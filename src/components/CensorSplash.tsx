@@ -23,6 +23,7 @@ const VAULT_COUNT = moviesData.length;
 interface CensorSplashProps {
   activeDateKey: string;
   stats: PlayerStats;
+  vaultCount?: number;
   onEnterRoom: () => void;
   onOpenStats: () => void;
   onOpenCalendar: () => void;
@@ -32,12 +33,14 @@ interface CensorSplashProps {
 export default function CensorSplash({
   activeDateKey,
   stats,
+  vaultCount,
   onEnterRoom,
   onOpenStats,
   onOpenCalendar,
   onResetToToday,
 }: CensorSplashProps) {
   const [isSlamming, setIsSlamming] = useState(false);
+  const totalVaultCount = vaultCount ?? moviesData.length;
   const todayKey = getLocalDateKey();
   const isToday = activeDateKey === todayKey;
   const activeDayRecord = stats.dailyRecords[activeDateKey];
@@ -334,8 +337,15 @@ export default function CensorSplash({
               Examining Committee Sign-Off
             </p>
             <p>
-              Regional Officer, CBFC Hyderabad • {VAULT_COUNT} Classified{" "}
-              {VAULT_COUNT === 1 ? "Film" : "Films"} in Vault
+              Regional Officer, CBFC Hyderabad • {totalVaultCount} Classified{" "}
+              {totalVaultCount === 1 ? "Film" : "Films"} in Vault •{" "}
+              <a
+                href="/login"
+                className="underline hover:text-censor-crimson text-censor-ink/90 font-semibold"
+                title="CBFC Official Admin Login"
+              >
+                Officer Portal (/login)
+              </a>
             </p>
           </div>
 

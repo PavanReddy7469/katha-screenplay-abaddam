@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Fuse from "fuse.js";
 import moviesData from "@/data/movies.json";
+import { getMovieById } from "@/lib/movieStore";
 import {
   BENCH_HECKLES,
   evaluateLieRule,
@@ -24,6 +25,7 @@ interface HistoryItem {
 
 interface InterrogateRequest {
   movieId: string;
+  movieData?: Movie;
   personaId?: GameModeId;
   question: string;
   questionNumber: number;
@@ -1018,20 +1020,24 @@ export async function POST(req: NextRequest) {
     const body = (await req.json()) as InterrogateRequest;
     const {
       movieId,
+      movieData,
       question,
       questionNumber,
       gajalaLieReels,
       history = [],
     } = body;
 
-    if (!movieId || !question || !questionNumber) {
+    if ((!movieId && !movieData) || !question || !questionNumber) {
       return NextResponse.json(
         { error: "Missing required interrogation parameters." },
         { status: 400 }
       );
     }
 
-    const movie = MOVIES.find((m) => m.id === movieId);
+    const movie =
+      movieData ||
+      (movieId ? getMovieById(movieId) : undefined) ||
+      (movieId ? MOVIES.find((m) => m.id === movieId) : undefined);
     if (!movie) {
       return NextResponse.json(
         { error: "Invalid movie ID." },
@@ -1068,25 +1074,55 @@ export async function POST(req: NextRequest) {
         unlocksClue: false,
         reply: roastText,
         wasLie: false,
-        mode: process.env.GEMINI_API_KEY?.trim() ? "gemini" : "simulator",
+        mode: process.env.GROQ_API_KEY?.trim()
+          ? "groq"
+          : process.env.GEMINI_API_KEY?.trim()
+          ? "gemini"
+          : "simulator",
       });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY?.trim()
-      .replace(/^GEMINI_API_KEY\s*=\s*/i, "")
-      .replace(/^["']|["']$/g, "")
-      .trim();
+    const readEnvKey = (name: string) =>
+      process.env[name]
+        ?.trim()
+        .replace(new RegExp(`^${name}\\s*=\\s*`, "i"), "")
+        .replace(/^["']|["']$/g, "")
+        .trim();
 
-    let fallbackReason: string = apiKey ? "gemini_error" : "missing_env_key";
+    const groqKey = readEnvKey("GROQ_API_KEY");
+    const geminiKeyRaw = readEnvKey("GEMINI_API_KEY");
+    const apiKey =
+      geminiKeyRaw && geminiKeyRaw !== "your_gemini_api_key_here"
+        ? geminiKeyRaw
+        : undefined;
 
-    // 2. Single fast Gemini JSON call generating both witnesses' statements + 3rd witness heckle
-    if (apiKey && apiKey !== "your_gemini_api_key_here") {
-      const genAI = new GoogleGenerativeAI(apiKey);
+    let fallbackReason: string =
+      groqKey || apiKey ? "ai_error" : "missing_env_key";
+
+    const classifyAiError = (msg: string) => {
+      if (/429|quota|rate limit|RESOURCE_EXHAUSTED/i.test(msg)) {
+        return "rate_limited";
+      } else if (/401|403|API_KEY_INVALID|API key not valid|PERMISSION_DENIED|invalid_api_key/i.test(msg)) {
+        return "invalid_api_key";
+      } else if (/404|not found|model_not_found|decommissioned/i.test(msg)) {
+        return "model_not_found";
+      }
+      return "ai_error";
+    };
+
+    // 2. Single fast AI JSON call (Groq first, then Gemini) generating both witnesses' statements + 3rd witness heckle
+    if (groqKey || apiKey) {
       const modelCandidates = [
         "gemini-3.5-flash-lite",
         "gemini-3.1-flash-lite",
         "gemini-3.8-flash",
         "gemini-3.7-flash",
+      ];
+      const groqModelCandidates = [
+        ...(process.env.GROQ_MODEL?.trim() ? [process.env.GROQ_MODEL.trim()] : []),
+        "openai/gpt-oss-120b",
+        "qwen/qwen3.8-27b",
+        "openai/gpt-oss-20b",
       ];
 
       const historyContext = history
@@ -1191,16 +1227,11 @@ RETURN STRICT JSON ONLY:
   "heckle": { "personaId": "${heckler}", "text": "..." }
 }`;
 
-      for (const modelName of modelCandidates) {
-        try {
-          const model = genAI.getGenerativeModel({
-            model: modelName,
-            generationConfig: {
-              responseMimeType: "application/json",
-            },
-          });
-          const result = await model.generateContent(prompt);
-          const rawText = result.response.text().trim();
+      const respondFromAiText = (
+        rawTextIn: string,
+        aiMode: "groq" | "gemini"
+      ): NextResponse | null => {
+          const rawText = rawTextIn.trim();
           const stripped = rawText
             .replace(/^```json\s*/i, "")
             .replace(/^```\s*/i, "")
@@ -1222,7 +1253,7 @@ RETURN STRICT JSON ONLY:
               unlocksClue: false,
               reply: roastReply,
               wasLie: false,
-              mode: "gemini",
+              mode: aiMode,
             });
           }
 
@@ -1272,22 +1303,70 @@ RETURN STRICT JSON ONLY:
               unlocksClue,
               reply: normalizedStatements.map((s) => s.reply).join(" "),
               wasLie: normalizedStatements.some((s) => s.wasLie),
-              mode: "gemini",
+              mode: aiMode,
             });
           }
-        } catch (geminiError) {
-          const msg =
-            geminiError instanceof Error ? geminiError.message : String(geminiError);
-          if (/429|quota|rate limit|RESOURCE_EXHAUSTED/i.test(msg)) {
-            fallbackReason = "rate_limited";
-          } else if (/401|403|API_KEY_INVALID|API key not valid|PERMISSION_DENIED/i.test(msg)) {
-            fallbackReason = "invalid_api_key";
-          } else if (/404|not found/i.test(msg)) {
-            fallbackReason = "model_not_found";
-          } else {
-            fallbackReason = "gemini_error";
+          return null;
+      };
+
+      // 2a. Groq (OpenAI-compatible chat completions, JSON mode)
+      if (groqKey) {
+        for (const modelName of groqModelCandidates) {
+          try {
+            const res = await fetch(
+              "https://api.groq.com/openai/v1/chat/completions",
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${groqKey}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  model: modelName,
+                  messages: [{ role: "user", content: prompt }],
+                  response_format: { type: "json_object" },
+                  temperature: 0.9,
+                }),
+              }
+            );
+            if (!res.ok) {
+              throw new Error(`${res.status} ${await res.text()}`);
+            }
+            const data = (await res.json()) as {
+              choices?: { message?: { content?: string } }[];
+            };
+            const content = data.choices?.[0]?.message?.content ?? "";
+            const response = respondFromAiText(content, "groq");
+            if (response) return response;
+          } catch (groqError) {
+            const msg =
+              groqError instanceof Error ? groqError.message : String(groqError);
+            fallbackReason = classifyAiError(msg);
+            console.warn(`Groq model ${modelName} failed:`, msg);
           }
-          console.warn(`Gemini model ${modelName} failed:`, msg);
+        }
+      }
+
+      // 2b. Gemini fallback
+      if (apiKey) {
+        const genAI = new GoogleGenerativeAI(apiKey);
+        for (const modelName of modelCandidates) {
+          try {
+            const model = genAI.getGenerativeModel({
+              model: modelName,
+              generationConfig: {
+                responseMimeType: "application/json",
+              },
+            });
+            const result = await model.generateContent(prompt);
+            const response = respondFromAiText(result.response.text(), "gemini");
+            if (response) return response;
+          } catch (geminiError) {
+            const msg =
+              geminiError instanceof Error ? geminiError.message : String(geminiError);
+            fallbackReason = classifyAiError(msg);
+            console.warn(`Gemini model ${modelName} failed:`, msg);
+          }
         }
       }
     }

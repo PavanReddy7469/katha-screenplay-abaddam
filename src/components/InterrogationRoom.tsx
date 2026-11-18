@@ -137,6 +137,7 @@ interface InterrogationRoomProps {
   movie: Movie;
   activeDateKey: string;
   stats: PlayerStats;
+  allMovies?: Movie[];
   onGameComplete: (record: Omit<DailyRecord, "playedAt">) => void;
   onPlayAgain: () => void;
   onReturnSplash: () => void;
@@ -159,7 +160,11 @@ function normalizeTitle(str: string): string {
     .trim();
 }
 
-function checkFuzzyMatch(guess: string, targetMovie: Movie): boolean {
+function checkFuzzyMatch(
+  guess: string,
+  targetMovie: Movie,
+  moviePool: Movie[] = ALL_MOVIES
+): boolean {
   const cleanedGuess = normalizeTitle(guess);
   if (cleanedGuess.length < 3) return false;
 
@@ -173,7 +178,7 @@ function checkFuzzyMatch(guess: string, targetMovie: Movie): boolean {
     return true;
   }
 
-  const allEntries = ALL_MOVIES.flatMap((m) =>
+  const allEntries = moviePool.flatMap((m) =>
     Array.from(new Set([m.title, ...m.alternateSpellings])).map((variant) => ({
       movieId: m.id,
       variant: normalizeTitle(variant),
@@ -222,6 +227,7 @@ export default function InterrogationRoom({
   movie,
   activeDateKey,
   stats,
+  allMovies,
   onGameComplete,
   onPlayAgain,
   onReturnSplash,
@@ -237,7 +243,7 @@ export default function InterrogationRoom({
   const [tierOffset, setTierOffset] = useState<number>(0);
   const [objectionUsed, setObjectionUsed] = useState<boolean>(false);
   const [accusePickerOpen, setAccusePickerOpen] = useState<boolean>(false);
-  const [aiMode, setAiMode] = useState<"gemini" | "simulator" | null>(null);
+  const [aiMode, setAiMode] = useState<"groq" | "gemini" | "simulator" | null>(null);
   const [lastPanelTurn, setLastPanelTurn] = useState<LastPanelTurn | null>(
     null
   );
@@ -460,7 +466,7 @@ export default function InterrogationRoom({
         throw new Error(data.error || "Interrogation failed");
       }
 
-      if (data.mode === "gemini" || data.mode === "simulator") {
+      if (data.mode === "groq" || data.mode === "gemini" || data.mode === "simulator") {
         setAiMode(data.mode);
       }
 
@@ -713,7 +719,7 @@ export default function InterrogationRoom({
     }
 
     setGuessError("");
-    const isCorrect = checkFuzzyMatch(trimmed, movie);
+    const isCorrect = checkFuzzyMatch(trimmed, movie, allMovies);
 
     if (isCorrect) {
       setVerdictModalOpen(false);
@@ -883,16 +889,16 @@ export default function InterrogationRoom({
                   {aiMode && (
                     <span
                       className={`font-typewriter text-[8px] sm:text-[9px] uppercase px-1 sm:px-1.5 py-0.5 rounded-[2px] border shrink-0 ${
-                        aiMode === "gemini"
+                        aiMode !== "simulator"
                           ? "bg-emerald-950/80 border-emerald-500/50 text-emerald-300"
                           : "bg-booth-800 border-booth-600 text-parchment-300/75"
                       }`}
                     >
                       <span className="sm:hidden">
-                        {aiMode === "gemini" ? "LIVE" : "SIM"}
+                        {aiMode !== "simulator" ? "LIVE" : "SIM"}
                       </span>
                       <span className="hidden sm:inline">
-                        {aiMode === "gemini" ? "GEMINI LIVE" : "SIMULATOR MODE"}
+                        {aiMode === "groq" ? "GROQ LIVE" : aiMode === "gemini" ? "GEMINI LIVE" : "SIMULATOR MODE"}
                       </span>
                     </span>
                   )}
