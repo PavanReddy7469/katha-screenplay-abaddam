@@ -237,9 +237,7 @@ export default function InterrogationRoom({
   const [tierOffset, setTierOffset] = useState<number>(0);
   const [objectionUsed, setObjectionUsed] = useState<boolean>(false);
   const [accusePickerOpen, setAccusePickerOpen] = useState<boolean>(false);
-  const [aiMode, setAiMode] = useState<"groq" | "gemini" | "simulator" | null>(
-    null
-  );
+  const [aiMode, setAiMode] = useState<"groq" | "simulator" | null>(null);
   const [lastPanelTurn, setLastPanelTurn] = useState<LastPanelTurn | null>(
     null
   );
@@ -462,11 +460,7 @@ export default function InterrogationRoom({
         throw new Error(data.error || "Interrogation failed");
       }
 
-      if (
-        data.mode === "groq" ||
-        data.mode === "gemini" ||
-        data.mode === "simulator"
-      ) {
+      if (data.mode === "groq" || data.mode === "simulator") {
         setAiMode(data.mode);
       }
 
@@ -889,22 +883,16 @@ export default function InterrogationRoom({
                   {aiMode && (
                     <span
                       className={`font-typewriter text-[8px] sm:text-[9px] uppercase px-1 sm:px-1.5 py-0.5 rounded-[2px] border shrink-0 ${
-                        aiMode === "groq" || aiMode === "gemini"
+                        aiMode === "groq"
                           ? "bg-emerald-950/80 border-emerald-500/50 text-emerald-300"
                           : "bg-booth-800 border-booth-600 text-parchment-300/75"
                       }`}
                     >
                       <span className="sm:hidden">
-                        {aiMode === "groq" || aiMode === "gemini"
-                          ? "LIVE"
-                          : "SIM"}
+                        {aiMode === "groq" ? "LIVE" : "SIM"}
                       </span>
                       <span className="hidden sm:inline">
-                        {aiMode === "groq"
-                          ? "GROQ LIVE"
-                          : aiMode === "gemini"
-                          ? "GEMINI LIVE"
-                          : "SIMULATOR MODE"}
+                        {aiMode === "groq" ? "GROQ LIVE" : "SIMULATOR MODE"}
                       </span>
                     </span>
                   )}

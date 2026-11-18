@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import Fuse from "fuse.js";
 import moviesData from "@/data/movies.json";
 import {
@@ -999,7 +998,7 @@ function pickFreshHeckle(
   return choices[(questionNumber - 1) % choices.length];
 }
 
-interface GeminiPanelJson {
+interface GroqPanelJson {
   invalid?: boolean;
   invalidReply?: string;
   statements?: Array<{
@@ -1061,11 +1060,6 @@ export async function POST(req: NextRequest) {
       .replace(/^["']|["']$/g, "")
       .trim();
 
-    const geminiApiKey = process.env.GEMINI_API_KEY?.trim()
-      .replace(/^GEMINI_API_KEY\s*=\s*/i, "")
-      .replace(/^["']|["']$/g, "")
-      .trim();
-
     // 1. Block obvious gibberish BEFORE burning a reel or unlocking any clue
     if (isObviousGibberish(question)) {
       const roaster = speakers[0];
@@ -1078,25 +1072,17 @@ export async function POST(req: NextRequest) {
         unlocksClue: false,
         reply: roastText,
         wasLie: false,
-        mode: groqApiKey
-          ? "groq"
-          : geminiApiKey
-          ? "gemini"
-          : "simulator",
+        mode: groqApiKey ? "groq" : "simulator",
       });
     }
 
-    let fallbackReason: string =
-      groqApiKey || geminiApiKey ? "llm_error" : "missing_env_key";
+    let fallbackReason: string = groqApiKey ? "groq_error" : "missing_env_key";
 
     const hasGroq = Boolean(
       groqApiKey && groqApiKey !== "your_groq_api_key_here"
     );
-    const hasGemini = Boolean(
-      geminiApiKey && geminiApiKey !== "your_gemini_api_key_here"
-    );
 
-    if (hasGroq || hasGemini) {
+    if (hasGroq && groqApiKey) {
       const historyContext = history
         .slice(-12)
         .map((h) => {
@@ -1200,10 +1186,7 @@ RETURN STRICT JSON ONLY:
   "heckle": { "personaId": "${heckler}", "text": "..." }
 }`;
 
-      const formatParsedPanel = (
-        parsed: GeminiPanelJson,
-        activeMode: "groq" | "gemini"
-      ) => {
+      const formatParsedPanel = (parsed: GroqPanelJson) => {
         if (parsed.invalid) {
           const roastReply =
             parsed.invalidReply?.trim() ||
@@ -1216,7 +1199,7 @@ RETURN STRICT JSON ONLY:
             unlocksClue: false,
             reply: roastReply,
             wasLie: false,
-            mode: activeMode,
+            mode: "groq",
           });
         }
 
@@ -1266,140 +1249,83 @@ RETURN STRICT JSON ONLY:
             unlocksClue,
             reply: normalizedStatements.map((s) => s.reply).join(" "),
             wasLie: normalizedStatements.some((s) => s.wasLie),
-            mode: activeMode,
+            mode: "groq",
           });
         }
 
         return null;
       };
 
-      // 2A. Priority 1: Groq API (ultra-fast gpt-oss-120b / qwen3.8-27b / gpt-oss-20b)
-      if (hasGroq && groqApiKey) {
-        const groqModels = [
-          "openai/gpt-oss-120b",
-          "qwen/qwen3.8-27b",
-          "openai/gpt-oss-20b",
-        ];
+      // 2. Groq API (ultra-fast gpt-oss-120b -> qwen3.8-27b -> gpt-oss-20b)
+      const groqModels = [
+        "openai/gpt-oss-120b",
+        "qwen/qwen3.8-27b",
+        "openai/gpt-oss-20b",
+      ];
 
-        for (const modelName of groqModels) {
-          try {
-            const groqRes = await fetch(
-              "https://api.groq.com/openai/v1/chat/completions",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${groqApiKey}`,
-                },
-                body: JSON.stringify({
-                  model: modelName,
-                  temperature: 0.75,
-                  response_format: { type: "json_object" },
-                  messages: [
-                    {
-                      role: "system",
-                      content:
-                        "You are a witty Tollywood comedy screenplay generator that strictly outputs valid JSON matching the requested schema. Never leak spoilers.",
-                    },
-                    {
-                      role: "user",
-                      content: prompt,
-                    },
-                  ],
-                }),
-              }
-            );
-
-            if (!groqRes.ok) {
-              const errText = await groqRes.text();
-              throw new Error(`[${groqRes.status}] ${errText}`);
-            }
-
-            const groqData = (await groqRes.json()) as {
-              choices?: Array<{ message?: { content?: string } }>;
-            };
-            const rawText = groqData.choices?.[0]?.message?.content?.trim() ?? "";
-            const stripped = rawText
-              .replace(/^```json\s*/i, "")
-              .replace(/^```\s*/i, "")
-              .replace(/```$/i, "")
-              .trim();
-            const jsonMatch = stripped.match(/\{[\s\S]*\}/);
-            const parsed = JSON.parse(
-              jsonMatch ? jsonMatch[0] : stripped
-            ) as GeminiPanelJson;
-
-            const formatted = formatParsedPanel(parsed, "groq");
-            if (formatted) return formatted;
-          } catch (groqError) {
-            const msg =
-              groqError instanceof Error ? groqError.message : String(groqError);
-            if (/429|rate_limit|quota/i.test(msg)) {
-              fallbackReason = "rate_limited";
-            } else if (/401|403|invalid_api_key|unauthorized/i.test(msg)) {
-              fallbackReason = "invalid_api_key";
-            } else if (/404|model_not_found/i.test(msg)) {
-              fallbackReason = "model_not_found";
-            } else {
-              fallbackReason = "groq_error";
-            }
-            console.warn(`Groq model ${modelName} failed:`, msg);
-          }
-        }
-      }
-
-      // 2B. Priority 2: Google Gemini API fallback (if GEMINI_API_KEY is configured)
-      if (hasGemini && geminiApiKey) {
-        const genAI = new GoogleGenerativeAI(geminiApiKey);
-        const modelCandidates = [
-          "gemini-3.5-flash-lite",
-          "gemini-3.1-flash-lite",
-          "gemini-3.8-flash",
-          "gemini-3.7-flash",
-        ];
-
-        for (const modelName of modelCandidates) {
-          try {
-            const model = genAI.getGenerativeModel({
-              model: modelName,
-              generationConfig: {
-                responseMimeType: "application/json",
+      for (const modelName of groqModels) {
+        try {
+          const groqRes = await fetch(
+            "https://api.groq.com/openai/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${groqApiKey}`,
               },
-            });
-            const result = await model.generateContent(prompt);
-            const rawText = result.response.text().trim();
-            const stripped = rawText
-              .replace(/^```json\s*/i, "")
-              .replace(/^```\s*/i, "")
-              .replace(/```$/i, "")
-              .trim();
-            const jsonMatch = stripped.match(/\{[\s\S]*\}/);
-            const parsed = JSON.parse(
-              jsonMatch ? jsonMatch[0] : stripped
-            ) as GeminiPanelJson;
-
-            const formatted = formatParsedPanel(parsed, "gemini");
-            if (formatted) return formatted;
-          } catch (geminiError) {
-            const msg =
-              geminiError instanceof Error
-                ? geminiError.message
-                : String(geminiError);
-            if (/429|quota|rate limit|RESOURCE_EXHAUSTED/i.test(msg)) {
-              fallbackReason = "rate_limited";
-            } else if (
-              /401|403|API_KEY_INVALID|API key not valid|PERMISSION_DENIED/i.test(
-                msg
-              )
-            ) {
-              fallbackReason = "invalid_api_key";
-            } else if (/404|not found/i.test(msg)) {
-              fallbackReason = "model_not_found";
-            } else {
-              fallbackReason = "gemini_error";
+              body: JSON.stringify({
+                model: modelName,
+                temperature: 0.75,
+                response_format: { type: "json_object" },
+                messages: [
+                  {
+                    role: "system",
+                    content:
+                      "You are a witty Tollywood comedy screenplay generator that strictly outputs valid JSON matching the requested schema. Never leak spoilers.",
+                  },
+                  {
+                    role: "user",
+                    content: prompt,
+                  },
+                ],
+              }),
             }
-            console.warn(`Gemini model ${modelName} failed:`, msg);
+          );
+
+          if (!groqRes.ok) {
+            const errText = await groqRes.text();
+            throw new Error(`[${groqRes.status}] ${errText}`);
           }
+
+          const groqData = (await groqRes.json()) as {
+            choices?: Array<{ message?: { content?: string } }>;
+          };
+          const rawText = groqData.choices?.[0]?.message?.content?.trim() ?? "";
+          const stripped = rawText
+            .replace(/^```json\s*/i, "")
+            .replace(/^```\s*/i, "")
+            .replace(/```$/i, "")
+            .trim();
+          const jsonMatch = stripped.match(/\{[\s\S]*\}/);
+          const parsed = JSON.parse(
+            jsonMatch ? jsonMatch[0] : stripped
+          ) as GroqPanelJson;
+
+          const formatted = formatParsedPanel(parsed);
+          if (formatted) return formatted;
+        } catch (groqError) {
+          const msg =
+            groqError instanceof Error ? groqError.message : String(groqError);
+          if (/429|rate_limit|quota/i.test(msg)) {
+            fallbackReason = "rate_limited";
+          } else if (/401|403|invalid_api_key|unauthorized/i.test(msg)) {
+            fallbackReason = "invalid_api_key";
+          } else if (/404|model_not_found/i.test(msg)) {
+            fallbackReason = "model_not_found";
+          } else {
+            fallbackReason = "groq_error";
+          }
+          console.warn(`Groq model ${modelName} failed:`, msg);
         }
       }
     }
