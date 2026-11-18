@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { isAuthenticated } from "@/lib/adminAuth";
 import { Movie } from "@/lib/personas";
 
@@ -129,20 +128,33 @@ RETURN STRICT JSON ONLY MATCHING THIS SCHEMA:
       }
     }
 
-    // Try Gemini fallback
+    // Try Gemini fallback via REST fetch
     if (geminiKey) {
-      const genAI = new GoogleGenerativeAI(geminiKey);
-      const modelCandidates = ["gemini-3.5-flash-lite", "gemini-3.8-flash", "gemini-3.7-flash"];
+      const modelCandidates = ["gemini-2.0-flash", "gemini-1.5-flash"];
       for (const mName of modelCandidates) {
         try {
-          const model = genAI.getGenerativeModel({
-            model: mName,
-            generationConfig: { responseMimeType: "application/json" },
-          });
-          const result = await model.generateContent(prompt);
-          const rawText = result.response.text();
-          const parsed = JSON.parse(rawText) as Movie;
-          return NextResponse.json({ success: true, movie: parsed, provider: "gemini" });
+          const gemRes = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/${mName}:generateContent?key=${geminiKey}`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: { responseMimeType: "application/json" },
+              }),
+            }
+          );
+          if (gemRes.ok) {
+            const gemData = await gemRes.json();
+            const rawText =
+              gemData.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+            const parsed = JSON.parse(rawText) as Movie;
+            return NextResponse.json({
+              success: true,
+              movie: parsed,
+              provider: "gemini",
+            });
+          }
         } catch (gemErr) {
           console.warn(`Gemini model ${mName} failed:`, gemErr);
         }

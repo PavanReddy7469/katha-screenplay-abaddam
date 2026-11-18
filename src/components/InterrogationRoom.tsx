@@ -22,6 +22,7 @@ import {
   Zap,
 } from "lucide-react";
 import moviesData from "@/data/movies.json";
+import { TELUGU_IMDB_CATALOG } from "@/data/teluguCatalog";
 import {
   Movie,
   PERSONA_LIST,
@@ -40,6 +41,22 @@ import VerdictCard, { AuditEntry, CensorRating } from "./VerdictCard";
 
 const ALL_MOVIES = moviesData as Movie[];
 const MAX_TOKENS = 8;
+
+interface MovieSuggestion {
+  title: string;
+  year?: number;
+  source: "catalog" | "imdb";
+}
+
+const LOCAL_CATALOG_FUSE = new Fuse(TELUGU_IMDB_CATALOG, {
+  keys: [
+    { name: "title", weight: 0.7 },
+    { name: "aliases", weight: 0.3 },
+  ],
+  threshold: 0.38,
+  ignoreLocation: true,
+  minMatchCharLength: 2,
+});
 
 const RATING_ORDER: CensorRating[] = ["U", "U/A", "A", "S", "BANNED"];
 
@@ -97,16 +114,61 @@ const RATING_META: Record<
 
 const TACTICAL_CHIP_POOL = [
   "Did it release after 2015?",
+  "Did it release before 2010?",
+  "Was it released in the 2020s?",
+  "Was it released between 2000 and 2012?",
   "Is Brahmanandam in it?",
-  "Is there a faction or village backdrop?",
-  "Did S.S. Rajamouli direct it?",
-  "Did it win a National Film Award?",
-  "Is it a period or historical movie?",
-  "Was Peter Hein the stunt choreographer?",
-  "Did M.M. Keeravani compose the music?",
   "Is Prakash Raj in this movie?",
-  "Does it feature a surprise cameo or remix song?",
+  "Does Sunil act in this film?",
+  "Is Rao Ramesh part of the cast?",
+  "Does Ali have a comedy role in it?",
+  "Is there a faction or village backdrop?",
+  "Is it a period or historical movie?",
+  "Does it have a strong family drama angle?",
+  "Is it primarily a romantic comedy?",
+  "Does the story involve fantasy or sci-fi elements?",
+  "Is the hero a cop or working undercover?",
+  "Does the plot involve a college backdrop?",
+  "Is it a crime or gangster thriller?",
+  "Did S.S. Rajamouli direct it?",
+  "Did Trivikram Srinivas direct it?",
+  "Did Sukumar direct this film?",
+  "Did Devi Sri Prasad compose the music?",
+  "Did M.M. Keeravani score the music?",
+  "Did Mani Sharma compose the soundtrack?",
+  "Did Thaman S compose the music?",
+  "Is Mahesh Babu the hero?",
+  "Is Ram Charan in the lead?",
+  "Is Allu Arjun the hero?",
+  "Is Prabhas the lead actor?",
+  "Is Nani the hero of this film?",
+  "Did it win a National Film Award?",
+  "Was it a Pan-India release?",
+  "Was it later remade in Hindi?",
+  "Does it feature a famous special cameo?",
+  "Does it have a sequel or part 2?",
 ];
+
+// Deterministic daily shuffle seeded ONLY by dateKey (completely independent of the movie!)
+function getDailyChipDeck(dateKey: string): string[] {
+  let seed = 2166136261;
+  for (let i = 0; i < dateKey.length; i++) {
+    seed ^= dateKey.charCodeAt(i);
+    seed = Math.imul(seed, 16777619) >>> 0;
+  }
+
+  const nextRand = () => {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    return seed / 4294967296;
+  };
+
+  const deck = [...TACTICAL_CHIP_POOL];
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(nextRand() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  return deck;
+}
 
 interface PanelStatement {
   personaId: PersonaId;
@@ -243,7 +305,11 @@ export default function InterrogationRoom({
   const [tierOffset, setTierOffset] = useState<number>(0);
   const [objectionUsed, setObjectionUsed] = useState<boolean>(false);
   const [accusePickerOpen, setAccusePickerOpen] = useState<boolean>(false);
+<<<<<<< HEAD
   const [aiMode, setAiMode] = useState<"groq" | "gemini" | "simulator" | null>(null);
+=======
+  const [aiMode, setAiMode] = useState<"groq" | "simulator" | null>(null);
+>>>>>>> 7480616d96e8edbdf146c58fac2d2f6342207913
   const [lastPanelTurn, setLastPanelTurn] = useState<LastPanelTurn | null>(
     null
   );
@@ -312,6 +378,12 @@ export default function InterrogationRoom({
   const [verdictModalOpen, setVerdictModalOpen] = useState<boolean>(false);
   const [guessInput, setGuessInput] = useState<string>("");
   const [guessError, setGuessError] = useState<string>("");
+  const [movieSuggestions, setMovieSuggestions] = useState<MovieSuggestion[]>(
+    []
+  );
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const [highlightedIdx, setHighlightedIdx] = useState<number>(-1);
+  const [loadingSuggestions, setLoadingSuggestions] = useState<boolean>(false);
 
   const [objectionBanner, setObjectionBanner] = useState<{
     status: "caught" | "wrong";
@@ -335,6 +407,55 @@ export default function InterrogationRoom({
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
 
+  // Live IMDb + 180+ Telugu catalog autocomplete inside Final Verdict modal
+  useEffect(() => {
+    if (!verdictModalOpen) return;
+    const q = guessInput.trim();
+    if (q.length < 2) {
+      setMovieSuggestions([]);
+      setHighlightedIdx(-1);
+      setLoadingSuggestions(false);
+      return;
+    }
+
+    // 1. Instant 0ms local fuzzy matches
+    const instantLocal: MovieSuggestion[] = LOCAL_CATALOG_FUSE.search(q, {
+      limit: 6,
+    }).map((r) => ({
+      title: r.item.title,
+      year: r.item.year,
+      source: "catalog",
+    }));
+    setMovieSuggestions(instantLocal);
+    setHighlightedIdx(-1);
+
+    // 2. Debounced live IMDb suggestion enrichment
+    const controller = new AbortController();
+    const timer = setTimeout(async () => {
+      setLoadingSuggestions(true);
+      try {
+        const res = await fetch(
+          `/api/suggest-movies?q=${encodeURIComponent(q)}`,
+          { signal: controller.signal }
+        );
+        if (!res.ok) return;
+        const data = (await res.json()) as { suggestions?: MovieSuggestion[] };
+        if (data.suggestions && data.suggestions.length > 0) {
+          setMovieSuggestions(data.suggestions);
+        }
+      } catch {
+        // Keep instant local suggestions on abort or offline
+      } finally {
+        setLoadingSuggestions(false);
+      }
+    }, 220);
+
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [guessInput, verdictModalOpen]);
+
   const currentRating: CensorRating = useMemo(() => {
     if (gameOutcome?.status === "lost" || bannedSlamActive) {
       return "BANNED";
@@ -346,12 +467,17 @@ export default function InterrogationRoom({
 
   const ratingInfo = RATING_META[currentRating];
 
+  const dailyChipDeck = useMemo(
+    () => getDailyChipDeck(activeDateKey),
+    [activeDateKey]
+  );
+
   const activeChips = useMemo(() => {
-    return TACTICAL_CHIP_POOL.filter((chip) => !usedChips.includes(chip)).slice(
+    return dailyChipDeck.filter((chip) => !usedChips.includes(chip)).slice(
       0,
       3
     );
-  }, [usedChips]);
+  }, [dailyChipDeck, usedChips]);
 
   const unlockedHintsCount = useMemo(
     () => Math.min(pressHints.length, wrongAnswerCount),
@@ -1531,25 +1657,121 @@ export default function InterrogationRoom({
             </div>
 
             <form onSubmit={handleSubmitVerdict} className="space-y-4">
-              <div>
-                <label
-                  htmlFor="verdict-guess"
-                  className="block font-typewriter text-xs font-bold uppercase tracking-wider text-censor-ink mb-1.5"
-                >
-                  Suspected Telugu Film Title:
-                </label>
+              <div className="relative">
+                <div className="flex items-center justify-between gap-2 mb-1.5">
+                  <label
+                    htmlFor="verdict-guess"
+                    className="block font-typewriter text-xs font-bold uppercase tracking-wider text-censor-ink"
+                  >
+                    Suspected Telugu Film Title:
+                  </label>
+                  <span className="font-typewriter text-[10px] text-censor-ink/65">
+                    {loadingSuggestions ? "Searching IMDb..." : "IMDb Autocomplete"}
+                  </span>
+                </div>
+
                 <input
                   id="verdict-guess"
                   type="text"
                   autoFocus
+                  autoComplete="off"
                   value={guessInput}
+                  onFocus={() => {
+                    if (guessInput.trim().length >= 2) setDropdownOpen(true);
+                  }}
+                  onBlur={() => {
+                    setTimeout(() => setDropdownOpen(false), 150);
+                  }}
                   onChange={(e) => {
                     setGuessInput(e.target.value);
+                    setDropdownOpen(e.target.value.trim().length >= 2);
                     if (guessError) setGuessError("");
                   }}
-                  placeholder="Type Telugu movie name..."
-                  className="w-full bg-parchment-50 border-2 border-censor-ink px-3.5 py-3 rounded-sm font-display font-bold text-lg text-censor-ink placeholder:text-censor-ink/40 focus:outline-none focus:ring-2 focus:ring-censor-crimson"
+                  onKeyDown={(e) => {
+                    if (!dropdownOpen || movieSuggestions.length === 0) return;
+                    if (e.key === "ArrowDown") {
+                      e.preventDefault();
+                      setHighlightedIdx((prev) =>
+                        prev < movieSuggestions.length - 1 ? prev + 1 : 0
+                      );
+                    } else if (e.key === "ArrowUp") {
+                      e.preventDefault();
+                      setHighlightedIdx((prev) =>
+                        prev > 0 ? prev - 1 : movieSuggestions.length - 1
+                      );
+                    } else if (e.key === "Enter" && highlightedIdx >= 0) {
+                      e.preventDefault();
+                      const picked = movieSuggestions[highlightedIdx];
+                      if (picked) {
+                        setGuessInput(picked.title);
+                        setDropdownOpen(false);
+                        setHighlightedIdx(-1);
+                      }
+                    } else if (e.key === "Escape") {
+                      setDropdownOpen(false);
+                    }
+                  }}
+                  placeholder="Start typing Telugu movie name..."
+                  className="w-full bg-parchment-50 border-2 border-censor-ink px-3.5 py-3 rounded-sm font-display font-bold text-base sm:text-lg text-censor-ink placeholder:text-censor-ink/40 focus:outline-none focus:ring-2 focus:ring-censor-crimson"
                 />
+
+                {/* Live IMDb Movie Suggestions Dropdown */}
+                {dropdownOpen && movieSuggestions.length > 0 && (
+                  <ul
+                    role="listbox"
+                    className="mt-1.5 max-h-52 overflow-y-auto custom-scrollbar bg-parchment-50 border-2 border-censor-ink rounded-sm shadow-xl divide-y divide-censor-ink/15"
+                  >
+                    {movieSuggestions.map((item, idx) => {
+                      const isActive = idx === highlightedIdx;
+                      return (
+                        <li key={`${item.title}-${item.year ?? idx}`}>
+                          <button
+                            type="button"
+                            onMouseDown={(e) => {
+                              e.preventDefault();
+                              setGuessInput(item.title);
+                              setDropdownOpen(false);
+                              setHighlightedIdx(-1);
+                              if (guessError) setGuessError("");
+                            }}
+                            className={`w-full px-3.5 py-2.5 text-left flex items-center justify-between gap-2 transition-colors ${
+                              isActive
+                                ? "bg-censor-ink text-parchment-50"
+                                : "hover:bg-parchment-200 text-censor-ink"
+                            }`}
+                          >
+                            <span className="font-display font-bold text-sm sm:text-base truncate">
+                              {item.title}
+                            </span>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              {item.year && (
+                                <span
+                                  className={`font-typewriter text-[11px] ${
+                                    isActive
+                                      ? "text-parchment-200"
+                                      : "text-censor-ink/70"
+                                  }`}
+                                >
+                                  ({item.year})
+                                </span>
+                              )}
+                              <span
+                                className={`font-typewriter text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-[2px] ${
+                                  isActive
+                                    ? "bg-censor-gold text-booth-950"
+                                    : "bg-censor-ink/10 text-censor-ink/75"
+                                }`}
+                              >
+                                IMDb
+                              </span>
+                            </div>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+
                 {guessError && (
                   <p className="mt-1.5 font-typewriter text-xs text-censor-crimson font-bold">
                     {guessError}
