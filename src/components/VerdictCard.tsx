@@ -115,8 +115,8 @@ export default function VerdictCard({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-      <div className="w-full max-w-2xl my-auto cbfc-paper cbfc-frame text-censor-ink rounded-sm p-5 sm:p-7 md:p-8 relative animate-fade-up">
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-start sm:items-center justify-center p-2.5 sm:p-6 overflow-y-auto">
+      <div className="w-full max-w-2xl my-auto max-h-[94dvh] overflow-y-auto cbfc-paper cbfc-frame text-censor-ink rounded-sm p-4 sm:p-7 md:p-8 relative animate-fade-up">
         {/* Vintage Newspaper / CBFC Gazette Masthead */}
         <div className="border-b-2 border-censor-ink pb-3 text-center">
           <p className="font-typewriter text-[10px] sm:text-xs uppercase tracking-[0.22em] text-censor-ink/70">

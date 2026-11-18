@@ -103,3 +103,17 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(212, 155, 53, 0.55);
 }
+
+/* Hide horizontal scrollbar on mobile swipeable chip strips */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Safe area padding helper for notched phones */
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}

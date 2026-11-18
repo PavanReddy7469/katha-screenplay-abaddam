@@ -850,22 +850,22 @@ export default function InterrogationRoom({
 
   return (
     <div
-      className={`min-h-screen w-full screening-room-bg flex flex-col relative ${
+      className={`min-h-[100dvh] w-full screening-room-bg flex flex-col relative overflow-x-hidden ${
         screenShake ? "animate-screen-shake" : ""
       }`}
     >
       {/* TOP BAR: Live Censor Board Certificate Meter + 8 Vintage Film Reels */}
       <header className="sticky top-0 z-30 border-b border-censor-gold/30 bg-booth-950/95 backdrop-blur-md shadow-xl">
-        <div className="h-2 sprocket-strip opacity-75" />
+        <div className="h-1.5 sm:h-2 sprocket-strip opacity-75" />
 
-        <div className="max-w-7xl mx-auto px-3 sm:px-5 py-3 flex flex-col gap-3">
+        <div className="max-w-7xl mx-auto px-2.5 sm:px-5 py-2 sm:py-3 flex flex-col gap-2 sm:gap-3">
           {/* Row 1: Title, Case Date, Engine Badge, Stats/Calendar & Verdict */}
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5 min-w-0">
+          <div className="flex items-center justify-between gap-1.5 sm:gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
               <button
                 type="button"
                 onClick={onReturnSplash}
-                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-sm border border-parchment-300/25 bg-booth-800 hover:bg-booth-700 text-parchment-200 font-typewriter text-[11px] uppercase tracking-wider transition-colors shrink-0"
+                className="inline-flex items-center justify-center gap-1 p-2 sm:px-2.5 sm:py-1.5 rounded-sm border border-parchment-300/25 bg-booth-800 hover:bg-booth-700 text-parchment-200 font-typewriter text-[11px] uppercase tracking-wider transition-colors shrink-0"
                 title="Return to Censor Certificate Splash"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
@@ -873,61 +873,74 @@ export default function InterrogationRoom({
               </button>
 
               <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <h1 className="font-display font-extrabold text-sm sm:text-base text-parchment-100 truncate tracking-wide">
-                    KATHA • SCREENPLAY • ABADDAM : MEERE!
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <h1 className="font-display font-extrabold text-xs min-[375px]:text-sm sm:text-base text-parchment-100 truncate tracking-wide">
+                    <span className="sm:hidden">KATHA • ABADDAM</span>
+                    <span className="hidden sm:inline">
+                      KATHA • SCREENPLAY • ABADDAM : MEERE!
+                    </span>
                   </h1>
                   {aiMode && (
                     <span
-                      className={`hidden sm:inline-block font-typewriter text-[9px] uppercase px-1.5 py-0.5 rounded-[2px] border ${
+                      className={`font-typewriter text-[8px] sm:text-[9px] uppercase px-1 sm:px-1.5 py-0.5 rounded-[2px] border shrink-0 ${
                         aiMode === "gemini"
                           ? "bg-emerald-950/80 border-emerald-500/50 text-emerald-300"
                           : "bg-booth-800 border-booth-600 text-parchment-300/75"
                       }`}
                     >
-                      {aiMode === "gemini" ? "GEMINI LIVE" : "SIMULATOR MODE"}
+                      <span className="sm:hidden">
+                        {aiMode === "gemini" ? "LIVE" : "SIM"}
+                      </span>
+                      <span className="hidden sm:inline">
+                        {aiMode === "gemini" ? "GEMINI LIVE" : "SIMULATOR MODE"}
+                      </span>
                     </span>
                   )}
                 </div>
-                <p className="font-typewriter text-[10px] text-censor-gold/90 truncate">
+                <p className="font-typewriter text-[9px] sm:text-[10px] text-censor-gold/90 truncate">
                   {isTodayCase ? "DAILY" : "ARCHIVE"} •{" "}
-                  {formatReadableDate(activeDateKey)} •{" "}
-                  <strong className="text-parchment-50 uppercase">
-                    3-WITNESS CHAOS PANEL
-                  </strong>
+                  {formatReadableDate(activeDateKey)}
+                  <span className="hidden min-[400px]:inline">
+                    {" "}
+                    •{" "}
+                    <strong className="text-parchment-50 uppercase">
+                      3-WITNESS PANEL
+                    </strong>
+                  </span>
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5 sm:gap-2">
+            <div className="flex items-center gap-1 min-[375px]:gap-1.5 sm:gap-2 shrink-0">
               <button
                 type="button"
                 onClick={onOpenStats}
-                className="inline-flex items-center gap-1 px-2.5 py-2 rounded-sm bg-booth-800 hover:bg-booth-700 border border-booth-600 text-parchment-200 font-typewriter text-xs uppercase transition-colors"
+                className="inline-flex items-center justify-center gap-1 p-2 sm:px-2.5 sm:py-2 rounded-sm bg-booth-800 hover:bg-booth-700 border border-booth-600 text-parchment-200 font-typewriter text-xs uppercase transition-colors"
                 title="Officer Stats"
               >
-                <BarChart3 className="w-4 h-4 text-censor-gold" />
+                <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-censor-gold" />
                 <span className="hidden md:inline">Stats</span>
               </button>
 
               <button
                 type="button"
                 onClick={onOpenCalendar}
-                className="inline-flex items-center gap-1 px-2.5 py-2 rounded-sm bg-booth-800 hover:bg-booth-700 border border-booth-600 text-parchment-200 font-typewriter text-xs uppercase transition-colors"
+                className="inline-flex items-center justify-center gap-1 p-2 sm:px-2.5 sm:py-2 rounded-sm bg-booth-800 hover:bg-booth-700 border border-booth-600 text-parchment-200 font-typewriter text-xs uppercase transition-colors"
                 title="Previous Days Calendar"
               >
-                <CalendarDays className="w-4 h-4 text-censor-gold" />
+                <CalendarDays className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-censor-gold" />
                 <span className="hidden md:inline">Archive</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setMobileHintsOpen(true)}
-                className="lg:hidden inline-flex items-center gap-1.5 px-3 py-2 rounded-sm bg-booth-800 hover:bg-booth-700 border border-censor-gold/55 text-parchment-100 font-typewriter font-bold text-xs uppercase tracking-wider"
+                className="lg:hidden inline-flex items-center gap-1 px-2 min-[375px]:px-2.5 py-2 rounded-sm bg-booth-800 hover:bg-booth-700 border border-censor-gold/55 text-parchment-100 font-typewriter font-bold text-[10px] min-[375px]:text-xs uppercase tracking-wider"
+                title="Open Non-Spoiler Press Clippings"
               >
-                <Newspaper className="w-4 h-4 text-censor-gold" />
+                <Newspaper className="w-3.5 h-3.5 text-censor-gold shrink-0" />
                 <span>
-                  Hints ({unlockedHintsCount}/{pressHints.length})
+                  {unlockedHintsCount}/{pressHints.length}
                 </span>
               </button>
 
@@ -938,7 +951,7 @@ export default function InterrogationRoom({
                   setVerdictModalOpen(true);
                 }}
                 disabled={Boolean(gameOutcome)}
-                className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-sm bg-censor-gold hover:bg-amber-400 text-booth-950 font-typewriter font-bold text-xs uppercase tracking-wider shadow-[0_0_16px_rgba(212,155,53,0.35)] transition-all disabled:opacity-40"
+                className="hidden sm:inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-sm bg-censor-gold hover:bg-amber-400 text-booth-950 font-typewriter font-bold text-xs uppercase tracking-wider shadow-[0_0_16px_rgba(212,155,53,0.35)] transition-all disabled:opacity-40"
               >
                 <Gavel className="w-4 h-4" />
                 <span>Final Verdict</span>
@@ -947,55 +960,55 @@ export default function InterrogationRoom({
           </div>
 
           {/* Row 2: Live Censor Certificate Health Bar + 8 Vintage Film Reels */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-booth-900/90 border border-booth-600/70 rounded-sm p-2.5 sm:p-3">
-            <div className="md:col-span-6 flex items-center gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-2 sm:gap-3 items-center bg-booth-900/90 border border-booth-600/70 rounded-sm p-2 sm:p-3">
+            <div className="md:col-span-6 flex items-center gap-2.5 sm:gap-3">
               <div
-                className={`min-w-[66px] px-2.5 py-1.5 text-center border-2 rounded-[2px] font-display font-black text-xl sm:text-2xl leading-none transition-all duration-300 ${ratingInfo.badgeClass}`}
+                className={`min-w-[50px] sm:min-w-[66px] px-2 sm:px-2.5 py-1 sm:py-1.5 text-center border-2 rounded-[2px] font-display font-black text-lg sm:text-2xl leading-none transition-all duration-300 ${ratingInfo.badgeClass}`}
               >
                 {ratingInfo.label}
               </div>
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2 mb-1">
-                  <span className="font-typewriter text-[10px] uppercase tracking-wider text-parchment-300/80">
-                    Censor Certificate Meter
+                  <span className="font-typewriter text-[9px] sm:text-[10px] uppercase tracking-wider text-parchment-300/80 truncate">
+                    Censor Cert. Meter
                   </span>
-                  <span className="font-typewriter text-[10px] font-bold text-parchment-200">
-                    U/A → A → S → BANNED
+                  <span className="font-typewriter text-[9px] sm:text-[10px] font-bold text-parchment-200 shrink-0">
+                    U/A→A→S→BAN
                   </span>
                 </div>
 
-                <div className="h-2.5 w-full bg-booth-950 rounded-full overflow-hidden border border-booth-600">
+                <div className="h-2 sm:h-2.5 w-full bg-booth-950 rounded-full overflow-hidden border border-booth-600">
                   <div
                     className={`h-full transition-all duration-500 ${ratingInfo.barClass}`}
                     style={{ width: `${ratingInfo.fillPercent}%` }}
                   />
                 </div>
 
-                <p className="font-typewriter text-[10px] sm:text-[11px] text-parchment-200/90 mt-1 truncate">
+                <p className="font-typewriter text-[9px] sm:text-[11px] text-parchment-200/90 mt-0.5 sm:mt-1 truncate">
                   {ratingInfo.subtitle}
                 </p>
               </div>
             </div>
 
-            <div className="md:col-span-6 flex flex-col sm:flex-row md:flex-col lg:flex-row sm:items-center justify-between gap-2 md:border-l md:border-booth-700 md:pl-3.5">
-              <div className="flex items-center justify-between sm:justify-start gap-2">
-                <span className="font-typewriter text-[10px] uppercase tracking-widest text-parchment-300/80">
-                  Interrogation Reels
+            <div className="md:col-span-6 flex items-center justify-between gap-2 md:border-l md:border-booth-700 md:pl-3.5 pt-1.5 md:pt-0 border-t border-booth-700/60 md:border-t-0">
+              <div className="flex items-center gap-1.5 shrink-0">
+                <span className="font-typewriter text-[9px] sm:text-[10px] uppercase tracking-wider text-parchment-300/80 hidden min-[400px]:inline">
+                  Reels
                 </span>
                 <span
-                  className={`font-typewriter text-xs font-bold px-2 py-0.5 rounded-[2px] ${
+                  className={`font-typewriter text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-[2px] ${
                     tokensLeft <= 2
                       ? "bg-red-950 text-red-200 border border-red-500/60"
                       : "bg-booth-800 text-censor-gold border border-censor-gold/40"
                   }`}
                 >
-                  {tokensLeft}/{MAX_TOKENS} LEFT
+                  {tokensLeft}/{MAX_TOKENS}
                 </span>
               </div>
 
               <div
-                className="flex items-center gap-1.5 flex-wrap"
+                className="flex items-center gap-1 min-[375px]:gap-1.5"
                 aria-label={`${tokensLeft} of ${MAX_TOKENS} film reels remaining`}
               >
                 {Array.from({ length: MAX_TOKENS }).map((_, idx) => {
@@ -1008,14 +1021,14 @@ export default function InterrogationRoom({
                           ? `Film Reel #${idx + 1} (Available)`
                           : `Film Reel #${idx + 1} (Spent)`
                       }
-                      className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                      className={`w-6 h-6 min-[375px]:w-7 min-[375px]:h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                         isActive
                           ? "border-censor-gold bg-censor-gold/15 text-censor-gold shadow-[0_0_8px_rgba(212,155,53,0.3)] scale-100"
                           : "border-booth-700 bg-booth-950 text-booth-600 opacity-45 scale-90"
                       }`}
                     >
                       <Disc3
-                        className={`w-4 h-4 ${
+                        className={`w-3.5 h-3.5 min-[375px]:w-4 min-[375px]:h-4 ${
                           isActive && isLoading && idx === tokensLeft - 1
                             ? "animate-reel-spin"
                             : ""
@@ -1031,45 +1044,52 @@ export default function InterrogationRoom({
       </header>
 
       {/* MAIN 2-COLUMN WORKSPACE: 3-Witness Interrogation Bench (Left) + Press Clippings Column (Right) */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-5 py-4 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-2.5 sm:px-5 py-2.5 sm:py-4 grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-stretch">
         {/* LEFT COLUMN (8 cols) */}
-        <div className="lg:col-span-8 flex flex-col gap-3 min-w-0">
+        <div className="lg:col-span-8 flex flex-col gap-2.5 sm:gap-3 min-w-0">
           {/* LIVE 3-WITNESS BENCH BAR */}
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
             {PERSONA_LIST.map((p) => {
               const isOnMic = activeSpeakerIds.has(p.id);
               const isHeckling = lastPanelTurn?.heckler === p.id;
+              const shortName =
+                p.id === "relangi"
+                  ? "Relangi"
+                  : p.id === "gajala"
+                  ? "Gajala"
+                  : "Pandey";
               return (
                 <div
                   key={p.id}
-                  className={`flex items-center gap-2 px-2.5 py-2 rounded-sm border transition-all ${
+                  className={`flex items-center gap-1.5 sm:gap-2 px-1.5 py-1.5 sm:px-2.5 sm:py-2 rounded-sm border transition-all min-w-0 ${
                     isOnMic
                       ? "bg-booth-800 border-censor-gold shadow-[0_0_12px_rgba(212,155,53,0.22)]"
                       : "bg-booth-900/75 border-booth-700/80 opacity-80"
                   }`}
                 >
                   <div
-                    className="w-8 h-8 rounded-sm font-display font-black text-xs flex items-center justify-center text-parchment-50 shrink-0 border border-parchment-200/30"
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-sm font-display font-black text-[11px] sm:text-xs flex items-center justify-center text-parchment-50 shrink-0 border border-parchment-200/30"
                     style={{ backgroundColor: p.accentColor }}
                   >
                     {p.monogram}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-display font-bold text-xs text-parchment-100 truncate">
-                      {p.name}
+                    <p className="font-display font-bold text-[11px] sm:text-xs text-parchment-100 truncate">
+                      <span className="sm:hidden">{shortName}</span>
+                      <span className="hidden sm:inline">{p.name}</span>
                     </p>
-                    <p className="font-typewriter text-[9px] uppercase tracking-wider flex items-center gap-1 text-parchment-300/75 truncate">
+                    <p className="font-typewriter text-[8px] sm:text-[9px] uppercase tracking-wider flex items-center gap-0.5 sm:gap-1 text-parchment-300/75 truncate">
                       {isOnMic ? (
                         <>
                           <Mic className="w-2.5 h-2.5 text-censor-gold shrink-0" />
                           <span className="text-censor-gold font-bold">
-                            TESTIFIED
+                            ON MIC
                           </span>
                         </>
                       ) : isHeckling ? (
-                        <span>BENCH HECKLE</span>
+                        <span>HECKLE</span>
                       ) : (
-                        <span>ON BENCH</span>
+                        <span>BENCH</span>
                       )}
                     </p>
                   </div>
@@ -1079,7 +1099,7 @@ export default function InterrogationRoom({
           </div>
 
           {/* Chat History Container */}
-          <div className="flex-1 min-h-[320px] max-h-[calc(100vh-425px)] overflow-y-auto custom-scrollbar bg-booth-900/65 border border-booth-700/80 rounded-sm p-3.5 sm:p-5 space-y-3.5 shadow-inner">
+          <div className="flex-1 min-h-[240px] max-h-[48dvh] min-[390px]:max-h-[54dvh] sm:max-h-[58dvh] lg:max-h-[calc(100vh-425px)] overflow-y-auto custom-scrollbar bg-booth-900/65 border border-booth-700/80 rounded-sm p-2.5 sm:p-5 space-y-3 sm:space-y-3.5 shadow-inner">
             {messages.map((msg) => {
               if (msg.sender === "system") {
                 const sysStyle = msg.isContradictionBanner
@@ -1212,7 +1232,7 @@ export default function InterrogationRoom({
           </div>
 
           {/* BOTTOM CONTROLS DOCK */}
-          <section className="bg-booth-900/95 border border-booth-700 rounded-sm p-3 sm:p-4 space-y-3 shadow-2xl">
+          <section className="bg-booth-900/95 border border-booth-700 rounded-sm p-2.5 sm:p-4 pb-safe space-y-2.5 sm:space-y-3 shadow-2xl">
             {/* TARGETED OBJECTION! ACCUSE-THE-LIAR BAR */}
             {accusePickerOpen && lastPanelTurn && !objectionUsed && (
               <div className="bg-red-950/85 border-2 border-red-400 p-3 rounded-sm animate-fade-up">
@@ -1268,23 +1288,28 @@ export default function InterrogationRoom({
               </div>
             )}
 
-            {/* 3 Quick-Tap Tactical Question Chips */}
+            {/* 3 Quick-Tap Tactical Question Chips (Swipeable 1-row strip on mobile, wrapped on desktop) */}
             {tokensLeft > 0 && !gameOutcome && activeChips.length > 0 && (
               <div>
-                <div className="flex items-center gap-1.5 mb-2">
-                  <Sparkles className="w-3.5 h-3.5 text-censor-gold" />
-                  <span className="font-typewriter text-[10px] uppercase tracking-widest text-parchment-300/80">
-                    Quick-Tap Tactical Questions
+                <div className="flex items-center justify-between gap-1.5 mb-1.5 sm:mb-2">
+                  <div className="flex items-center gap-1.5">
+                    <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-censor-gold" />
+                    <span className="font-typewriter text-[9px] sm:text-[10px] uppercase tracking-widest text-parchment-300/80">
+                      Quick-Tap Questions
+                    </span>
+                  </div>
+                  <span className="sm:hidden font-typewriter text-[9px] text-parchment-300/50">
+                    Swipe →
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-nowrap sm:flex-wrap overflow-x-auto no-scrollbar gap-1.5 sm:gap-2 pb-0.5">
                   {activeChips.map((chip) => (
                     <button
                       key={chip}
                       type="button"
                       disabled={!canAskQuestion}
                       onClick={() => handleAskQuestion(chip)}
-                      className="px-3 py-1.5 rounded-sm bg-booth-800 hover:bg-booth-700 border border-censor-gold/40 hover:border-censor-gold text-parchment-100 font-sans text-xs transition-all disabled:opacity-40 text-left"
+                      className="shrink-0 sm:shrink px-2.5 sm:px-3 py-1.5 rounded-sm bg-booth-800 hover:bg-booth-700 border border-censor-gold/40 hover:border-censor-gold text-parchment-100 font-sans text-[11px] sm:text-xs transition-all disabled:opacity-40 text-left whitespace-nowrap sm:whitespace-normal"
                     >
                       &ldquo;{chip}&rdquo;
                     </button>
@@ -1336,13 +1361,13 @@ export default function InterrogationRoom({
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   disabled={!canAskQuestion}
-                  placeholder="Interrogate the 3 witnesses (cast, crew, year, awards, hype)..."
-                  className="flex-1 bg-booth-950 border border-booth-600 focus:border-censor-gold focus:outline-none focus:ring-1 focus:ring-censor-gold/50 rounded-sm px-3.5 py-2.5 text-sm text-parchment-50 placeholder:text-parchment-300/40 disabled:opacity-50"
+                  placeholder="Ask cast, crew, year, awards..."
+                  className="flex-1 min-w-0 bg-booth-950 border border-booth-600 focus:border-censor-gold focus:outline-none focus:ring-1 focus:ring-censor-gold/50 rounded-sm px-3 sm:px-3.5 py-2.5 text-base sm:text-sm text-parchment-50 placeholder:text-parchment-300/40 disabled:opacity-50"
                 />
                 <button
                   type="submit"
                   disabled={!canAskQuestion || !input.trim()}
-                  className="px-4 sm:px-5 bg-parchment-100 hover:bg-parchment-50 text-censor-ink font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider rounded-sm border-2 border-censor-gold inline-flex items-center gap-2 transition-colors disabled:opacity-40"
+                  className="px-3.5 sm:px-5 bg-parchment-100 hover:bg-parchment-50 text-censor-ink font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider rounded-sm border-2 border-censor-gold inline-flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-40 shrink-0"
                 >
                   <Send className="w-4 h-4" />
                   <span className="hidden sm:inline">Ask</span>
@@ -1351,25 +1376,26 @@ export default function InterrogationRoom({
             )}
 
             {/* Action Row: OBJECTION! (ABADDAM!) & DECLARE FINAL VERDICT */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-1 border-t border-booth-700/80">
+            <div className="grid grid-cols-2 sm:flex sm:items-center sm:justify-between gap-2 sm:gap-2.5 pt-1.5 border-t border-booth-700/80">
               <button
                 type="button"
                 onClick={() => setAccusePickerOpen((prev) => !prev)}
                 disabled={!canObject}
-                className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider border-2 transition-all ${
+                className={`inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2.5 rounded-sm font-typewriter font-bold text-[11px] min-[375px]:text-xs sm:text-sm uppercase tracking-wider border-2 transition-all ${
                   canObject
                     ? "bg-censor-crimson hover:bg-censor-red text-parchment-50 border-red-400 shadow-[0_0_16px_rgba(185,28,28,0.45)] cursor-pointer"
                     : "bg-booth-800 text-parchment-300/40 border-booth-700 cursor-not-allowed"
                 }`}
               >
-                <AlertOctagon className="w-4 h-4" />
-                <span>OBJECTION! (ABADDAM!)</span>
-                <span className="ml-1 px-1.5 py-0.5 text-[10px] rounded-[2px] bg-black/30">
-                  {objectionUsed ? "USED" : "1 LEFT"}
+                <AlertOctagon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+                <span className="sm:hidden">OBJECTION!</span>
+                <span className="hidden sm:inline">OBJECTION! (ABADDAM!)</span>
+                <span className="px-1 sm:px-1.5 py-0.5 text-[9px] sm:text-[10px] rounded-[2px] bg-black/30 shrink-0">
+                  {objectionUsed ? "0" : "1"}
                 </span>
               </button>
 
-              <div className="flex items-center justify-between sm:justify-end gap-2.5">
+              <div className="flex items-center justify-end gap-2.5">
                 <span className="font-typewriter text-[10px] text-parchment-300/65 hidden xl:inline">
                   Accuse liar = +2 Reels &amp; Upgrade • Wrong = -2 Reels &amp;
                   Downgrade
@@ -1381,10 +1407,11 @@ export default function InterrogationRoom({
                     setVerdictModalOpen(true);
                   }}
                   disabled={Boolean(gameOutcome)}
-                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm bg-booth-800 hover:bg-booth-700 text-censor-gold border-2 border-censor-gold/70 font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider transition-colors disabled:opacity-40"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2.5 rounded-sm bg-censor-gold sm:bg-booth-800 hover:bg-amber-400 sm:hover:bg-booth-700 text-booth-950 sm:text-censor-gold border-2 border-censor-gold sm:border-censor-gold/70 font-typewriter font-bold text-[11px] min-[375px]:text-xs sm:text-sm uppercase tracking-wider transition-colors disabled:opacity-40"
                 >
-                  <Gavel className="w-4 h-4" />
-                  <span>Declare Final Verdict</span>
+                  <Gavel className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+                  <span className="sm:hidden">Final Verdict</span>
+                  <span className="hidden sm:inline">Declare Final Verdict</span>
                 </button>
               </div>
             </div>
@@ -1400,16 +1427,16 @@ export default function InterrogationRoom({
       {/* MOBILE / TABLET PRESS HINTS DRAWER */}
       {mobileHintsOpen && (
         <div className="fixed inset-0 z-40 lg:hidden bg-black/75 backdrop-blur-sm flex justify-end">
-          <div className="w-full max-w-sm h-full bg-booth-900 border-l border-censor-gold/40 p-4 flex flex-col relative shadow-2xl">
+          <div className="w-[92vw] max-w-sm h-[100dvh] bg-booth-900 border-l border-censor-gold/40 p-3.5 sm:p-4 pb-safe flex flex-col relative shadow-2xl">
             <button
               type="button"
               onClick={() => setMobileHintsOpen(false)}
-              className="absolute top-3.5 right-3.5 p-1.5 rounded-sm bg-booth-800 hover:bg-booth-700 text-parchment-100"
+              className="absolute top-3 right-3 p-2 rounded-sm bg-booth-800 hover:bg-booth-700 text-parchment-100 z-10"
               aria-label="Close Press Clippings drawer"
             >
               <X className="w-4 h-4" />
             </button>
-            <div className="pt-2 h-full overflow-hidden">
+            <div className="pt-1 h-full overflow-hidden">
               {renderHintsColumnContent()}
             </div>
           </div>
@@ -1420,16 +1447,16 @@ export default function InterrogationRoom({
       {objectionBanner && (
         <div className="fixed inset-0 z-40 pointer-events-none flex items-center justify-center bg-black/45 backdrop-blur-[1px] p-4">
           <div
-            className={`animate-stamp-slam rubber-stamp border-[6px] px-6 sm:px-10 py-5 text-center shadow-2xl max-w-lg ${
+            className={`animate-stamp-slam rubber-stamp border-[5px] sm:border-[6px] px-4 sm:px-10 py-4 sm:py-5 text-center shadow-2xl max-w-[92vw] sm:max-w-lg ${
               objectionBanner.status === "caught"
                 ? "border-emerald-400 bg-emerald-950/95 text-emerald-100"
                 : "border-red-500 bg-red-950/95 text-red-100"
             }`}
           >
-            <div className="font-display font-black text-2xl sm:text-4xl tracking-wider">
+            <div className="font-display font-black text-xl min-[375px]:text-2xl sm:text-4xl tracking-wider">
               {objectionBanner.headline}
             </div>
-            <div className="font-typewriter text-xs sm:text-sm font-bold tracking-widest mt-2">
+            <div className="font-typewriter text-[11px] sm:text-sm font-bold tracking-wider sm:tracking-widest mt-2">
               {objectionBanner.subtext}
             </div>
           </div>
@@ -1439,16 +1466,16 @@ export default function InterrogationRoom({
       {/* GIANT RED "BANNED BY CENSOR BOARD" FULL-SCREEN SLAM */}
       {bannedSlamActive && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-xs p-4">
-          <div className="animate-stamp-slam rubber-stamp border-[8px] border-censor-red bg-parchment-50/95 text-censor-red px-6 sm:px-12 py-6 sm:py-8 text-center shadow-[0_0_80px_rgba(220,38,38,0.75)]">
-            <div className="font-typewriter text-xs sm:text-sm font-bold tracking-[0.28em]">
+          <div className="animate-stamp-slam rubber-stamp border-[6px] sm:border-[8px] border-censor-red bg-parchment-50/95 text-censor-red px-5 sm:px-12 py-5 sm:py-8 text-center shadow-[0_0_80px_rgba(220,38,38,0.75)] max-w-[92vw]">
+            <div className="font-typewriter text-[10px] sm:text-sm font-bold tracking-[0.2em] sm:tracking-[0.28em]">
               CENTRAL BOARD OF FILM CERTIFICATION
             </div>
-            <div className="font-display font-black text-3xl sm:text-5xl md:text-6xl tracking-wider mt-1 leading-none">
+            <div className="font-display font-black text-2xl min-[375px]:text-3xl sm:text-5xl md:text-6xl tracking-wider mt-1 leading-none">
               BANNED BY
               <br />
               CENSOR BOARD
             </div>
-            <div className="font-telugu text-base sm:text-xl font-extrabold mt-2">
+            <div className="font-telugu text-sm sm:text-xl font-extrabold mt-2">
               సెన్సార్ బోర్డ్ నిషేధం • UTTER FLOP!
             </div>
           </div>
@@ -1458,7 +1485,7 @@ export default function InterrogationRoom({
       {/* FINAL VERDICT MODAL / DRAWER (FUZZY MATCHING VIA FUSE.JS) */}
       {verdictModalOpen && !gameOutcome && (
         <div className="fixed inset-0 z-40 bg-black/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
-          <div className="w-full max-w-lg cbfc-paper cbfc-frame text-censor-ink rounded-t-md sm:rounded-sm p-5 sm:p-7 relative animate-fade-up">
+          <div className="w-full max-w-lg max-h-[90dvh] overflow-y-auto cbfc-paper cbfc-frame text-censor-ink rounded-t-md sm:rounded-sm p-4 sm:p-7 pb-safe relative animate-fade-up">
             <button
               type="button"
               onClick={() => setVerdictModalOpen(false)}

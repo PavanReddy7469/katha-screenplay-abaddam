@@ -55,12 +55,12 @@ export default function CensorSplash({
   };
 
   return (
-    <main className="min-h-screen w-full screening-room-bg flex flex-col items-center justify-center p-3 sm:p-6 md:p-8 relative overflow-hidden">
-      <div className="fixed top-0 inset-x-0 h-3 sprocket-strip opacity-70 pointer-events-none" />
-      <div className="fixed bottom-0 inset-x-0 h-3 sprocket-strip opacity-70 pointer-events-none" />
+    <main className="min-h-[100dvh] w-full screening-room-bg flex flex-col items-center justify-center p-2.5 min-[375px]:p-3.5 sm:p-6 md:p-8 relative overflow-x-hidden">
+      <div className="fixed top-0 inset-x-0 h-2.5 sm:h-3 sprocket-strip opacity-70 pointer-events-none" />
+      <div className="fixed bottom-0 inset-x-0 h-2.5 sm:h-3 sprocket-strip opacity-70 pointer-events-none" />
 
       <section
-        className={`relative w-full max-w-4xl cbfc-paper cbfc-frame text-censor-ink rounded-sm p-5 sm:p-8 md:p-10 transition-transform ${
+        className={`relative w-full max-w-4xl cbfc-paper cbfc-frame text-censor-ink rounded-sm p-4 min-[375px]:p-5 sm:p-8 md:p-10 transition-transform ${
           isSlamming ? "animate-screen-shake" : ""
         }`}
       >
@@ -218,17 +218,17 @@ export default function CensorSplash({
         </div>
 
         {/* VINTAGE TITLE CARD */}
-        <div className="relative z-10 text-center py-5 sm:py-6 border-b-2 border-censor-ink/75">
-          <p className="font-telugu text-lg sm:text-2xl font-extrabold text-censor-crimson tracking-wide mb-1.5">
+        <div className="relative z-10 text-center py-4 sm:py-6 border-b-2 border-censor-ink/75">
+          <p className="font-telugu text-base min-[375px]:text-lg sm:text-2xl font-extrabold text-censor-crimson tracking-wide mb-1">
             కథ • స్క్రీన్ ప్లే • అబద్ధం : మీరే!
           </p>
-          <h1 className="font-display font-black text-2xl sm:text-4xl md:text-[2.65rem] leading-[1.08] tracking-tight text-censor-ink uppercase">
+          <h1 className="font-display font-black text-[1.35rem] min-[375px]:text-2xl sm:text-4xl md:text-[2.65rem] leading-[1.1] tracking-tight text-censor-ink uppercase break-words">
             KATHA • SCREENPLAY • ABADDAM
-            <span className="block text-censor-red mt-1 text-xl sm:text-3xl tracking-[0.12em]">
+            <span className="block text-censor-red mt-1 text-lg min-[375px]:text-xl sm:text-3xl tracking-[0.12em]">
               : MEERE!
             </span>
           </h1>
-          <p className="mt-2.5 font-typewriter text-xs sm:text-sm text-censor-ink/80 max-w-2xl mx-auto">
+          <p className="mt-2 font-typewriter text-[11px] min-[375px]:text-xs sm:text-sm text-censor-ink/80 max-w-2xl mx-auto leading-relaxed">
             Interrogate <strong>all 3 Tollywood legends together</strong> in{" "}
             <strong className="underline decoration-censor-red decoration-2">
               8 Yes/No Questions
@@ -343,9 +343,9 @@ export default function CensorSplash({
             type="button"
             onClick={handleEnter}
             disabled={isSlamming}
-            className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-censor-crimson hover:bg-censor-red text-parchment-50 font-typewriter font-bold text-sm sm:text-base tracking-[0.14em] uppercase border-[3px] border-censor-ink shadow-[4px_4px_0px_#261B12] hover:shadow-[2px_2px_0px_#261B12] hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all disabled:opacity-90"
+            className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3.5 bg-censor-crimson hover:bg-censor-red text-parchment-50 font-typewriter font-bold text-xs min-[375px]:text-sm sm:text-base tracking-[0.12em] uppercase border-[3px] border-censor-ink shadow-[4px_4px_0px_#261B12] hover:shadow-[2px_2px_0px_#261B12] hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all disabled:opacity-90"
           >
-            <Stamp className="w-5 h-5 group-hover:-rotate-12 transition-transform" />
+            <Stamp className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-rotate-12 transition-transform shrink-0" />
             <span>
               {isSlamming ? "STAMPING ENTRY..." : "ENTER SCREENING ROOM"}
             </span>
@@ -354,15 +354,15 @@ export default function CensorSplash({
 
         {/* RUBBER STAMP SLAM OVERLAY ANIMATION */}
         {isSlamming && (
-          <div className="absolute inset-0 z-30 flex items-center justify-center bg-parchment-100/35 backdrop-blur-[1px] pointer-events-none">
-            <div className="animate-stamp-slam rubber-stamp border-[6px] border-censor-red text-censor-red bg-parchment-50/90 px-6 sm:px-10 py-4 text-center shadow-2xl">
-              <div className="font-typewriter text-xs sm:text-sm font-bold tracking-[0.28em]">
+          <div className="absolute inset-0 z-30 flex items-center justify-center bg-parchment-100/35 backdrop-blur-[1px] pointer-events-none p-4">
+            <div className="animate-stamp-slam rubber-stamp border-[5px] sm:border-[6px] border-censor-red text-censor-red bg-parchment-50/90 px-4 min-[375px]:px-6 sm:px-10 py-3 sm:py-4 text-center shadow-2xl max-w-[90vw]">
+              <div className="font-typewriter text-[10px] sm:text-sm font-bold tracking-[0.22em]">
                 CBFC HYDERABAD • U/A
               </div>
-              <div className="font-display font-black text-2xl sm:text-4xl tracking-wider mt-1">
+              <div className="font-display font-black text-xl min-[375px]:text-2xl sm:text-4xl tracking-wider mt-1">
                 PANEL ASSEMBLED
               </div>
-              <div className="font-telugu text-sm sm:text-base font-bold mt-1">
+              <div className="font-telugu text-xs sm:text-base font-bold mt-1">
                 విచారణ ప్రారంభం!
               </div>
             </div>

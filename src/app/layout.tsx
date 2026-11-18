@@ -1,5 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: "#0E0B09",
+};
 
 export const metadata: Metadata = {
   title: "Katha, Screenplay, Abaddam: Meere! | CBFC Telugu Cinema Interrogation",
@@ -8,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Katha, Screenplay, Abaddam: Meere!",
     description:
-      "Interrogate Relangi Mavayya, Gajala, or Kill Bill Pandey in 8 Yes/No questions to guess the secret Telugu movie!",
+      "Interrogate Relangi Mavayya, Gajala, and Kill Bill Pandey together in 8 Yes/No questions to guess the secret Telugu movie!",
     url: "https://katha-screenplay-abaddam.vercel.app",
     siteName: "Katha, Screenplay, Abaddam: Meere!",
     type: "website",
@@ -34,7 +42,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-sans min-h-screen overflow-x-hidden">
+      <body className="font-sans min-h-[100dvh] overflow-x-hidden touch-manipulation">
         {children}
       </body>
     </html>

@@ -115,8 +115,8 @@ export default function StatsCalendarModal({
   const isSelectedFuture = selectedDayKey > todayKey;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
-      <div className="w-full max-w-2xl my-auto cbfc-paper cbfc-frame text-censor-ink rounded-sm p-5 sm:p-7 relative animate-fade-up">
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-start sm:items-center justify-center p-2.5 sm:p-5 overflow-y-auto">
+      <div className="w-full max-w-2xl my-auto max-h-[94dvh] overflow-y-auto cbfc-paper cbfc-frame text-censor-ink rounded-sm p-4 sm:p-7 relative animate-fade-up">
         {/* Close Button */}
         <button
           type="button"
@@ -140,31 +140,32 @@ export default function StatsCalendarModal({
         </div>
 
         {/* Tab Switcher */}
-        <div className="grid grid-cols-2 gap-2 mb-5">
+        <div className="grid grid-cols-2 gap-1.5 sm:gap-2 mb-4 sm:mb-5">
           <button
             type="button"
             onClick={() => setTab("stats")}
-            className={`py-2.5 px-3 rounded-sm font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider border-2 inline-flex items-center justify-center gap-2 transition-all ${
+            className={`py-2.5 px-2 sm:px-3 rounded-sm font-typewriter font-bold text-[11px] min-[375px]:text-xs sm:text-sm uppercase tracking-wider border-2 inline-flex items-center justify-center gap-1.5 sm:gap-2 transition-all ${
               tab === "stats"
                 ? "bg-censor-ink text-parchment-50 border-censor-ink shadow-sm"
                 : "bg-parchment-200/70 text-censor-ink border-censor-ink/40 hover:border-censor-ink"
             }`}
           >
-            <BarChart3 className="w-4 h-4" />
-            <span>Officer Stats</span>
+            <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+            <span>Stats</span>
           </button>
 
           <button
             type="button"
             onClick={() => setTab("calendar")}
-            className={`py-2.5 px-3 rounded-sm font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider border-2 inline-flex items-center justify-center gap-2 transition-all ${
+            className={`py-2.5 px-2 sm:px-3 rounded-sm font-typewriter font-bold text-[11px] min-[375px]:text-xs sm:text-sm uppercase tracking-wider border-2 inline-flex items-center justify-center gap-1.5 sm:gap-2 transition-all ${
               tab === "calendar"
                 ? "bg-censor-ink text-parchment-50 border-censor-ink shadow-sm"
                 : "bg-parchment-200/70 text-censor-ink border-censor-ink/40 hover:border-censor-ink"
             }`}
           >
-            <CalendarDays className="w-4 h-4" />
-            <span>Previous Days Calendar</span>
+            <CalendarDays className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+            <span className="sm:hidden">Archive</span>
+            <span className="hidden sm:inline">Previous Days Calendar</span>
           </button>
         </div>
 
@@ -361,23 +362,24 @@ export default function StatsCalendarModal({
             </div>
 
             {/* Calendar Grid */}
-            <div className="border-2 border-censor-ink/60 bg-parchment-50/80 p-3 rounded-sm">
+            <div className="border-2 border-censor-ink/60 bg-parchment-50/80 p-2 sm:p-3 rounded-sm">
               {/* Weekday Headers */}
-              <div className="grid grid-cols-7 gap-1.5 mb-2 text-center">
+              <div className="grid grid-cols-7 gap-1 sm:gap-1.5 mb-1.5 sm:mb-2 text-center">
                 {WEEKDAYS.map((day) => (
                   <div
                     key={day}
-                    className="font-typewriter text-[10px] font-bold uppercase text-censor-ink/65"
+                    className="font-typewriter text-[9px] sm:text-[10px] font-bold uppercase text-censor-ink/65"
                   >
-                    {day}
+                    {day.slice(0, 2)}
+                    <span className="hidden min-[375px]:inline">{day.slice(2)}</span>
                   </div>
                 ))}
               </div>
 
               {/* Day Cells */}
-              <div className="grid grid-cols-7 gap-1.5">
+              <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
                 {Array.from({ length: startWeekday }).map((_, i) => (
-                  <div key={`empty-${i}`} className="h-12 sm:h-14" />
+                  <div key={`empty-${i}`} className="h-10 min-[375px]:h-12 sm:h-14" />
                 ))}
 
                 {Array.from({ length: daysInMonth }).map((_, idx) => {
@@ -409,34 +411,34 @@ export default function StatsCalendarModal({
                       type="button"
                       disabled={isFuture}
                       onClick={() => setSelectedDayKey(cellKey)}
-                      className={`h-12 sm:h-14 rounded-[2px] p-1 flex flex-col items-center justify-between transition-all relative ${cellClasses} ${
+                      className={`h-10 min-[375px]:h-12 sm:h-14 rounded-[2px] p-0.5 sm:p-1 flex flex-col items-center justify-between transition-all relative ${cellClasses} ${
                         isSelected
                           ? "ring-2 ring-censor-ink ring-offset-1 ring-offset-parchment-50 scale-[1.03] z-10"
                           : ""
                       } ${isToday && !isSelected ? "ring-2 ring-censor-gold" : ""}`}
                     >
-                      <span className="font-typewriter text-xs font-bold leading-none">
+                      <span className="font-typewriter text-[11px] sm:text-xs font-bold leading-none">
                         {dayNum}
                       </span>
 
                       {isFuture ? (
-                        <Lock className="w-3 h-3 opacity-50" />
+                        <Lock className="w-2.5 h-2.5 sm:w-3 sm:h-3 opacity-50" />
                       ) : record?.outcome === "won" ? (
-                        <span className="inline-flex items-center gap-0.5 font-typewriter text-[9px] font-bold text-censor-teal">
-                          <CheckCircle2 className="w-3 h-3" />
+                        <span className="inline-flex items-center gap-0.5 font-typewriter text-[8px] sm:text-[9px] font-bold text-censor-teal">
+                          <CheckCircle2 className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                           <span>{record.questionsUsed}R</span>
                         </span>
                       ) : record?.outcome === "lost" ? (
-                        <span className="inline-flex items-center gap-0.5 font-typewriter text-[9px] font-bold text-censor-red">
-                          <XCircle className="w-3 h-3" />
-                          <span>BAN</span>
+                        <span className="inline-flex items-center gap-0.5 font-typewriter text-[8px] sm:text-[9px] font-bold text-censor-red">
+                          <XCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                          <span className="hidden min-[375px]:inline">BAN</span>
                         </span>
                       ) : isToday ? (
-                        <span className="font-typewriter text-[8px] font-bold uppercase px-1 bg-censor-gold text-booth-950 rounded-[1px]">
-                          TODAY
+                        <span className="font-typewriter text-[7px] sm:text-[8px] font-bold uppercase px-0.5 sm:px-1 bg-censor-gold text-booth-950 rounded-[1px]">
+                          NOW
                         </span>
                       ) : (
-                        <span className="font-typewriter text-[8px] uppercase text-censor-ink/45">
+                        <span className="font-typewriter text-[7px] sm:text-[8px] uppercase text-censor-ink/45">
                           OPEN
                         </span>
                       )}
