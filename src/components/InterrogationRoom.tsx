@@ -114,16 +114,61 @@ const RATING_META: Record<
 
 const TACTICAL_CHIP_POOL = [
   "Did it release after 2015?",
+  "Did it release before 2010?",
+  "Was it released in the 2020s?",
+  "Was it released between 2000 and 2012?",
   "Is Brahmanandam in it?",
-  "Is there a faction or village backdrop?",
-  "Did S.S. Rajamouli direct it?",
-  "Did it win a National Film Award?",
-  "Is it a period or historical movie?",
-  "Was Peter Hein the stunt choreographer?",
-  "Did M.M. Keeravani compose the music?",
   "Is Prakash Raj in this movie?",
-  "Does it feature a surprise cameo or remix song?",
+  "Does Sunil act in this film?",
+  "Is Rao Ramesh part of the cast?",
+  "Does Ali have a comedy role in it?",
+  "Is there a faction or village backdrop?",
+  "Is it a period or historical movie?",
+  "Does it have a strong family drama angle?",
+  "Is it primarily a romantic comedy?",
+  "Does the story involve fantasy or sci-fi elements?",
+  "Is the hero a cop or working undercover?",
+  "Does the plot involve a college backdrop?",
+  "Is it a crime or gangster thriller?",
+  "Did S.S. Rajamouli direct it?",
+  "Did Trivikram Srinivas direct it?",
+  "Did Sukumar direct this film?",
+  "Did Devi Sri Prasad compose the music?",
+  "Did M.M. Keeravani score the music?",
+  "Did Mani Sharma compose the soundtrack?",
+  "Did Thaman S compose the music?",
+  "Is Mahesh Babu the hero?",
+  "Is Ram Charan in the lead?",
+  "Is Allu Arjun the hero?",
+  "Is Prabhas the lead actor?",
+  "Is Nani the hero of this film?",
+  "Did it win a National Film Award?",
+  "Was it a Pan-India release?",
+  "Was it later remade in Hindi?",
+  "Does it feature a famous special cameo?",
+  "Does it have a sequel or part 2?",
 ];
+
+// Deterministic daily shuffle seeded ONLY by dateKey (completely independent of the movie!)
+function getDailyChipDeck(dateKey: string): string[] {
+  let seed = 2166136261;
+  for (let i = 0; i < dateKey.length; i++) {
+    seed ^= dateKey.charCodeAt(i);
+    seed = Math.imul(seed, 16777619) >>> 0;
+  }
+
+  const nextRand = () => {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    return seed / 4294967296;
+  };
+
+  const deck = [...TACTICAL_CHIP_POOL];
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(nextRand() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  return deck;
+}
 
 interface PanelStatement {
   personaId: PersonaId;
@@ -412,12 +457,17 @@ export default function InterrogationRoom({
 
   const ratingInfo = RATING_META[currentRating];
 
+  const dailyChipDeck = useMemo(
+    () => getDailyChipDeck(activeDateKey),
+    [activeDateKey]
+  );
+
   const activeChips = useMemo(() => {
-    return TACTICAL_CHIP_POOL.filter((chip) => !usedChips.includes(chip)).slice(
+    return dailyChipDeck.filter((chip) => !usedChips.includes(chip)).slice(
       0,
       3
     );
-  }, [usedChips]);
+  }, [dailyChipDeck, usedChips]);
 
   const unlockedHintsCount = useMemo(
     () => Math.min(pressHints.length, wrongAnswerCount),
