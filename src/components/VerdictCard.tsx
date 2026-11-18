@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Movie, PERSONA_LIST, PERSONAS, PersonaId } from "@/lib/personas";
 import { formatReadableDate, PlayerStats } from "@/lib/gameStats";
+import MidnightCountdown from "./MidnightCountdown";
 
 export type CensorRating = "U" | "U/A" | "A" | "S" | "BANNED";
 
@@ -370,9 +371,10 @@ export default function VerdictCard({
           </button>
         </div>
 
-        <p className="mt-3 text-center font-typewriter text-[10px] text-censor-ink/60">
-          katha-screenplay-abaddam.vercel.app
-        </p>
+        <div className="mt-3 flex flex-col sm:flex-row items-center justify-between gap-1.5 text-center font-typewriter text-[10px] text-censor-ink/70 pt-2 border-t border-censor-ink/20">
+          <MidnightCountdown compact />
+          <span>katha-screenplay-abaddam.vercel.app</span>
+        </div>
       </div>
     </div>
   );

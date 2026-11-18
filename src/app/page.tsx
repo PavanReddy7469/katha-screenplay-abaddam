@@ -1,62 +1,68 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import defaultMoviesData from "@/data/movies.json";
-import { Movie } from "@/lib/personas";
+import React, { useCallback, useEffect, useState } from "react";
+import { PressHint } from "@/lib/personas";
 import {
   createEmptyStats,
   DailyRecord,
   getLocalDateKey,
-  getMovieForDate,
   loadPlayerStats,
   PlayerStats,
   recordGameOutcome,
   resetPlayerStats,
 } from "@/lib/gameStats";
 import CensorSplash from "@/components/CensorSplash";
-import InterrogationRoom from "@/components/InterrogationRoom";
+import InterrogationRoom, { CaseFile } from "@/components/InterrogationRoom";
 import StatsCalendarModal from "@/components/StatsCalendarModal";
-
-const INITIAL_MOVIES = defaultMoviesData as Movie[];
 
 export default function HomePage() {
   const [stage, setStage] = useState<"splash" | "interrogation">("splash");
-  const [moviesList, setMoviesList] = useState<Movie[]>(INITIAL_MOVIES);
   const [activeDateKey, setActiveDateKey] = useState<string>(() =>
     getLocalDateKey()
   );
-  const [currentMovie, setCurrentMovie] = useState<Movie>(() =>
-    getMovieForDate(getLocalDateKey(), INITIAL_MOVIES)
-  );
+  const [caseFile, setCaseFile] = useState<CaseFile | null>(null);
+  const [vaultCount, setVaultCount] = useState<number>(18);
+  const [loadingCase, setLoadingCase] = useState<boolean>(true);
   const [gameKey, setGameKey] = useState<number>(0);
 
   const [stats, setStats] = useState<PlayerStats>(() => createEmptyStats());
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalTab, setModalTab] = useState<"stats" | "calendar">("stats");
 
-  // Load stats from localStorage
+  const fetchCaseForDate = useCallback(async (dateKey: string) => {
+    setLoadingCase(true);
+    try {
+      const res = await fetch(
+        `/api/daily-case?date=${encodeURIComponent(dateKey)}`,
+        { cache: "no-store" }
+      );
+      if (res.status === 403) {
+        const errData = (await res.json()) as { todayIst?: string };
+        if (errData.todayIst && errData.todayIst !== dateKey) {
+          setActiveDateKey(errData.todayIst);
+          return;
+        }
+      }
+      if (!res.ok) return;
+      const data = (await res.json()) as {
+        dateKey: string;
+        vaultCount: number;
+        caseFile: { movieId: string; pressHints: PressHint[] };
+      };
+      setCaseFile(data.caseFile);
+      setVaultCount(data.vaultCount);
+    } finally {
+      setLoadingCase(false);
+    }
+  }, []);
+
   useEffect(() => {
     setStats(loadPlayerStats());
   }, []);
 
-  // Fetch dynamic movies from server (includes newly added admin movies)
   useEffect(() => {
-    async function fetchMovies() {
-      try {
-        const res = await fetch("/api/movies");
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data.movies) && data.movies.length > 0) {
-            setMoviesList(data.movies);
-            setCurrentMovie(getMovieForDate(activeDateKey, data.movies));
-          }
-        }
-      } catch (err) {
-        console.warn("Could not fetch dynamic movies, using bundled set:", err);
-      }
-    }
-    fetchMovies();
-  }, [activeDateKey]);
+    fetchCaseForDate(activeDateKey);
+  }, [activeDateKey, fetchCaseForDate]);
 
   const openStatsModal = () => {
     setModalTab("stats");
@@ -69,28 +75,30 @@ export default function HomePage() {
   };
 
   const handleEnterRoom = () => {
-    setCurrentMovie(getMovieForDate(activeDateKey, moviesList));
+    if (!caseFile) return;
     setGameKey((k) => k + 1);
     setStage("interrogation");
   };
 
   const handleSelectArchiveDate = (dateKey: string) => {
     setActiveDateKey(dateKey);
-    setCurrentMovie(getMovieForDate(dateKey, moviesList));
     setGameKey((k) => k + 1);
     setStage("interrogation");
   };
 
   const handlePlayAgain = () => {
-    setCurrentMovie(getMovieForDate(activeDateKey, moviesList));
     setGameKey((k) => k + 1);
   };
 
   const handleResetToToday = () => {
     const today = getLocalDateKey();
     setActiveDateKey(today);
-    setCurrentMovie(getMovieForDate(today, moviesList));
   };
+
+  const handleMidnightRollover = useCallback((newIstDateKey: string) => {
+    setActiveDateKey(newIstDateKey);
+    setGameKey((k) => k + 1);
+  }, []);
 
   const handleGameComplete = (record: Omit<DailyRecord, "playedAt">) => {
     setStats((prev) => recordGameOutcome(prev, record));
@@ -102,23 +110,24 @@ export default function HomePage() {
 
   return (
     <>
-      {stage === "splash" ? (
+      {stage === "splash" || !caseFile ? (
         <CensorSplash
           activeDateKey={activeDateKey}
+          vaultCount={vaultCount}
+          loadingCase={loadingCase || !caseFile}
           stats={stats}
-          vaultCount={moviesList.length}
           onEnterRoom={handleEnterRoom}
           onOpenStats={openStatsModal}
           onOpenCalendar={openCalendarModal}
           onResetToToday={handleResetToToday}
+          onMidnightRollover={handleMidnightRollover}
         />
       ) : (
         <InterrogationRoom
-          key={`${activeDateKey}-${gameKey}`}
-          movie={currentMovie}
+          key={`${activeDateKey}-${caseFile.movieId}-${gameKey}`}
+          caseFile={caseFile}
           activeDateKey={activeDateKey}
           stats={stats}
-          allMovies={moviesList}
           onGameComplete={handleGameComplete}
           onPlayAgain={handlePlayAgain}
           onReturnSplash={() => setStage("splash")}

@@ -1765,5 +1765,942 @@
         "unlockAfterReel": 4
       }
     ]
+  },
+  {
+    "id": "pandaga-chesko",
+    "featuredDate": "2026-11-19",
+    "title": "Pandaga Chesko",
+    "alternateSpellings": ["Pandaga Chesko", "Pandaga Chesuko", "Pandagachesko"],
+    "year": 2015,
+    "releaseMonth": "May 2015",
+    "hero": "Ram Pothineni",
+    "heroine": "Rakul Preet Singh",
+    "director": "Gopichand Malineni",
+    "music": "Thaman S",
+    "genre": "Action Comedy Family Entertainer",
+    "tropes": [
+      "Energetic NRI millionaire Karthik travels from Portugal to India to win back his love and reunite two feuding families",
+      "Rival industrialist and family patriarch factions clash over an old land feud",
+      "Features Brahmanandam as Weekend Venkat Rao, a hilarious comedy track in Europe and India",
+      "Two heroines: Rakul Preet Singh as Divya and Sonal Chauhan as Anushka",
+      "High-energy commercial masala songs and festive family comedy"
+    ],
+    "iconicProp": "Portugal vintage car & festive wedding banner",
+    "hint": "A fiery NRI millionaire returns home to unite feuding families—with Weekend Venkat Rao causing chaos.",
+    "fullCast": [
+      { "name": "Ram Pothineni", "role": "Lead Hero (Karthik)", "aliases": ["ram pothineni", "ram", "energetic star"] },
+      { "name": "Rakul Preet Singh", "role": "Lead Heroine (Divya)", "aliases": ["rakul", "rakul preet", "rakul preet singh"] },
+      { "name": "Sonal Chauhan", "role": "Second Heroine (Anushka)", "aliases": ["sonal chauhan", "sonal"] },
+      { "name": "Brahmanandam", "role": "Weekend Venkat Rao", "aliases": ["brahmanandam", "brahmi", "weekend venkat rao"] },
+      { "name": "Jagapathi Babu", "role": "Family Elder / Mentor", "aliases": ["jagapathi babu"] },
+      { "name": "Sai Kumar", "role": "Bhoopathi", "aliases": ["sai kumar", "saikumar"] },
+      { "name": "Sampath Raj", "role": "Main Villain (Bhupathi)", "aliases": ["sampath raj"] },
+      { "name": "Rao Ramesh", "role": "Karthik's Father", "aliases": ["rao ramesh"] },
+      { "name": "Vennela Kishore", "role": "Konda (Comedy Role)", "aliases": ["vennela kishore"] },
+      { "name": "Abhimanyu Singh", "role": "Shankar", "aliases": ["abhimanyu singh"] },
+      { "name": "Brahmaji", "role": "Supporting Role", "aliases": ["brahmaji"] }
+    ],
+    "fullCrew": [
+      { "name": "Gopichand Malineni", "department": "Director", "aliases": ["gopichand malineni"] },
+      { "name": "Thaman S", "department": "Music Director", "aliases": ["thaman", "thaman s", "ss thaman"] },
+      { "name": "Paruchuri Kireeti", "department": "Producer (United Movies)", "aliases": ["paruchuri kireeti", "united movies"] },
+      { "name": "Kona Venkat", "department": "Screenplay & Dialogues", "aliases": ["kona venkat"] },
+      { "name": "Arthur A. Wilson", "department": "Cinematographer (DOP)", "aliases": ["arthur a wilson"] },
+      { "name": "Gautham Raju", "department": "Film Editor", "aliases": ["gautham raju"] }
+    ],
+    "eraTrivia": [
+      "Released May 29, 2015 under United Movies and became a summer commercial hit for Ram Pothineni",
+      "Shot extensively in picturesque Portugal before moving to Hyderabad and Andhra Pradesh",
+      "Brahmanandam's eccentric 'Weekend Venkat Rao' comedy track became one of the film's biggest crowd-pleasers",
+      "Written by Kona Venkat & Veligonda Srinivas with peppy summer songs by Thaman S ('Ye Pilla Pilla', 'Chuda Sakagunnave')"
+    ],
+    "iconicMoments": [
+      "Brahmanandam's hilarious 'Weekend Venkat Rao' party-only philosophy",
+      "Energetic Ram Pothineni dance numbers shot in sunny Portugal streets",
+      "Kona Venkat-style family house comedy with Vennela Kishore and Rao Ramesh"
+    ],
+    "pressHints": [
+      {
+        "id": "pan-1",
+        "category": "EUROPEAN SHOOT",
+        "difficulty": "HARD",
+        "headline": "Filmed Lavish Opening Stretches Across Sunny Portugal",
+        "body": "Produced by Paruchuri Kireeti under United Movies with cinematography by Arthur A. Wilson, its opening act brought colorful Portuguese backdrops to May 2015 screens.",
+        "unlockAfterReel": 0
+      },
+      {
+        "id": "pan-2",
+        "category": "WRITING & MUSIC TEAM",
+        "difficulty": "MEDIUM",
+        "headline": "Kona Venkat Dialogues + Thaman's Peppy Summer Album",
+        "body": "Packed with commercial family laughs penned by Kona Venkat and lively mass tracks like 'Ye Pilla Pilla' scored by Thaman S.",
+        "unlockAfterReel": 1
+      },
+      {
+        "id": "pan-3",
+        "category": "COMEDY HIGHLIGHT",
+        "difficulty": "MEDIUM",
+        "headline": "Brahmanandam as 'Weekend Venkat Rao' Stole the Show!",
+        "body": "Featuring Jagapathi Babu, Sai Kumar, Rao Ramesh, Sampath Raj, and Vennela Kishore—anchored by Brahmanandam's riotous weekend-party comedy track.",
+        "unlockAfterReel": 2
+      },
+      {
+        "id": "pan-4",
+        "category": "CAST & DIRECTOR",
+        "difficulty": "WARM",
+        "headline": "Gopichand Malineni + Ram Pothineni + Rakul Preet + Sonal Chauhan",
+        "body": "Directed by Gopichand Malineni in May 2015, pairing Energetic Star Ram Pothineni opposite Rakul Preet Singh and Sonal Chauhan.",
+        "unlockAfterReel": 3
+      },
+      {
+        "id": "pan-5",
+        "category": "FESTIVE TITLE VIBE",
+        "difficulty": "EASY",
+        "headline": "A Title Literally Telling Everyone to 'Celebrate Like a Festival!'",
+        "body": "An energetic 2015 summer family entertainer whose Telugu title translates straight to 'Have a Festival / Go Celebrate!'",
+        "unlockAfterReel": 4
+      }
+    ]
+  },
+  {
+    "id": "dhee",
+    "featuredDate": "2026-11-20",
+    "title": "Dhee",
+    "alternateSpellings": ["Dhee", "Dhee 2007", "Dee"],
+    "year": 2007,
+    "releaseMonth": "April 2007",
+    "hero": "Vishnu Manchu",
+    "heroine": "Genelia D'Souza",
+    "director": "Srinu Vaitla",
+    "music": "Chakri",
+    "genre": "Action Comedy Entertainer",
+    "tropes": [
+      "Carefree young guy Babloo falls for Pooja, the fiercely guarded sister of dreaded local don Shankar Goud (Srihari)",
+      "Babloo gets hired inside Shankar Goud's own house while secretly romancing his sister",
+      "Features Brahmanandam's legendary 'Chari' comedy track—one of the funniest roles of his career!",
+      "Written by Kona Venkat & Gopi Mohan, pioneering Srinu Vaitla's signature comedy-action template",
+      "Sunil plays Babloo's witty sidekick Kaththi"
+    ],
+    "iconicProp": "Chari's terrified expression & Shankar Goud's gold chain",
+    "hint": "He sneaks right into a dreaded don's house to woo his sister—while poor 'Chari' takes all the slaps.",
+    "fullCast": [
+      { "name": "Vishnu Manchu", "role": "Lead Hero (Babloo)", "aliases": ["vishnu manchu", "manchu vishnu", "vishnu"] },
+      { "name": "Genelia D'Souza", "role": "Lead Heroine (Pooja)", "aliases": ["genelia", "genelia dsouza"] },
+      { "name": "Srihari", "role": "Shankar Goud (Don Brother)", "aliases": ["srihari"] },
+      { "name": "Brahmanandam", "role": "Chari (All-Time Iconic Comedy Role)", "aliases": ["brahmanandam", "brahmi", "chari"] },
+      { "name": "Sunil", "role": "Kaththi (Friend)", "aliases": ["sunil"] },
+      { "name": "Supreeth", "role": "Ballu (Rival Goon)", "aliases": ["supreeth"] },
+      { "name": "Jai Akash", "role": "Ajay", "aliases": ["jai akash"] },
+      { "name": "Chandra Mohan", "role": "Narayana Rao (Father)", "aliases": ["chandra mohan"] },
+      { "name": "Tanikella Bharani", "role": "Corporate Boss", "aliases": ["tanikella bharani"] },
+      { "name": "Master Bharath", "role": "Young Boy", "aliases": ["master bharath"] }
+    ],
+    "fullCrew": [
+      { "name": "Srinu Vaitla", "department": "Director & Screenplay", "aliases": ["srinu vaitla", "vaitla"] },
+      { "name": "Chakri", "department": "Music Director", "aliases": ["chakri"] },
+      { "name": "Mallidi Satyanarayana Reddy", "department": "Producer (Siri Venkateswara Films)", "aliases": ["mallidi satyanarayana reddy"] },
+      { "name": "Kona Venkat & Gopi Mohan", "department": "Story & Dialogue Writers", "aliases": ["kona venkat", "gopi mohan"] },
+      { "name": "Prasad Murella", "department": "Cinematographer (DOP)", "aliases": ["prasad murella"] },
+      { "name": "M.R. Varma", "department": "Film Editor", "aliases": ["mr varma"] }
+    ],
+    "eraTrivia": [
+      "Released April 13, 2007 and became a sensational blockbuster that birthed Srinu Vaitla's famous 'Brahmanandam bakra comedy' template for the next decade!",
+      "Remade across India in Tamil ('Mirattal'), Bengali ('Khokababu'), and Odia ('Tu Mo Girlfriend')",
+      "Brahmanandam's character 'Chari' is universally ranked among the top 5 Telugu comedy performances of the 21st century",
+      "Scored by late hitmaker Chakri with peppy songs like 'Kanupapallo' and 'Konnallu Koyila'"
+    ],
+    "iconicMoments": [
+      "Brahmanandam as 'Chari' getting hilariously trapped between Srihari's fury and Babloo's pranks",
+      "Srihari's deadpan Telangana don swagger as Shankar Goud",
+      "The iconic 'Evaru raa nuvvu?!' / 'Chari!' slapstick house comedy"
+    ],
+    "pressHints": [
+      {
+        "id": "dhe-1",
+        "category": "GENRE BLUEPRINT",
+        "difficulty": "HARD",
+        "headline": "Created the 'Bakra Comedy' Blueprint That Dominated Tollywood for a Decade",
+        "body": "Written by Kona Venkat & Gopi Mohan in April 2007, its runaway success inspired a whole era of Telugu action-comedies and spawned Tamil, Bengali, and Odia remakes.",
+        "unlockAfterReel": 0
+      },
+      {
+        "id": "dhe-2",
+        "category": "MUSIC & CREW",
+        "difficulty": "MEDIUM",
+        "headline": "Late Hitmaker Chakri's Music + Prasad Murella's Camera",
+        "body": "Produced under Siri Venkateswara Films, pairing Chakri's catchy 2007 tunes with lightning-fast slapstick editing by M.R. Varma.",
+        "unlockAfterReel": 1
+      },
+      {
+        "id": "dhe-3",
+        "category": "SUPPORTING LEGENDS",
+        "difficulty": "MEDIUM",
+        "headline": "Srihari's Fierce Telangana Don vs. Sunil & Chandra Mohan",
+        "body": "Srihari won roaring applause as an overprotective Hyderabadi mafia brother—sparring constantly with rival goon Supreeth and a mischievous house guest.",
+        "unlockAfterReel": 2
+      },
+      {
+        "id": "dhe-4",
+        "category": "LEAD PAIR & DIRECTOR",
+        "difficulty": "WARM",
+        "headline": "Srinu Vaitla + Vishnu Manchu + Genelia D'Souza",
+        "body": "Directed by Srinu Vaitla in 2007, marking Vishnu Manchu's biggest commercial blockbuster opposite bubbly Genelia D'Souza.",
+        "unlockAfterReel": 3
+      },
+      {
+        "id": "dhe-5",
+        "category": "IMMORTAL COMEDY TRACK",
+        "difficulty": "EASY",
+        "headline": "Brahmanandam's All-Time Legendary 'Chari!' Comedy Role",
+        "body": "Forever immortalized on Telugu meme pages for 'Chari' getting roasted inside Shankar Goud's house—with a crisp 4-letter Telugu title meaning 'Clash!'",
+        "unlockAfterReel": 4
+      }
+    ]
+  },
+  {
+    "id": "bindaas",
+    "featuredDate": "2026-11-21",
+    "title": "Bindaas",
+    "alternateSpellings": ["Bindaas", "Bindas", "Bindaas 2010"],
+    "year": 2010,
+    "releaseMonth": "February 2010",
+    "hero": "Manchu Manoj",
+    "heroine": "Sheena Shahabadi",
+    "director": "Veeru Potla",
+    "music": "Bobo Shashi",
+    "genre": "Action Comedy Family Entertainer",
+    "tropes": [
+      "Hyper-energetic guy Ajay infiltrates a fierce rival faction family to end a long-standing blood feud",
+      "Packed with non-stop Tollywood comedy legends: Brahmanandam, Sunil, M.S. Narayana, Vennela Kishore, and Master Bharath",
+      "Jayaprakash Reddy and Ahuti Prasad lead the two warring faction clans",
+      "Director Veeru Potla's debut feature film after writing superhit scripts like Nuvvostanante Nenoddantana",
+      "High-energy stunts and rapid-fire slapstick dialogue"
+    ],
+    "iconicProp": "Faction mansion jeep & Ajay's carefree grin",
+    "hint": "An unstoppable prankster crashes a Rayalaseema faction family—backed by an army of Tollywood's top comedians.",
+    "fullCast": [
+      { "name": "Manchu Manoj", "role": "Lead Hero (Ajay)", "aliases": ["manchu manoj", "manoj manchu", "manoj"] },
+      { "name": "Sheena Shahabadi", "role": "Lead Heroine (Girija)", "aliases": ["sheena shahabadi", "sheena"] },
+      { "name": "Brahmanandam", "role": "Parabrahmam", "aliases": ["brahmanandam", "brahmi"] },
+      { "name": "Sunil", "role": "Saravana", "aliases": ["sunil"] },
+      { "name": "Vennela Kishore", "role": "Muddu Krishna", "aliases": ["vennela kishore"] },
+      { "name": "M.S. Narayana", "role": "Comedy Supporting Role", "aliases": ["ms narayana", "m s narayana"] },
+      { "name": "Jayaprakash Reddy", "role": "Seshadri Naidu", "aliases": ["jayaprakash reddy", "jp"] },
+      { "name": "Ahuti Prasad", "role": "Mahendra Naidu", "aliases": ["ahuti prasad", "aahuthi prasad"] },
+      { "name": "Subbaraju", "role": "Rival Villain", "aliases": ["subbaraju"] },
+      { "name": "Telangana Sakuntala", "role": "Family Elder", "aliases": ["telangana sakuntala"] },
+      { "name": "Master Bharath", "role": "Kid Comedy Role", "aliases": ["master bharath"] }
+    ],
+    "fullCrew": [
+      { "name": "Veeru Potla", "department": "Debut Director & Writer", "aliases": ["veeru potla"] },
+      { "name": "Bobo Shashi", "department": "Music Director", "aliases": ["bobo shashi"] },
+      { "name": "Anil Sunkara", "department": "Producer (A.K. Entertainments)", "aliases": ["anil sunkara", "ak entertainments"] },
+      { "name": "Vetri", "department": "Cinematographer (DOP)", "aliases": ["vetri"] }
+    ],
+    "eraTrivia": [
+      "Released February 5, 2010 marking writer Veeru Potla's directorial debut and Anil Sunkara's maiden production under A.K. Entertainments!",
+      "Music composed by Bobo Shashi (including catchy tracks like 'Entamma Entamma' and 'Girija Girija')",
+      "Manchu Manoj won the Nandi Special Jury Award for his high-octane performance",
+      "Packed almost every top 2010 Telugu comedian—Brahmanandam, Sunil, M.S. Narayana, Vennela Kishore, and Master Bharath—into one chaotic faction comedy"
+    ],
+    "iconicMoments": [
+      "Manchu Manoj's relentless energy crashing Jayaprakash Reddy's stern faction mansion",
+      "Rapid-fire comedy clash featuring Brahmanandam, M.S. Narayana, Sunil, and Vennela Kishore",
+      "A hilarious wedding-chaos stretch filled with classic Telugu slapstick"
+    ],
+    "pressHints": [
+      {
+        "id": "bin-1",
+        "category": "DEBUT DIRECTOR & BANNER",
+        "difficulty": "HARD",
+        "headline": "Writer Veeru Potla's Directorial Debut & A.K. Entertainments' First Hit",
+        "body": "Released in early February 2010, this film launched producer Anil Sunkara's banner and scored music from composer Bobo Shashi.",
+        "unlockAfterReel": 0
+      },
+      {
+        "id": "bin-2",
+        "category": "NANDI RECOGNITION",
+        "difficulty": "MEDIUM",
+        "headline": "Earned Its Lead Actor a Nandi Special Jury Award!",
+        "body": "Praised in 2010 reviews for the hero's wild comic-action energy, winning him a Nandi Special Jury trophy.",
+        "unlockAfterReel": 1
+      },
+      {
+        "id": "bin-3",
+        "category": "COMEDY ALL-STAR CAST",
+        "difficulty": "MEDIUM",
+        "headline": "Brahmanandam + Sunil + M.S. Narayana + Vennela Kishore + JP Reddy",
+        "body": "Assembled an absurdly stacked comedy & faction ensemble including Ahuti Prasad, Telangana Sakuntala, Subbaraju, and Master Bharath.",
+        "unlockAfterReel": 2
+      },
+      {
+        "id": "bin-4",
+        "category": "LEAD PAIR",
+        "difficulty": "WARM",
+        "headline": "Manchu Manoj Paired Opposite Sheena Shahabadi",
+        "body": "Starred Manchu Manoj in one of his biggest mass-comedy crowd-pleasers alongside debutante heroine Sheena Shahabadi.",
+        "unlockAfterReel": 3
+      },
+      {
+        "id": "bin-5",
+        "category": "CAREFREE TITLE",
+        "difficulty": "EASY",
+        "headline": "A 1-Word Hindi/Hyderabadi Slang Title Meaning 'Totally Carefree!'",
+        "body": "Famous for its upbeat 'Girija Girija' track and a title word every youngster uses to say 'cool, chill, and fearless!'",
+        "unlockAfterReel": 4
+      }
+    ]
+  },
+  {
+    "id": "bangaram",
+    "featuredDate": "2026-11-22",
+    "title": "Bangaram",
+    "alternateSpellings": ["Bangaram", "Bangaram 2006"],
+    "year": 2006,
+    "releaseMonth": "May 2006",
+    "hero": "Pawan Kalyan",
+    "heroine": "Meera Chopra",
+    "director": "Dharani",
+    "music": "Vidyasagar",
+    "genre": "Action Comedy Drama",
+    "tropes": [
+      "Brash TV news reporter Bangaram dreams of landing a BBC job in London",
+      "Gets tangled in a Rayalaseema faction conflict while protecting a young girl Vindhya and her family",
+      "Features Ashutosh Rana as ruthless factionist Bhooma Reddy and Mukesh Rishi as Peddi Reddy",
+      "Includes a memorable surprise cameo by Trisha Krishnan alongside Meera Chopra and Reema Sen",
+      "Does not feature Brahmanandam (comedy handled by Ali, Venu Madhav, M.S. Narayana, Raghu Babu)"
+    ],
+    "iconicProp": "TV news microphone & a vibrant bandanna",
+    "hint": "A loud, kind-hearted TV reporter dreaming of BBC London takes on Rayalaseema factionists.",
+    "fullCast": [
+      { "name": "Pawan Kalyan", "role": "Lead Hero (Bangaram / Balram)", "aliases": ["pawan kalyan", "pavan kalyan", "pk", "power star"] },
+      { "name": "Meera Chopra", "role": "Lead Heroine (Sandhya)", "aliases": ["meera chopra", "meera"] },
+      { "name": "Reema Sen", "role": "Reporter Seema", "aliases": ["reema sen"] },
+      { "name": "Trisha Krishnan", "role": "Special Cameo Appearance", "aliases": ["trisha", "trisha krishnan"] },
+      { "name": "Sanusha", "role": "Vindhya", "aliases": ["sanusha", "baby sanusha"] },
+      { "name": "Ashutosh Rana", "role": "Main Villain (Bhooma Reddy)", "aliases": ["ashutosh rana"] },
+      { "name": "Mukesh Rishi", "role": "Peddi Reddy", "aliases": ["mukesh rishi"] },
+      { "name": "Raja Abel", "role": "Vinay", "aliases": ["raja", "raja abel"] },
+      { "name": "Ali", "role": "Cameraman / Friend", "aliases": ["ali"] },
+      { "name": "Venu Madhav", "role": "Comedy Role", "aliases": ["venu madhav"] },
+      { "name": "Raghu Babu", "role": "Henchman Comedy", "aliases": ["raghu babu"] },
+      { "name": "Tanikella Bharani", "role": "Supporting Role", "aliases": ["tanikella bharani"] },
+      { "name": "M.S. Narayana", "role": "Comedy Role", "aliases": ["ms narayana"] }
+    ],
+    "fullCrew": [
+      { "name": "Dharani", "department": "Director & Screenwriter", "aliases": ["dharani"] },
+      { "name": "Vidyasagar", "department": "Music Director", "aliases": ["vidyasagar"] },
+      { "name": "A.M. Ratnam", "department": "Producer (Sri Surya Movies)", "aliases": ["am ratnam", "a m ratnam"] },
+      { "name": "Gopinath", "department": "Cinematographer (DOP)", "aliases": ["gopinath"] },
+      { "name": "V.T. Vijayan", "department": "Film Editor", "aliases": ["vt vijayan"] }
+    ],
+    "eraTrivia": [
+      "Released May 3, 2006 marking Tamil blockbuster director Dharani's (of 'Ghilli' fame) Telugu directorial debut!",
+      "Produced by A.M. Ratnam (the producer of 'Kushi') with music by Vidyasagar ('Ra Ra Bangaram', 'Maro Masthi')",
+      "Featured a buzzworthy surprise guest cameo by Trisha Krishnan",
+      "Had massive summer 2006 hype—opening across a record number of theatres for Pawan Kalyan right after 'Balu'"
+    ],
+    "iconicMoments": [
+      "Pawan Kalyan's colorful, quirky TV reporter intro chasing breaking news on the streets",
+      "Vidyasagar's energetic mass title anthem 'Ra Ra Bangaram'",
+      "High-voltage faction showdown against Bollywood menace Ashutosh Rana"
+    ],
+    "pressHints": [
+      {
+        "id": "ban-1",
+        "category": "TAMIL DIRECTOR'S TELUGU DEBUT",
+        "difficulty": "HARD",
+        "headline": "Marked 'Ghilli' Director Dharani's Telugu Directorial Debut",
+        "body": "Produced by A.M. Ratnam in May 2006, it reunited the producer-hero duo behind 'Kushi' with Tamil hitmaker Dharani and composer Vidyasagar.",
+        "unlockAfterReel": 0
+      },
+      {
+        "id": "ban-2",
+        "category": "SURPRISE CAMEO & VILLAIN",
+        "difficulty": "MEDIUM",
+        "headline": "Featured a Special Cameo by Trisha & Menacing Ashutosh Rana",
+        "body": "Also starred Mukesh Rishi, Raja Abel, Reema Sen, Ali, Venu Madhav, M.S. Narayana, and Raghu Babu—notably without Brahmanandam.",
+        "unlockAfterReel": 1
+      },
+      {
+        "id": "ban-3",
+        "category": "HERO'S QUIRKY JOB",
+        "difficulty": "MEDIUM",
+        "headline": "A Street-Smart TV News Reporter Dreaming of BBC London!",
+        "body": "Fans loved the hero's goofy, energetic television-journalist mannerisms before the action shifted into Rayalaseema faction territory.",
+        "unlockAfterReel": 2
+      },
+      {
+        "id": "ban-4",
+        "category": "LEAD PAIR & MUSIC",
+        "difficulty": "WARM",
+        "headline": "Pawan Kalyan + Meera Chopra + Vidyasagar's Catchy Title Anthem",
+        "body": "Starred Power Star Pawan Kalyan opposite Meera Chopra with memorable 2006 summer tracks like 'Maro Masthi' and its roaring title song.",
+        "unlockAfterReel": 3
+      },
+      {
+        "id": "ban-5",
+        "category": "GOLDEN TITLE",
+        "difficulty": "EASY",
+        "headline": "Its One-Word Telugu Title Literally Means 'Gold!'",
+        "body": "A beloved Telugu term of endearment meaning 'Gold'—and the hero's own nickname in this 2006 Pawan Kalyan entertainer!",
+        "unlockAfterReel": 4
+      }
+    ]
+  },
+  {
+    "id": "bavagaru-bagunnara",
+    "featuredDate": "2026-11-23",
+    "title": "Bavagaru Bagunnara?",
+    "alternateSpellings": ["Bavagaru Bagunnara?", "Bavagaru Bagunnara", "Baavagaru Bagunnara"],
+    "year": 1998,
+    "releaseMonth": "April 1998",
+    "hero": "Chiranjeevi",
+    "heroine": "Rambha",
+    "director": "Jayanth C. Paranjee",
+    "music": "Mani Sharma",
+    "genre": "Romantic Comedy Family Drama",
+    "tropes": [
+      "Chiranjeevi plays Raju, a kind-hearted guy who pretends to be a pregnant woman's husband in front of her strict father (Paresh Rawal) to save her honor",
+      "Actually falls in love with her bubbly younger sister Swapna (Rambha) in New Zealand",
+      "Features Chiranjeevi's iconic real-life bungee-jumping stunt in New Zealand!",
+      "Veteran Bollywood legend Paresh Rawal plays the stern father Rao Bahadur Rajendra Prasad",
+      "Features Brahmanandam, Kota Srinivasa Rao, Srihari, and Kaikala Satyanarayana"
+    ],
+    "iconicProp": "New Zealand bungee cord & a vintage wedding garland",
+    "hint": "He jumps off a New Zealand bridge for love—then pretends to be the son-in-law of a strict household.",
+    "fullCast": [
+      { "name": "Chiranjeevi", "role": "Lead Hero (Raju)", "aliases": ["chiranjeevi", "megastar", "chiru"] },
+      { "name": "Rambha", "role": "Lead Heroine (Swapna)", "aliases": ["rambha"] },
+      { "name": "Rachana Banerjee", "role": "Sandhya (Elder Sister)", "aliases": ["rachana", "rachana banerjee"] },
+      { "name": "Paresh Rawal", "role": "Rao Bahadur Rajendra Prasad", "aliases": ["paresh rawal"] },
+      { "name": "Kota Srinivasa Rao", "role": "Pedda Basavaraju", "aliases": ["kota", "kota srinivasa rao"] },
+      { "name": "Srihari", "role": "Chinna Kankaraju", "aliases": ["srihari"] },
+      { "name": "Kaikala Satyanarayana", "role": "Grandfather", "aliases": ["kaikala satyanarayana", "satyanarayana"] },
+      { "name": "Brahmanandam", "role": "Gopi (Comedy Role)", "aliases": ["brahmanandam", "brahmi"] },
+      { "name": "Achyuth", "role": "Supporting Role", "aliases": ["achyuth"] }
+    ],
+    "fullCrew": [
+      { "name": "Jayanth C. Paranjee", "department": "Director", "aliases": ["jayanth c paranjee", "jayanth"] },
+      { "name": "Mani Sharma", "department": "Music Director (Breakthrough Hit)", "aliases": ["mani sharma", "manisharma"] },
+      { "name": "Nagendra Babu", "department": "Producer (Anjana Productions)", "aliases": ["nagendra babu", "nagababu", "anjana productions"] },
+      { "name": "Jayanan Vincent", "department": "Cinematographer (DOP)", "aliases": ["jayanan vincent"] },
+      { "name": "Marthand K. Venkatesh", "department": "Film Editor", "aliases": ["marthand k venkatesh"] }
+    ],
+    "eraTrivia": [
+      "Released April 9, 1998 and became a massive family blockbuster—also marking composer Mani Sharma's breakthrough mega-album!",
+      "Made huge 1998 headlines because Megastar Chiranjeevi performed a real bungee jump in New Zealand without a body double!",
+      "Produced by Chiranjeevi's brother Nagendra Babu under Anjana Productions",
+      "Iconic chartbuster soundtrack ('Aunty Koothura', 'Sorry Sorry', 'Navami Dasami', 'Mattekkindhi') played non-stop across Telugu weddings",
+      "Remade in Hindi as 'Kunwara' (2000) starring Govinda and Urmila Matondkar"
+    ],
+    "iconicMoments": [
+      "Chiranjeevi's unforgettable real-life bungee jump in New Zealand",
+      "Paresh Rawal's strict patriarch reacting to hilarious brother-in-law mischief",
+      "Evergreen dance chartbusters 'Aunty Koothura' and 'Sorry Sorry'"
+    ],
+    "pressHints": [
+      {
+        "id": "bav-1",
+        "category": "1998 REAL STUNT HEADLINE",
+        "difficulty": "HARD",
+        "headline": "Made 1998 News for a Real Bungee Jump in New Zealand Without a Double!",
+        "body": "Produced under Anjana Productions, this April 1998 blockbuster stunned press and fans when its superstar hero performed a real New Zealand bungee jump himself.",
+        "unlockAfterReel": 0
+      },
+      {
+        "id": "bav-2",
+        "category": "BOLLYWOOD REMAKE & COMPOSER BREAKTHROUGH",
+        "difficulty": "MEDIUM",
+        "headline": "Mani Sharma's Mega Breakthrough + Remade in Hindi as 'Kunwara'",
+        "body": "Cemented Mani Sharma's status as Melody Brahma with evergreen wedding hits—and was later remade in Bollywood with Govinda!",
+        "unlockAfterReel": 1
+      },
+      {
+        "id": "bav-3",
+        "category": "ENSEMBLE CAST",
+        "difficulty": "MEDIUM",
+        "headline": "Paresh Rawal + Kota + Srihari + Brahmanandam + Kaikala Satyanarayana",
+        "body": "Featured Bollywood legend Paresh Rawal as a stern patriarch alongside Rachana Banerjee, Kota Srinivasa Rao, Srihari, and Brahmanandam.",
+        "unlockAfterReel": 2
+      },
+      {
+        "id": "bav-4",
+        "category": "LEAD PAIR & DIRECTOR",
+        "difficulty": "WARM",
+        "headline": "Megastar Chiranjeevi + Rambha + Director Jayanth C. Paranjee",
+        "body": "Directed by Jayanth C. Paranjee and produced by Nagendra Babu, pairing Chiranjeevi and Rambha in a beloved 1998 family rom-com.",
+        "unlockAfterReel": 3
+      },
+      {
+        "id": "bav-5",
+        "category": "ICONIC SONGS & GREETING TITLE",
+        "difficulty": "EASY",
+        "headline": "'Aunty Koothura!' & A Polite Telugu Question Asking 'How Are You, Brother-in-Law?'",
+        "body": "Unforgettable for its cheeky songs ('Aunty Koothura', 'Sorry Sorry') and a warm family title ending with a question mark!",
+        "unlockAfterReel": 4
+      }
+    ]
+  },
+  {
+    "id": "chennakesava-reddy",
+    "featuredDate": "2026-11-24",
+    "title": "Chennakesava Reddy",
+    "alternateSpellings": ["Chennakesava Reddy", "Chenna Kesava Reddy", "CKR"],
+    "year": 2002,
+    "releaseMonth": "September 2002",
+    "hero": "Nandamuri Balakrishna",
+    "heroine": "Tabu",
+    "director": "V.V. Vinayak",
+    "music": "Mani Sharma",
+    "genre": "Faction Action Mass Drama",
+    "tropes": [
+      "Nandamuri Balakrishna plays a roaring dual role as father Chennakesava Reddy and son DCP Bharath Reddy",
+      "Rayalaseema faction epic packed with thunderous Paruchuri Brothers dialogues",
+      "Stars Tabu opposite the senior faction patriarch and Shriya Saran opposite the young police officer",
+      "Director V.V. Vinayak's second film right after his blockbuster debut 'Aadi'",
+      "Features Brahmanandam, Ali, Venu Madhav, M.S. Narayana, and Jayaprakash Reddy"
+    ],
+    "iconicProp": "Rayalaseema hunting sickle (Kathi) & crisp IPS uniform",
+    "hint": "A thunderous dual-role Rayalaseema faction epic—father in a white pancha, son in a khaki DCP uniform.",
+    "fullCast": [
+      { "name": "Nandamuri Balakrishna", "role": "Dual Role (Chennakesava Reddy & DCP Bharath Reddy)", "aliases": ["balakrishna", "balayya", "nbk", "nandamuri balakrishna"] },
+      { "name": "Tabu", "role": "Lead Heroine (Seeta)", "aliases": ["tabu"] },
+      { "name": "Shriya Saran", "role": "Lead Heroine (Preethi)", "aliases": ["shriya", "shriya saran"] },
+      { "name": "Devayani", "role": "Janaki", "aliases": ["devayani"] },
+      { "name": "Jayaprakash Reddy", "role": "Venkat Reddy (Villain)", "aliases": ["jayaprakash reddy", "jp"] },
+      { "name": "Anandraj", "role": "Dhanunjaya Reddy", "aliases": ["anandraj"] },
+      { "name": "Ahuti Prasad", "role": "Sivaji Reddy", "aliases": ["ahuti prasad"] },
+      { "name": "Brahmanandam", "role": "Purohit / Comedy Role", "aliases": ["brahmanandam", "brahmi"] },
+      { "name": "Ali", "role": "Comedy Role", "aliases": ["ali"] },
+      { "name": "Venu Madhav", "role": "Comedy Role", "aliases": ["venu madhav"] },
+      { "name": "M.S. Narayana", "role": "Comedy Role", "aliases": ["ms narayana"] },
+      { "name": "L.B. Sriram", "role": "Supporting Role", "aliases": ["lb sriram"] }
+    ],
+    "fullCrew": [
+      { "name": "V.V. Vinayak", "department": "Director & Screenplay", "aliases": ["vv vinayak", "vinayak"] },
+      { "name": "Mani Sharma", "department": "Music Director & Thunderous BGM", "aliases": ["mani sharma", "manisharma"] },
+      { "name": "Bellamkonda Suresh", "department": "Producer (Sri Sai Ganesh Productions)", "aliases": ["bellamkonda suresh"] },
+      { "name": "Paruchuri Brothers", "department": "Dialogue Writers", "aliases": ["paruchuri brothers", "paruchuri"] },
+      { "name": "Ajayan Vincent", "department": "Cinematographer (DOP)", "aliases": ["ajayan vincent"] },
+      { "name": "Gautham Raju", "department": "Film Editor", "aliases": ["gautham raju"] }
+    ],
+    "eraTrivia": [
+      "Released September 25, 2002 as young director V.V. Vinayak's second feature film right after his sensational debut 'Aadi'",
+      "Mani Sharma's iconic roaring background theme and mass songs ('Telusa Telusa', 'Hai Re Hai', 'Bakara Bakara') became an all-time fan anthem",
+      "Its 20th-anniversary 4K re-release in September 2022 sparked massive midnight festival celebrations across Telugu states and the US!",
+      "Produced by Bellamkonda Suresh with explosive Rayalaseema faction dialogues by Paruchuri Brothers"
+    ],
+    "iconicMoments": [
+      "Mani Sharma's goosebumps-inducing 'Chennakesava Reddy' trumpet/percussion BGM during the father's entry",
+      "The iconic dual-role confrontation between a stern DCP son and his legendary factionist father",
+      "Explosive Paruchuri Brothers mass dialogues that still rattle theatres during re-releases"
+    ],
+    "pressHints": [
+      {
+        "id": "ckr-1",
+        "category": "20TH ANNIVERSARY RE-RELEASE",
+        "difficulty": "HARD",
+        "headline": "Its 2022 4K Re-Release Sparked Huge Fan Celebrations Across India & USA",
+        "body": "Produced by Bellamkonda Suresh in September 2002 with cinematography by Ajayan Vincent, its cult following exploded all over again on its 20th anniversary!",
+        "unlockAfterReel": 0
+      },
+      {
+        "id": "ckr-2",
+        "category": "DIRECTOR & BGM LEGEND",
+        "difficulty": "MEDIUM",
+        "headline": "V.V. Vinayak's 2nd Film + One of Mani Sharma's Greatest Mass BGMs",
+        "body": "Right after his debut 'Aadi', director V.V. Vinayak teamed with Paruchuri Brothers and Mani Sharma—delivering a roaring theme score still used in fan edits today.",
+        "unlockAfterReel": 1
+      },
+      {
+        "id": "ckr-3",
+        "category": "HEROINES & VILLAIN GANG",
+        "difficulty": "MEDIUM",
+        "headline": "Tabu + Shriya Saran + Devayani vs. Jayaprakash Reddy & Anandraj",
+        "body": "Paired veteran actress Tabu and rising star Shriya Saran opposite two generations of the lead star, with Brahmanandam, Ali, Venu Madhav, and M.S. Narayana on comedy.",
+        "unlockAfterReel": 2
+      },
+      {
+        "id": "ckr-4",
+        "category": "DUAL-ROLE SUPERSTAR",
+        "difficulty": "WARM",
+        "headline": "Nandamuri Balakrishna in a Roaring Father-and-DCP-Son Dual Role",
+        "body": "Balayya unleashed full Rayalaseema mass energy in a dual role—a bearded faction patriarch and his righteous police officer son.",
+        "unlockAfterReel": 3
+      },
+      {
+        "id": "ckr-5",
+        "category": "ICONIC FACTION NAME",
+        "difficulty": "EASY",
+        "headline": "Named After Its Rayalaseema Patriarch With 'Reddy' in the Title!",
+        "body": "One of Balakrishna's most iconic 2002 faction titles—famous for 'Bakara Bakara', 'Telusa Telusa', and a roaring Rayalaseema name!",
+        "unlockAfterReel": 4
+      }
+    ]
+  },
+  {
+    "id": "bhageeratha",
+    "featuredDate": "2026-11-25",
+    "title": "Bhageeratha",
+    "alternateSpellings": ["Bhageeratha", "Bhagiratha", "Bhageeratha 2005"],
+    "year": 2005,
+    "releaseMonth": "October 2005",
+    "hero": "Ravi Teja",
+    "heroine": "Shriya Saran",
+    "director": "Rasool Ellore",
+    "music": "Chakri",
+    "genre": "Action Family Drama",
+    "tropes": [
+      "Energetic village youth Chandu fights to bring an essential bridge/infrastructure project to his isolated island village in Godavari",
+      "Clashes with stubborn rich industrialist Venkata Ratnam (Prakash Raj) while romancing his daughter Shweta (Shriya Saran)",
+      "Directed by acclaimed cinematographer-turned-director Rasool Ellore",
+      "Features Brahmanandam, Sunil, Venu Madhav, Nassar, and Vijayakumar",
+      "Chakri's foot-tapping 2005 mass soundtrack"
+    ],
+    "iconicProp": "Godavari village bridge blueprint & Chandu's fiery determination",
+    "hint": "Named after the mythic figure who brought the Ganga—this village youth moves mountains to build a bridge for his people.",
+    "fullCast": [
+      { "name": "Ravi Teja", "role": "Lead Hero (Chandu)", "aliases": ["ravi teja", "raviteja", "mass maharaja"] },
+      { "name": "Shriya Saran", "role": "Lead Heroine (Shweta)", "aliases": ["shriya", "shriya saran"] },
+      { "name": "Prakash Raj", "role": "Venkata Ratnam", "aliases": ["prakash raj"] },
+      { "name": "Brahmanandam", "role": "Hotel Manager / Comedy Role", "aliases": ["brahmanandam", "brahmi"] },
+      { "name": "Sunil", "role": "Nanda (Comedy Friend)", "aliases": ["sunil"] },
+      { "name": "Venu Madhav", "role": "Comedy Role", "aliases": ["venu madhav"] },
+      { "name": "Nassar", "role": "Durga Prasad", "aliases": ["nassar"] },
+      { "name": "Vijayakumar", "role": "Chandu's Father", "aliases": ["vijayakumar"] },
+      { "name": "Jeeva", "role": "Supporting Role", "aliases": ["jeeva"] }
+    ],
+    "fullCrew": [
+      { "name": "Rasool Ellore", "department": "Director & Cinematographer", "aliases": ["rasool ellore", "rasool"] },
+      { "name": "Chakri", "department": "Music Director", "aliases": ["chakri"] },
+      { "name": "Ramesh Puppala", "department": "Producer (Yellow Flowers)", "aliases": ["ramesh puppala"] },
+      { "name": "Gautham Raju", "department": "Film Editor", "aliases": ["gautham raju"] }
+    ],
+    "eraTrivia": [
+      "Released October 13, 2005 for Dussehra under director Rasool Ellore—famous primarily as the ace cinematographer of 'Jalsa' and 'Oye!'",
+      "Music composed by Chakri with upbeat tracks like 'O Prema Nuvve', 'Prapanchame', and 'Po Po'",
+      "Reunited Ravi Teja with Shriya Saran and Prakash Raj in a crisp social-message-meets-commercial-comedy package",
+      "Featured a laugh-riot comedy track with Brahmanandam, Sunil, and Venu Madhav"
+    ],
+    "iconicMoments": [
+      "Ravi Teja's witty banter challenging Prakash Raj's ego in style",
+      "Sunil and Brahmanandam's hilarious comedy sequences",
+      "Scenic Godavari river backdrop underscoring a village's fight for a bridge"
+    ],
+    "pressHints": [
+      {
+        "id": "bha-1",
+        "category": "CINEMATOGRAPHER-TURNED-DIRECTOR",
+        "difficulty": "HARD",
+        "headline": "Directed by Ace Cinematographer Rasool Ellore (DOP of 'Jalsa')",
+        "body": "Released for Dussehra in October 2005 and produced by Ramesh Puppala, this drama was helmed by one of Tollywood's most celebrated cinematographers.",
+        "unlockAfterReel": 0
+      },
+      {
+        "id": "bha-2",
+        "category": "MUSIC & COMEDY CREW",
+        "difficulty": "MEDIUM",
+        "headline": "Chakri's Soundtrack + Brahmanandam, Sunil & Venu Madhav",
+        "body": "Mixed social-welfare emotion with classic mid-2000s laughs delivered by Brahmanandam, Sunil, and Venu Madhav alongside Nassar and Vijayakumar.",
+        "unlockAfterReel": 1
+      },
+      {
+        "id": "bha-3",
+        "category": "VILLAGE MISSION",
+        "difficulty": "MEDIUM",
+        "headline": "A Stubborn Battle to Build a Bridge for an Isolated Godavari Village",
+        "body": "Centered around a determined youngster clashing head-on with an arrogant tycoon (Prakash Raj) to connect his isolated island village to the mainland.",
+        "unlockAfterReel": 2
+      },
+      {
+        "id": "bha-4",
+        "category": "LEAD PAIR",
+        "difficulty": "WARM",
+        "headline": "Mass Maharaja Ravi Teja Paired Opposite Shriya Saran",
+        "body": "Starred Ravi Teja in peak energetic form opposite Shriya Saran, trading sharp verbal punches with Prakash Raj.",
+        "unlockAfterReel": 3
+      },
+      {
+        "id": "bha-5",
+        "category": "MYTHOLOGICAL TITLE",
+        "difficulty": "EASY",
+        "headline": "Named After the Mythological King Who Brought the Ganga to Earth!",
+        "body": "Its single-word Telugu title comes straight from the legendary sage-king famous for impossible determination ('___ Prayatnam')!",
+        "unlockAfterReel": 4
+      }
+    ]
+  },
+  {
+    "id": "raja",
+    "featuredDate": "2026-11-26",
+    "title": "Raja",
+    "alternateSpellings": ["Raja", "Raja 1999", "Venkatesh Raja"],
+    "year": 1999,
+    "releaseMonth": "March 1999",
+    "hero": "Venkatesh",
+    "heroine": "Soundarya",
+    "director": "Muppalaneni Shiva",
+    "music": "S.A. Rajkumar",
+    "genre": "Romantic Family Musical Drama",
+    "tropes": [
+      "Small-time pickpocket Raja reforms his life after falling deeply for the compassionate Anjali (Soundarya)",
+      "Anjali loses her family in a tragedy and suffers heartbreak before Raja quietly stands by her without expecting anything in return",
+      "Remake of the Tamil blockbuster 'Unnidathil Ennai Koduthen' produced by R.B. Choudary's Super Good Films",
+      "Timeless S.A. Rajkumar musical soundtrack ('Edo Oka Ragam', 'Mallela Vaana', 'Kavvinchake O Prema')",
+      "Features Sudhakar as Raja's hilarious sidekick Balu alongside Brahmanandam, Chandra Mohan, Abbas, and Tanikella Bharani"
+    ],
+    "iconicProp": "A secret diary & a soulful 1999 cassette tape",
+    "hint": "A reformed petty thief silently transforms a grieving woman's life—backed by S.A. Rajkumar's immortal melodies.",
+    "fullCast": [
+      { "name": "Venkatesh", "role": "Lead Hero (Raja)", "aliases": ["venkatesh", "venky", "victory venkatesh"] },
+      { "name": "Soundarya", "role": "Lead Heroine (Anjali)", "aliases": ["soundarya"] },
+      { "name": "Abbas", "role": "Sanjay", "aliases": ["abbas"] },
+      { "name": "Sudhakar", "role": "Balu (Best Friend Comedy)", "aliases": ["sudhakar"] },
+      { "name": "Brahmanandam", "role": "Delhi Dada", "aliases": ["brahmanandam", "brahmi"] },
+      { "name": "Chandra Mohan", "role": "Supporting Role", "aliases": ["chandra mohan"] },
+      { "name": "Tanikella Bharani", "role": "Supporting Role", "aliases": ["tanikella bharani"] },
+      { "name": "Annapoorna", "role": "Supporting Elder", "aliases": ["annapoorna"] },
+      { "name": "A.V.S.", "role": "Comedy Role", "aliases": ["avs", "a v s"] },
+      { "name": "Y. Vijaya", "role": "Supporting Role", "aliases": ["y vijaya"] }
+    ],
+    "fullCrew": [
+      { "name": "Muppalaneni Shiva", "department": "Director", "aliases": ["muppalaneni shiva"] },
+      { "name": "S.A. Rajkumar", "department": "Music Director (Filmfare Winner)", "aliases": ["sa rajkumar", "s a rajkumar", "rajkumar"] },
+      { "name": "R.B. Choudary", "department": "Producer (Super Good Films)", "aliases": ["rb choudary", "super good films"] },
+      { "name": "Sirivennela Seetharama Sastry", "department": "Lyricist", "aliases": ["sirivennela"] }
+    ],
+    "eraTrivia": [
+      "Released March 18, 1999 under R.B. Choudary's Super Good Films and ran for 100+ days across Andhra Pradesh as a massive family blockbuster",
+      "Swept the 47th Filmfare Awards South: Best Film (Telugu), Best Actress (Soundarya), and Best Music Director (S.A. Rajkumar), plus Nandi Awards!",
+      "Remake of the 1998 Tamil superhit 'Unnidathil Ennai Koduthen'",
+      "S.A. Rajkumar's soulful songs ('Edo Oka Ragam', 'Mallela Vaana', 'Neevevvaro') remain among the most-loved 1990s Telugu melodies"
+    ],
+    "iconicMoments": [
+      "Evergreen heartbreak melody 'Edo Oka Ragam' sung by S.P.B. & K.S. Chithra",
+      "Sudhakar's laugh-riot street banter with Venkatesh and Brahmanandam's 'Delhi Dada' cameo",
+      "Venkatesh and Soundarya's unmatched emotional chemistry in late-90s Telugu cinema"
+    ],
+    "pressHints": [
+      {
+        "id": "raj-1",
+        "category": "TAMIL REMAKE HIT",
+        "difficulty": "HARD",
+        "headline": "Remade From a 1998 Tamil Hit by R.B. Choudary's Super Good Films",
+        "body": "Directed by Muppalaneni Shiva in March 1999, this musical family drama ran past 100 days across centres and swept 3 major Filmfare Awards South.",
+        "unlockAfterReel": 0
+      },
+      {
+        "id": "raj-2",
+        "category": "FILMFARE MUSICAL CLASSIC",
+        "difficulty": "MEDIUM",
+        "headline": "S.A. Rajkumar Won Filmfare Best Music for 'Edo Oka Ragam'",
+        "body": "Its cassette album sold in the lakhs in 1999—featuring timeless melodies like 'Edo Oka Ragam' and 'Mallela Vaana' with lyrics by Sirivennela.",
+        "unlockAfterReel": 1
+      },
+      {
+        "id": "raj-3",
+        "category": "90S COMEDY & SUPPORTING CAST",
+        "difficulty": "MEDIUM",
+        "headline": "Sudhakar + Abbas + Brahmanandam + Chandra Mohan + AVS",
+        "body": "Featured Sudhakar as the hero's hilarious street partner, Abbas in a key romantic angle, and Brahmanandam as 'Delhi Dada'.",
+        "unlockAfterReel": 2
+      },
+      {
+        "id": "raj-4",
+        "category": "GOLDEN 90S PAIR",
+        "difficulty": "WARM",
+        "headline": "Victory Venkatesh & Soundarya (Best Actress Winner)",
+        "body": "Celebrated as one of the finest emotional collaborations between Venkatesh and the late Soundarya, who won Filmfare Best Actress for her role.",
+        "unlockAfterReel": 3
+      },
+      {
+        "id": "raj-5",
+        "category": "ROYAL 4-LETTER TITLE",
+        "difficulty": "EASY",
+        "headline": "A Classic 4-Letter Title Meaning 'King' — Also the Hero's Own Name!",
+        "body": "Simple, iconic, and unforgettable—one of Victory Venkatesh's most beloved 1999 tear-jerker family musicals!",
+        "unlockAfterReel": 4
+      }
+    ]
+  },
+  {
+    "id": "vishwanath-and-sons",
+    "featuredDate": "2026-11-27",
+    "title": "Vishwanath & Sons",
+    "alternateSpellings": ["Vishwanath & Sons", "Vishwanath and Sons", "Viswanath & Sons", "Viswanath and Sons"],
+    "year": 2026,
+    "releaseMonth": "August 2026",
+    "hero": "Suriya",
+    "heroine": "Mamitha Baiju",
+    "director": "Venky Atluri",
+    "music": "G.V. Prakash Kumar",
+    "genre": "Bilingual Family Drama",
+    "tropes": [
+      "Bilingual Telugu-Tamil heartwarming family drama directed by Venky Atluri right after his blockbuster 'Lucky Baskhar'",
+      "Stars Tamil superstar Suriya as Sanjay Vishwanath in a warm, rooted Telugu-Tamil family role",
+      "Pairs Suriya alongside breakout Malayalam sensation Mamitha Baiju (as Maddy)",
+      "Features veteran powerhouses Radhika Sarathkumar and Bollywood icon Raveena Tandon in pivotal roles",
+      "Includes Telugu comedian Harsha Chemudu (Viva Harsha) and music by G.V. Prakash Kumar"
+    ],
+    "iconicProp": "Family business signboard 'Vishwanath & Sons'",
+    "hint": "Venky Atluri's August 2026 bilingual family drama uniting Suriya, Mamitha Baiju, and Raveena Tandon.",
+    "fullCast": [
+      { "name": "Suriya", "role": "Lead Hero (Sanjay Vishwanath)", "aliases": ["suriya", "surya"] },
+      { "name": "Mamitha Baiju", "role": "Lead Heroine (Maddy)", "aliases": ["mamitha baiju", "mamitha"] },
+      { "name": "Raveena Tandon", "role": "Pivotal Supporting Role", "aliases": ["raveena tandon", "raveena"] },
+      { "name": "Radhika Sarathkumar", "role": "Family Matriarch", "aliases": ["radhika", "radhika sarathkumar"] },
+      { "name": "Harsha Chemudu", "role": "Comedy Supporting Role (Viva Harsha)", "aliases": ["viva harsha", "harsha chemudu", "harsha"] }
+    ],
+    "fullCrew": [
+      { "name": "Venky Atluri", "department": "Director & Writer", "aliases": ["venky atluri", "atluri"] },
+      { "name": "G.V. Prakash Kumar", "department": "Music Director", "aliases": ["gv prakash", "g v prakash", "gv prakash kumar"] },
+      { "name": "Suryadevara Naga Vamsi", "department": "Producer (Sithara Entertainments)", "aliases": ["naga vamsi", "sithara entertainments"] }
+    ],
+    "eraTrivia": [
+      "Released on August 14, 2026 for the Independence Day weekend as a Telugu-Tamil bilingual family drama",
+      "Marked director Venky Atluri's high-anticipation follow-up right after the pan-South smash hit 'Lucky Baskhar' (2024)",
+      "Brought Bollywood star Raveena Tandon and 'Premalu' sensation Mamitha Baiju together with Suriya in a heartwarming Telugu-Tamil entertainer",
+      "Reunited Suriya with National Award-winning composer G.V. Prakash Kumar (of 'Soorarai Pottru' fame)"
+    ],
+    "iconicMoments": [
+      "Suriya stepping into a charming, grounded family-man avatar directed by Venky Atluri",
+      "Playful generational chemistry featuring Mamitha Baiju, Radhika Sarathkumar, and Viva Harsha",
+      "Soulful G.V. Prakash Kumar melodies built for Independence Day 2026 family audiences"
+    ],
+    "pressHints": [
+      {
+        "id": "vis-1",
+        "category": "INDEPENDENCE DAY 2026 RELEASE",
+        "difficulty": "HARD",
+        "headline": "A Fresh August 2026 Telugu–Tamil Bilingual Family Drama",
+        "body": "Hit screens on August 14, 2026 backed by Sithara Entertainments, reuniting a celebrated actor-composer pair who previously won National Awards together.",
+        "unlockAfterReel": 0
+      },
+      {
+        "id": "vis-2",
+        "category": "DIRECTOR'S HOT STREAK",
+        "difficulty": "MEDIUM",
+        "headline": "Directed by Venky Atluri Right After 'Lucky Baskhar'",
+        "body": "Written and directed by Venky Atluri with music by G.V. Prakash Kumar and laughs from Viva Harsha (Harsha Chemudu).",
+        "unlockAfterReel": 1
+      },
+      {
+        "id": "vis-3",
+        "category": "CROSS-INDUSTRY CAST",
+        "difficulty": "MEDIUM",
+        "headline": "Features Bollywood Star Raveena Tandon & Radhika Sarathkumar!",
+        "body": "Generated huge pan-South buzz by bringing Raveena Tandon, Radhika Sarathkumar, and 'Premalu' breakout star Mamitha Baiju into one family ensemble.",
+        "unlockAfterReel": 2
+      },
+      {
+        "id": "vis-4",
+        "category": "LEAD PAIR",
+        "difficulty": "WARM",
+        "headline": "Suriya (as Sanjay Vishwanath) Paired Opposite Mamitha Baiju",
+        "body": "Stars beloved Tamil superstar Suriya in a direct Telugu-Tamil bilingual opposite Mamitha Baiju.",
+        "unlockAfterReel": 3
+      },
+      {
+        "id": "vis-5",
+        "category": "FAMILY BUSINESS TITLE",
+        "difficulty": "EASY",
+        "headline": "Named Like a Classic Family Shop Signboard ('_____ & Sons')!",
+        "body": "Shares its surname with Suriya's character (Sanjay Vishwanath) and ends with '& Sons'!",
+        "unlockAfterReel": 4
+      }
+    ]
+  },
+  {
+    "id": "chi-la-sow",
+    "featuredDate": "2026-11-28",
+    "title": "Chi La Sow",
+    "alternateSpellings": ["Chi La Sow", "Chilasow", "Chi. La. Sow."],
+    "year": 2018,
+    "releaseMonth": "August 2018",
+    "hero": "Sushanth",
+    "heroine": "Ruhani Sharma",
+    "director": "Rahul Ravindran",
+    "music": "Prashanth R Vihari",
+    "genre": "Romantic Comedy Slice-of-Life",
+    "tropes": [
+      "Marriage-shy 27-year-old bachelor Arjun reluctantly agrees to one blind arranged-marriage date with mature, grounded Anjali",
+      "Almost the entire love story unfolds naturally over a single day and night in Hyderabad",
+      "Marked actor Rahul Ravindran's acclaimed directorial debut—winning the National Film Award for Best Original Screenplay!",
+      "Features Vennela Kishore and Rahul Ramakrishna in hilarious friend cameos alongside Anu Haasan",
+      "Does not feature Brahmanandam"
+    ],
+    "iconicProp": "Traditional Telugu wedding invitation prefix 'Chi. La. Sow.' & a late-night coffee cup",
+    "hint": "One reluctant blind date in Hyderabad stretches into a magical 24-hour conversation—and won a National Award for Best Screenplay.",
+    "fullCast": [
+      { "name": "Sushanth", "role": "Lead Hero (Arjun)", "aliases": ["sushanth", "sushant"] },
+      { "name": "Ruhani Sharma", "role": "Lead Heroine (Anjali)", "aliases": ["ruhani sharma", "ruhani"] },
+      { "name": "Vennela Kishore", "role": "Sujith (Friend)", "aliases": ["vennela kishore"] },
+      { "name": "Rahul Ramakrishna", "role": "Police Constable / Friend", "aliases": ["rahul ramakrishna"] },
+      { "name": "Anu Haasan", "role": "Anjali's Mother", "aliases": ["anu haasan", "anu hasan"] },
+      { "name": "Rohini", "role": "Arjun's Mother", "aliases": ["rohini"] },
+      { "name": "Sanjay Swaroop", "role": "Arjun's Father", "aliases": ["sanjay swaroop"] },
+      { "name": "Vidyullekha Raman", "role": "Anjali's Friend", "aliases": ["vidyullekha raman"] }
+    ],
+    "fullCrew": [
+      { "name": "Rahul Ravindran", "department": "Debut Director & Writer (National Award Winner)", "aliases": ["rahul ravindran"] },
+      { "name": "Prashanth R Vihari", "department": "Music Director", "aliases": ["prashanth r vihari", "prashanth vihari"] },
+      { "name": "Jaswanth Nadipalli", "department": "Producer (Presented by Annapurna Studios)", "aliases": ["jaswanth nadipalli", "annapurna studios", "nagarjuna"] },
+      { "name": "M. Sukumar", "department": "Cinematographer (DOP)", "aliases": ["m sukumar"] },
+      { "name": "Chota K. Prasad", "department": "Film Editor", "aliases": ["chota k prasad"] }
+    ],
+    "eraTrivia": [
+      "Released August 3, 2018 and won the 66th National Film Award for Best Original Screenplay (Rahul Ravindran)!",
+      "Marked actor Rahul Ravindran's (of 'Andala Rakshasi' fame) acclaimed directorial debut—presented by Nagarjuna's Annapurna Studios",
+      "Marked Punjabi actress Ruhani Sharma's widely praised Telugu cinema debut",
+      "Praised as one of the warmest, most grounded single-day Telugu romantic comedies—backed by Prashanth R Vihari's indie soundtrack ('Varshinchey', 'Mellaga Mellaga')"
+    ],
+    "iconicMoments": [
+      "An honest, awkward blind date that slowly turns into a heartfelt 24-hour Hyderabad walk-and-talk",
+      "Vennela Kishore and Rahul Ramakrishna stealing scenes with effortless deadpan humor",
+      "Anu Haasan's tender, deeply moving mother-daughter subplot"
+    ],
+    "pressHints": [
+      {
+        "id": "cls-1",
+        "category": "NATIONAL SCREENPLAY HONOR",
+        "difficulty": "HARD",
+        "headline": "Won the 66th National Film Award for Best Original Screenplay!",
+        "body": "Presented by Annapurna Studios in August 2018, this intimate slice-of-life gem took home the National Award for Best Original Screenplay—beating giant pan-India contenders.",
+        "unlockAfterReel": 0
+      },
+      {
+        "id": "cls-2",
+        "category": "ACTOR-TURNED-DIRECTOR DEBUT",
+        "difficulty": "MEDIUM",
+        "headline": "'Andala Rakshasi' Actor Rahul Ravindran's Acclaimed Directorial Debut",
+        "body": "Scored by indie favorite Prashanth R Vihari with crisp editing by Chota K. Prasad—earning huge critical love despite a modest release.",
+        "unlockAfterReel": 1
+      },
+      {
+        "id": "cls-3",
+        "category": "ONE-DAY ROM-COM & SUPPORTING CAST",
+        "difficulty": "MEDIUM",
+        "headline": "Unfolds Over One 24-Hour Blind Date + Vennela Kishore & Rahul Ramakrishna",
+        "body": "Features hilarious turns by Vennela Kishore and Rahul Ramakrishna alongside deeply touching performances by Rohini and Anu Haasan.",
+        "unlockAfterReel": 2
+      },
+      {
+        "id": "cls-4",
+        "category": "LEAD PAIR",
+        "difficulty": "WARM",
+        "headline": "Sushanth & Debutante Ruhani Sharma in Career-Best Grounded Roles",
+        "body": "Reinvented Akkineni family actor Sushanth as a relatable 27-year-old marriage-shy bachelor opposite debutante Ruhani Sharma.",
+        "unlockAfterReel": 3
+      },
+      {
+        "id": "cls-5",
+        "category": "WEDDING CARD PREFIX",
+        "difficulty": "EASY",
+        "headline": "Named After the 3-Word Telugu Blessing Printed Before Every Bride's Name!",
+        "body": "Every Telugu wedding invitation card prints these exact three short syllables right before the bride's name ('Chiranjeevi Lakshmi Sowbhagyavathi')!",
+        "unlockAfterReel": 4
+      }
+    ]
   }
 ]

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import Fuse from "fuse.js";
 import moviesData from "@/data/movies.json";
+import { isAuthenticated } from "@/lib/adminAuth";
+import { getIstDateKey } from "@/lib/istDate";
 import { getMovieById } from "@/lib/movieStore";
 import {
   BENCH_HECKLES,
@@ -1035,13 +1037,25 @@ export async function POST(req: NextRequest) {
 
     const movie =
       movieData ||
-      (movieId ? getMovieById(movieId) : undefined) ||
+      (movieId ? await getMovieById(movieId) : undefined) ||
       (movieId ? MOVIES.find((m) => m.id === movieId) : undefined);
     if (!movie) {
       return NextResponse.json(
         { error: "Invalid movie ID." },
         { status: 404 }
       );
+    }
+
+    // Prevent unauthenticated players from probing embargoed future daily cases
+    const todayIst = getIstDateKey();
+    if (movie.featuredDate && movie.featuredDate > todayIst) {
+      const authed = await isAuthenticated();
+      if (!authed) {
+        return NextResponse.json(
+          { error: "This case is embargoed by CBFC until 12:00 AM IST!" },
+          { status: 403 }
+        );
+      }
     }
 
     // Select the 2 active panel speakers + 1 sideline heckler for this reel

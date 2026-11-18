@@ -7,12 +7,15 @@ import {
   Calendar,
   Check,
   CheckCircle2,
+  Clock,
+  Cloud,
   Database,
   Edit3,
   ExternalLink,
   Film,
   Flame,
   KeyRound,
+  Lock,
   LogOut,
   Plus,
   RefreshCw,
@@ -27,6 +30,37 @@ import {
 } from "lucide-react";
 import { Movie, PERSONAS, PersonaId } from "@/lib/personas";
 import { formatReadableDate, getLocalDateKey } from "@/lib/gameStats";
+import MidnightCountdown from "./MidnightCountdown";
+
+interface StorageInfo {
+  backend: "redis" | "github" | "local-fs" | "ephemeral-tmp";
+  persistent: boolean;
+  label: string;
+  detail: string;
+}
+
+function addDaysToDateKey(dateKey: string, days: number): string {
+  const [y, m, d] = dateKey.split("-").map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d + days));
+  const yy = dt.getUTCFullYear();
+  const mm = String(dt.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(dt.getUTCDate()).padStart(2, "0");
+  return `${yy}-${mm}-${dd}`;
+}
+
+function getNextAvailableDateKey(movies: Movie[], todayKey: string): string {
+  const taken = new Set(
+    movies.map((m) => m.featuredDate).filter((d): d is string => Boolean(d))
+  );
+  // Start checking from tomorrow (IST) so new scheduled films never overwrite today's live game
+  for (let offset = 1; offset <= 365; offset++) {
+    const candidate = addDaysToDateKey(todayKey, offset);
+    if (!taken.has(candidate)) {
+      return candidate;
+    }
+  }
+  return addDaysToDateKey(todayKey, 1);
+}
 
 interface AdminPanelProps {
   onLogout: () => void;
@@ -72,7 +106,9 @@ const EMPTY_MOVIE_FORM: Partial<Movie> = {
 };
 
 export default function AdminPanel({ onLogout }: AdminPanelProps) {
-  const todayKey = getLocalDateKey();
+  const [todayKey, setTodayKey] = useState<string>(() => getLocalDateKey());
+  const [storageInfo, setStorageInfo] = useState<StorageInfo | null>(null);
+  const [vaultFilter, setVaultFilter] = useState<"all" | "upcoming" | "archive">("all");
 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loadingMovies, setLoadingMovies] = useState(true);
@@ -113,10 +149,16 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
   const loadMovies = async () => {
     setLoadingMovies(true);
     try {
-      const res = await fetch("/api/movies");
+      const res = await fetch("/api/movies", { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
         setMovies(data.movies || []);
+        if (data.todayIst) {
+          setTodayKey(data.todayIst);
+        }
+        if (data.storage) {
+          setStorageInfo(data.storage);
+        }
         if (data.movies?.length > 0 && !testMovieId) {
           setTestMovieId(data.movies[0].id);
         }
@@ -136,6 +178,7 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
     return movies.find((m) => m.featuredDate === todayKey);
   }, [movies, todayKey]);
 
+<<<<<<< HEAD
   const tomorrowKey = useMemo(() => {
     const d = new Date();
     d.setDate(d.getDate() + 1);
@@ -151,13 +194,51 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
     if (!targetDate) return null;
     return movies.find(
       (m) => m.featuredDate === targetDate && m.id !== formMovie.id
+=======
+  const tomorrowKey = useMemo(() => addDaysToDateKey(todayKey, 1), [todayKey]);
+
+  const upcomingMovies = useMemo(() => {
+    return movies
+      .filter((m) => Boolean(m.featuredDate && m.featuredDate > todayKey))
+      .sort((a, b) => (a.featuredDate || "").localeCompare(b.featuredDate || ""));
+  }, [movies, todayKey]);
+
+  const nextMidnightMovie = useMemo(() => {
+    return (
+      movies.find((m) => m.featuredDate === tomorrowKey) || upcomingMovies[0]
+    );
+  }, [movies, tomorrowKey, upcomingMovies]);
+
+  const nextFreeDateKey = useMemo(
+    () => getNextAvailableDateKey(movies, todayKey),
+    [movies, todayKey]
+  );
+
+  const dateConflictMovie = useMemo(() => {
+    if (!formMovie.featuredDate) return null;
+    return (
+      movies.find(
+        (m) =>
+          m.featuredDate === formMovie.featuredDate &&
+          m.id !== formMovie.id
+      ) || null
+>>>>>>> 0421d9ca4bef3b5376e8515fc60ce98489534089
     );
   }, [movies, formMovie.featuredDate, formMovie.id]);
 
   const filteredMovies = useMemo(() => {
-    if (!searchQuery.trim()) return movies;
+    let base = movies;
+    if (vaultFilter === "upcoming") {
+      base = upcomingMovies;
+    } else if (vaultFilter === "archive") {
+      base = movies
+        .filter((m) => !m.featuredDate || m.featuredDate <= todayKey)
+        .sort((a, b) => (b.featuredDate || "").localeCompare(a.featuredDate || ""));
+    }
+
+    if (!searchQuery.trim()) return base;
     const q = searchQuery.toLowerCase();
-    return movies.filter(
+    return base.filter(
       (m) =>
         m.title.toLowerCase().includes(q) ||
         m.hero.toLowerCase().includes(q) ||
@@ -165,11 +246,11 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
         m.genre.toLowerCase().includes(q) ||
         (m.featuredDate && m.featuredDate.includes(q))
     );
-  }, [movies, searchQuery]);
+  }, [movies, upcomingMovies, vaultFilter, todayKey, searchQuery]);
 
-  // Open Add Movie Modal in the middle of the screen
+  // Open Add Movie Modal in the middle of the screen (defaults to next unscheduled midnight slot!)
   const openNewMovieModal = () => {
-    setFormMovie({ ...EMPTY_MOVIE_FORM, featuredDate: todayKey });
+    setFormMovie({ ...EMPTY_MOVIE_FORM, featuredDate: nextFreeDateKey });
     setAltSpellingsStr("");
     setTropesStr("");
     setTriviaStr("");
@@ -313,21 +394,34 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
         throw new Error(data.error || "Failed to save movie");
       }
 
+      if (data.storage) {
+        setStorageInfo(data.storage);
+      }
+
       setSaveMessage({
+<<<<<<< HEAD
         type: "success",
         text: conflictingMovie && moviePayload.featuredDate
           ? `Movie "${moviePayload.title}" saved & scheduled for ${moviePayload.featuredDate} (reassigned from "${conflictingMovie.title}")!`
           : moviePayload.featuredDate
           ? `Movie "${moviePayload.title}" saved & scheduled for ${moviePayload.featuredDate}!`
           : `Movie "${moviePayload.title}" archived successfully in Film Vault!`,
+=======
+        type: data.persistent === false ? "error" : "success",
+        text:
+          data.message ||
+          `Movie "${moviePayload.title}" archived successfully in Film Vault!`,
+>>>>>>> 0421d9ca4bef3b5376e8515fc60ce98489534089
       });
 
       await loadMovies();
       setTestMovieId(moviePayload.id);
 
-      setTimeout(() => {
-        setIsModalOpen(false);
-      }, 1200);
+      if (data.persistent !== false) {
+        setTimeout(() => {
+          setIsModalOpen(false);
+        }, 1400);
+      }
     } catch (err) {
       setSaveMessage({
         type: "error",
@@ -464,15 +558,51 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
           </div>
         </header>
 
-        {/* TODAY'S CASE STATUS STRIP */}
-        <section className="bg-booth-900 border border-censor-gold/40 p-4 rounded-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
+        {/* STORAGE PERSISTENCE STATUS BANNER */}
+        {storageInfo && (
+          <section
+            className={`p-3.5 rounded-sm border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs ${
+              storageInfo.persistent
+                ? "bg-emerald-950/50 border-emerald-700/60 text-emerald-100"
+                : "bg-amber-950/60 border-amber-500/70 text-amber-100"
+            }`}
+          >
+            <div className="flex items-start gap-2.5">
+              {storageInfo.persistent ? (
+                <Cloud className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+              ) : (
+                <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+              )}
+              <div>
+                <div className="font-typewriter text-[11px] font-bold uppercase tracking-wider">
+                  {storageInfo.label}
+                </div>
+                <p className="font-sans text-xs opacity-90 mt-0.5">
+                  {storageInfo.detail}
+                </p>
+              </div>
+            </div>
+            <span
+              className={`font-typewriter text-[10px] font-bold uppercase px-2.5 py-1 rounded-[2px] shrink-0 ${
+                storageInfo.persistent
+                  ? "bg-emerald-800/70 text-emerald-100 border border-emerald-500/50"
+                  : "bg-amber-800/80 text-amber-100 border border-amber-400/60"
+              }`}
+            >
+              {storageInfo.persistent ? "12 AM IST AUTO-SYNC READY" : "ACTION NEEDED"}
+            </span>
+          </section>
+        )}
+
+        {/* TODAY'S CASE STATUS STRIP + MIDNIGHT AUTO-UNLOCK COUNTDOWN */}
+        <section className="bg-booth-900 border border-censor-gold/40 p-4 rounded-sm flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 shadow-md">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-sm bg-censor-gold/20 border border-censor-gold/60 flex items-center justify-center shrink-0">
               <Calendar className="w-5 h-5 text-censor-gold" />
             </div>
             <div>
               <span className="font-typewriter text-[10px] uppercase font-bold text-censor-gold tracking-widest block">
-                ACTIVE DAILY CASE • {formatReadableDate(todayKey)}
+                ACTIVE DAILY CASE (IST) • {formatReadableDate(todayKey)}
               </span>
               <h2 className="font-display font-bold text-lg text-parchment-50">
                 {todayMovie ? (
@@ -488,21 +618,43 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                   </span>
                 )}
               </h2>
+              <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
+                <span className="font-typewriter text-emerald-300 flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 shrink-0" />
+                  <span>
+                    UP NEXT AT 12:00 AM IST
+                    {nextMidnightMovie
+                      ? ` (${nextMidnightMovie.featuredDate}): ${nextMidnightMovie.title} (${nextMidnightMovie.year})`
+                      : ": No upcoming movie queued"}
+                  </span>
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="font-typewriter text-xs text-parchment-300">
-              Vault Total: <strong className="text-censor-gold">{movies.length} Films</strong>
-            </span>
-            <button
-              type="button"
-              onClick={loadMovies}
-              className="p-1.5 rounded-sm hover:bg-booth-800 text-parchment-300 hover:text-parchment-50"
-              title="Refresh Vault Data"
-            >
-              <RefreshCw className={`w-4 h-4 ${loadingMovies ? "animate-spin" : ""}`} />
-            </button>
+          <div className="flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end gap-1.5 self-stretch lg:self-auto justify-between">
+            <div className="text-censor-gold">
+              <MidnightCountdown
+                onMidnightRollover={(newKey) => {
+                  setTodayKey(newKey);
+                  loadMovies();
+                }}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-typewriter text-xs text-parchment-300">
+                Vault Total: <strong className="text-censor-gold">{movies.length} Films</strong> •{" "}
+                <strong className="text-emerald-300">{upcomingMovies.length} Scheduled</strong>
+              </span>
+              <button
+                type="button"
+                onClick={loadMovies}
+                className="p-1.5 rounded-sm hover:bg-booth-800 text-parchment-300 hover:text-parchment-50"
+                title="Refresh Vault Data"
+              >
+                <RefreshCw className={`w-4 h-4 ${loadingMovies ? "animate-spin" : ""}`} />
+              </button>
+            </div>
           </div>
         </section>
 
@@ -564,6 +716,29 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                 />
               </div>
 
+              <div className="flex flex-wrap items-center gap-1.5">
+                {(
+                  [
+                    { id: "all", label: `All (${movies.length})` },
+                    { id: "upcoming", label: `Upcoming 12 AM Queue (${upcomingMovies.length})` },
+                    { id: "archive", label: "Past / Live" },
+                  ] as const
+                ).map((pill) => (
+                  <button
+                    key={pill.id}
+                    type="button"
+                    onClick={() => setVaultFilter(pill.id)}
+                    className={`px-2.5 py-1.5 font-typewriter text-[10px] font-bold uppercase rounded-[2px] border transition-colors cursor-pointer ${
+                      vaultFilter === pill.id
+                        ? "bg-censor-gold text-booth-950 border-censor-gold"
+                        : "bg-booth-950 text-parchment-300 border-booth-700 hover:border-censor-gold/50"
+                    }`}
+                  >
+                    {pill.label}
+                  </button>
+                ))}
+              </div>
+
               <button
                 type="button"
                 onClick={openNewMovieModal}
@@ -589,6 +764,9 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                 <tbody className="divide-y divide-booth-800">
                   {filteredMovies.map((m) => {
                     const isPinnedToday = m.featuredDate === todayKey;
+                    const isFutureScheduled = Boolean(
+                      m.featuredDate && m.featuredDate > todayKey
+                    );
                     return (
                       <tr key={m.id} className="hover:bg-booth-800/50 transition-colors">
                         <td className="p-3 font-medium text-parchment-50">
@@ -614,16 +792,29 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                         </td>
                         <td className="p-3 font-typewriter text-xs">
                           {m.featuredDate ? (
-                            <span
-                              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] ${
-                                isPinnedToday
-                                  ? "bg-censor-gold text-booth-950 font-bold"
-                                  : "bg-booth-950 text-parchment-300 border border-booth-700"
-                              }`}
-                            >
-                              <Calendar className="w-3 h-3" />
-                              {m.featuredDate} {isPinnedToday ? "(TODAY)" : ""}
-                            </span>
+                            <div className="flex flex-col items-start gap-1">
+                              <span
+                                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] ${
+                                  isPinnedToday
+                                    ? "bg-censor-gold text-booth-950 font-bold"
+                                    : isFutureScheduled
+                                    ? "bg-emerald-950/70 text-emerald-200 border border-emerald-600/60 font-bold"
+                                    : "bg-booth-950 text-parchment-300 border border-booth-700"
+                                }`}
+                              >
+                                {isFutureScheduled ? (
+                                  <Lock className="w-3 h-3" />
+                                ) : (
+                                  <Calendar className="w-3 h-3" />
+                                )}
+                                {m.featuredDate} {isPinnedToday ? "(LIVE TODAY)" : ""}
+                              </span>
+                              {isFutureScheduled && (
+                                <span className="text-[9px] uppercase tracking-wider text-emerald-300/90">
+                                  Auto-unlocks 12:00 AM IST
+                                </span>
+                              )}
+                            </div>
                           ) : (
                             <span className="text-parchment-300/40">Not Scheduled</span>
                           )}
@@ -995,6 +1186,7 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
               )}
 
               {/* HIGHLIGHTED DATE SCHEDULER BAR */}
+<<<<<<< HEAD
               <div className="bg-amber-900/10 border-2 border-censor-gold p-4 rounded-sm space-y-3">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                   <div>
@@ -1121,6 +1313,54 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                         </p>
                       </div>
                     </div>
+=======
+              <div className="bg-amber-900/10 border-2 border-censor-gold p-3.5 rounded-sm space-y-2">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div>
+                    <label className="block font-typewriter text-xs uppercase font-bold text-censor-ink flex items-center gap-1.5">
+                      <Calendar className="w-4 h-4 text-censor-crimson" />
+                      <span>Scheduled Daily Case Date (12:00 AM IST Unlock) *</span>
+                    </label>
+                    <p className="font-sans text-[11px] text-censor-ink/75 mt-0.5">
+                      Locked securely on the server until <strong>12:00:00 AM IST</strong> on this exact date, then goes live automatically!
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                    <input
+                      type="date"
+                      required
+                      value={formMovie.featuredDate || nextFreeDateKey}
+                      onChange={(e) => setFormMovie({ ...formMovie, featuredDate: e.target.value })}
+                      className="px-3 py-2 bg-parchment-50 border-2 border-censor-ink rounded-sm text-xs font-typewriter font-bold text-censor-ink focus:outline-none focus:ring-2 focus:ring-censor-gold"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setFormMovie({ ...formMovie, featuredDate: nextFreeDateKey })}
+                      className="px-2.5 py-2 bg-censor-gold hover:bg-amber-500 text-booth-950 font-typewriter text-[10px] font-bold uppercase rounded-sm border border-censor-ink transition-colors cursor-pointer shrink-0"
+                      title={`Assign next available unscheduled date (${nextFreeDateKey})`}
+                    >
+                      Next Free ({nextFreeDateKey.slice(5)})
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormMovie({ ...formMovie, featuredDate: todayKey })}
+                      className="px-2.5 py-2 bg-censor-ink hover:bg-booth-800 text-parchment-50 font-typewriter text-[10px] font-bold uppercase rounded-sm border border-censor-ink transition-colors cursor-pointer shrink-0"
+                      title="Set to today's live date"
+                    >
+                      Today
+                    </button>
+                  </div>
+                </div>
+
+                {dateConflictMovie && (
+                  <div className="flex items-center gap-1.5 text-[11px] font-typewriter text-amber-900 bg-amber-200/70 border border-amber-700/40 px-2.5 py-1.5 rounded-sm">
+                    <AlertTriangle className="w-3.5 h-3.5 shrink-0 text-censor-crimson" />
+                    <span>
+                      Note: <strong>{formMovie.featuredDate}</strong> currently has{" "}
+                      <strong>&ldquo;{dateConflictMovie.title}&rdquo;</strong> — saving will move this film into that midnight slot.
+                    </span>
+>>>>>>> 0421d9ca4bef3b5376e8515fc60ce98489534089
                   </div>
                 )}
               </div>

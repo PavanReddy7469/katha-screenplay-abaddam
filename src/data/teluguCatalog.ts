@@ -27,7 +27,9 @@ export const TELUGU_IMDB_CATALOG: CatalogMovie[] = [
   { title: "Pedarayudu", year: 1995 },
   { title: "Ninne Pelladata", year: 1996 },
   { title: "Annamayya", year: 1997 },
+  { title: "Bavagaru Bagunnara?", year: 1998, aliases: ["Bavagaru Bagunnara"] },
   { title: "Tholi Prema", year: 1998 },
+  { title: "Raja", year: 1999 },
   { title: "Samarasimha Reddy", year: 1999 },
   { title: "Thammudu", year: 1999 },
 
@@ -40,6 +42,7 @@ export const TELUGU_IMDB_CATALOG: CatalogMovie[] = [
   { title: "Nuvvu Naaku Nachav", year: 2001 },
   { title: "Student No. 1", year: 2001 },
   { title: "Aadi", year: 2002 },
+  { title: "Chennakesava Reddy", year: 2002, aliases: ["Chenna Kesava Reddy"] },
   { title: "Idiot", year: 2002 },
   { title: "Indra", year: 2002 },
   { title: "Jayam", year: 2002 },
@@ -57,8 +60,10 @@ export const TELUGU_IMDB_CATALOG: CatalogMovie[] = [
   { title: "Varsham", year: 2004 },
   { title: "Venky", year: 2004 },
   { title: "Athadu", year: 2005, aliases: ["Atadu", "Athaadu"] },
+  { title: "Bhageeratha", year: 2005, aliases: ["Bhagiratha"] },
   { title: "Chatrapathi", year: 2005 },
   { title: "Nuvvostanante Nenoddantana", year: 2005 },
+  { title: "Bangaram", year: 2006 },
   { title: "Bommarillu", year: 2006, aliases: ["Bommarilu"] },
   { title: "Godavari", year: 2006 },
   { title: "Pokiri", year: 2006, aliases: ["Pokri", "Pokkiri"] },
@@ -84,6 +89,7 @@ export const TELUGU_IMDB_CATALOG: CatalogMovie[] = [
 
   // 2010s Hits & Landmarks
   { title: "Adhurs", year: 2010 },
+  { title: "Bindaas", year: 2010, aliases: ["Bindas"] },
   { title: "Brindavanam", year: 2010 },
   { title: "Darling", year: 2010 },
   { title: "Khaleja", year: 2010, aliases: ["Kaleja"] },
@@ -117,6 +123,7 @@ export const TELUGU_IMDB_CATALOG: CatalogMovie[] = [
   { title: "Yevadu", year: 2014 },
   { title: "Baahubali: The Beginning", year: 2015, aliases: ["Baahubali", "Bahubali", "Baahubali 1"] },
   { title: "Bhale Bhale Magadivoy", year: 2015 },
+  { title: "Pandaga Chesko", year: 2015, aliases: ["Pandaga Chesuko"] },
   { title: "S/O Satyamurthy", year: 2015 },
   { title: "Srimanthudu", year: 2015 },
   { title: "Temper", year: 2015 },
@@ -138,6 +145,7 @@ export const TELUGU_IMDB_CATALOG: CatalogMovie[] = [
   { title: "Aravinda Sametha Veera Raghava", year: 2018, aliases: ["Aravinda Sametha"] },
   { title: "Bharat Ane Nenu", year: 2018 },
   { title: "C/o Kancharapalem", year: 2018 },
+  { title: "Chi La Sow", year: 2018, aliases: ["Chilasow"] },
   { title: "Ee Nagaraniki Emaindi", year: 2018, aliases: ["ENE"] },
   { title: "Geetha Govindam", year: 2018 },
   { title: "Goodachari", year: 2018 },
@@ -208,5 +216,6 @@ export const TELUGU_IMDB_CATALOG: CatalogMovie[] = [
   { title: "Court: State vs A Nobody", year: 2025 },
   { title: "HIT: The Third Case", year: 2025 },
   { title: "OG", year: 2025, aliases: ["They Call Him OG"] },
+  { title: "Vishwanath & Sons", year: 2026, aliases: ["Vishwanath and Sons", "Viswanath & Sons"] },
 ];
 

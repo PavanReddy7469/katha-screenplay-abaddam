@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import Fuse from "fuse.js";
-import moviesData from "@/data/movies.json";
 import { TELUGU_IMDB_CATALOG } from "@/data/teluguCatalog";
-import { Movie } from "@/lib/personas";
+import { getIstDateKey } from "@/lib/istDate";
+import { getAllMovies } from "@/lib/movieStore";
+
+export const dynamic = "force-dynamic";
 
 export interface MovieSuggestion {
   title: string;
@@ -10,45 +12,11 @@ export interface MovieSuggestion {
   source: "catalog" | "imdb";
 }
 
-// Build combined deduplicated Telugu IMDb catalog once per serverless instance
-const COMBINED_CATALOG = (() => {
-  const byTitle = new Map<
-    string,
-    { title: string; year?: number; aliases: string[] }
-  >();
-
-  for (const item of TELUGU_IMDB_CATALOG) {
-    byTitle.set(item.title.toLowerCase(), {
-      title: item.title,
-      year: item.year,
-      aliases: item.aliases ?? [],
-    });
-  }
-
-  for (const m of moviesData as Movie[]) {
-    const key = m.title.toLowerCase();
-    const existing = byTitle.get(key);
-    byTitle.set(key, {
-      title: m.title,
-      year: m.year,
-      aliases: Array.from(
-        new Set([...(existing?.aliases ?? []), ...m.alternateSpellings])
-      ),
-    });
-  }
-
-  return Array.from(byTitle.values());
-})();
-
-const catalogFuse = new Fuse(COMBINED_CATALOG, {
-  keys: [
-    { name: "title", weight: 0.7 },
-    { name: "aliases", weight: 0.3 },
-  ],
-  threshold: 0.38,
-  ignoreLocation: true,
-  minMatchCharLength: 2,
-});
+interface CatalogEntry {
+  title: string;
+  year?: number;
+  aliases: string[];
+}
 
 interface ImdbSuggestionItem {
   id?: string;
@@ -115,7 +83,43 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ suggestions: [] });
   }
 
-  // 1. Fast fuzzy search against our 180+ Telugu IMDb catalog
+  // Merge static Telugu IMDb catalog + live released vault movies (excluding future embargoed movies)
+  const todayIst = getIstDateKey();
+  const vaultMovies = await getAllMovies();
+  const byTitle = new Map<string, CatalogEntry>();
+
+  for (const item of TELUGU_IMDB_CATALOG) {
+    byTitle.set(item.title.toLowerCase(), {
+      title: item.title,
+      year: item.year,
+      aliases: item.aliases ?? [],
+    });
+  }
+
+  for (const m of vaultMovies) {
+    if (m.featuredDate && m.featuredDate > todayIst) continue;
+    const key = m.title.toLowerCase();
+    const existing = byTitle.get(key);
+    byTitle.set(key, {
+      title: m.title,
+      year: m.year,
+      aliases: Array.from(
+        new Set([...(existing?.aliases ?? []), ...(m.alternateSpellings ?? [])])
+      ),
+    });
+  }
+
+  const catalogFuse = new Fuse(Array.from(byTitle.values()), {
+    keys: [
+      { name: "title", weight: 0.7 },
+      { name: "aliases", weight: 0.3 },
+    ],
+    threshold: 0.38,
+    ignoreLocation: true,
+    minMatchCharLength: 2,
+  });
+
+  // 1. Fast fuzzy search against Telugu catalog + released vault movies
   const localMatches: MovieSuggestion[] = catalogFuse
     .search(q, { limit: 6 })
     .map((r) => ({
@@ -144,4 +148,3 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({ suggestions: merged });
 }
-
