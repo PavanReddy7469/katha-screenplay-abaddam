@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const allMovies = getAllMovies();
+  const allMovies = await getAllMovies();
   const movie = getMovieForDate(requestedDate, allMovies);
   const releasedCount = allMovies.filter(
     (m) => !m.featuredDate || m.featuredDate <= todayIst

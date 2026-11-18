@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
       surrender?: boolean;
     };
 
-    const allMovies = getAllMovies();
+    const allMovies = await getAllMovies();
     const movie = allMovies.find((m) => m.id === body.movieId);
     if (!movie) {
       return NextResponse.json({ error: "Invalid case file." }, { status: 404 });

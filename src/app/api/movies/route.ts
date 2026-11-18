@@ -1,20 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isAuthenticated } from "@/lib/adminAuth";
+import { getIstDateKey } from "@/lib/istDate";
 import {
   deleteMovie,
   getAllMovies,
+  getStorageInfo,
   saveMovie,
   setMovieFeaturedDate,
 } from "@/lib/movieStore";
 import { Movie } from "@/lib/personas";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
+  // Protect the full movie vault (including future scheduled dates) behind Admin auth
+  const authed = await isAuthenticated();
+  if (!authed) {
+    return NextResponse.json(
+      { error: "Unauthorized: Censor Board passkey required" },
+      { status: 401 }
+    );
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const date = searchParams.get("date");
     const id = searchParams.get("id");
 
-    const movies = getAllMovies();
+    const movies = await getAllMovies({ forceFresh: true });
+    const storage = getStorageInfo();
+    const todayIst = getIstDateKey();
 
     if (id) {
       const match = movies.find((m) => m.id === id);
@@ -26,13 +41,21 @@ export async function GET(req: NextRequest) {
 
     if (date) {
       const match = movies.find((m) => m.featuredDate === date);
-      return NextResponse.json({ movie: match || null });
+      return NextResponse.json({ movie: match || null, todayIst, storage });
     }
 
-    return NextResponse.json({ movies, count: movies.length });
+    return NextResponse.json({
+      movies,
+      count: movies.length,
+      todayIst,
+      storage,
+    });
   } catch (err) {
     console.error("GET /api/movies error:", err);
-    return NextResponse.json({ error: "Failed to fetch movies" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch movies" },
+      { status: 500 }
+    );
   }
 }
 
@@ -55,7 +78,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Ensure id is clean slug
     const movieId =
       body.id?.trim() ||
       body.title
@@ -80,13 +102,24 @@ export async function POST(req: NextRequest) {
     const result = await saveMovie(movieData);
     return NextResponse.json({
       success: true,
-      message: `Movie "${movieData.title}" archived successfully in Film Vault.`,
+      persistent: result.persistent,
+      storage: result.storage,
+      message: result.persistent
+        ? `Movie "${movieData.title}" permanently saved${
+            movieData.featuredDate
+              ? ` and scheduled to unlock at 12:00 AM IST on ${movieData.featuredDate}`
+              : ""
+          }.`
+        : `Movie "${movieData.title}" saved to temporary storage only — configure GITHUB_TOKEN or Upstash Redis in Vercel so it persists until 12:00 AM IST!`,
       movie: movieData,
       count: result.movies.length,
     });
   } catch (err) {
     console.error("POST /api/movies error:", err);
-    return NextResponse.json({ error: "Failed to save movie" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to save movie" },
+      { status: 500 }
+    );
   }
 }
 
@@ -111,12 +144,17 @@ export async function PATCH(req: NextRequest) {
     const result = await setMovieFeaturedDate(movieId, featuredDate);
     return NextResponse.json({
       success: true,
-      message: `Assigned date ${featuredDate} to movie ${movieId}`,
+      persistent: result.persistent,
+      storage: result.storage,
+      message: `Scheduled movie ${movieId} for ${featuredDate} (12:00 AM IST)`,
       movies: result.movies,
     });
   } catch (err) {
     console.error("PATCH /api/movies error:", err);
-    return NextResponse.json({ error: "Failed to update date" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update date" },
+      { status: 500 }
+    );
   }
 }
 
@@ -134,17 +172,25 @@ export async function DELETE(req: NextRequest) {
     const id = searchParams.get("id");
 
     if (!id) {
-      return NextResponse.json({ error: "Movie ID is required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Movie ID is required" },
+        { status: 400 }
+      );
     }
 
     const result = await deleteMovie(id);
     return NextResponse.json({
       success: true,
+      persistent: result.persistent,
+      storage: result.storage,
       message: `Movie ${id} deleted from vault`,
       count: result.movies.length,
     });
   } catch (err) {
     console.error("DELETE /api/movies error:", err);
-    return NextResponse.json({ error: "Failed to delete movie" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to delete movie" },
+      { status: 500 }
+    );
   }
 }
