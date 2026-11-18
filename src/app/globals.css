@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --font-special-elite: "Special Elite", "Courier New", monospace;
+    --font-playfair: "Playfair Display", Georgia, serif;
+    --font-jakarta: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    --font-telugu: "Noto Sans Telugu", "Nirmala UI", sans-serif;
+  }
+
+  body {
+    @apply bg-booth-950 text-parchment-100 antialiased selection:bg-censor-gold/30 selection:text-parchment-50;
+  }
+}
+
+/* Authentic textured cream/parchment CBFC certificate paper */
+.cbfc-paper {
+  background-color: #f3e8cd;
+  background-image:
+    radial-gradient(ellipse at top left, rgba(255, 252, 240, 0.72), transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(186, 152, 92, 0.32), transparent 65%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(74, 52, 28, 0.028) 0px,
+      rgba(74, 52, 28, 0.028) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(74, 52, 28, 0.018) 0px,
+      rgba(74, 52, 28, 0.018) 1px,
+      transparent 1px,
+      transparent 6px
+    );
+  box-shadow:
+    inset 0 0 60px rgba(124, 86, 36, 0.25),
+    0 24px 60px rgba(0, 0, 0, 0.65);
+}
+
+/* Vintage double-lined official border */
+.cbfc-frame {
+  box-shadow:
+    inset 0 0 0 2px #3b2a1a,
+    inset 0 0 0 6px #f3e8cd,
+    inset 0 0 0 7.5px #3b2a1a;
+}
+
+/* Subtle cinema screening booth texture */
+.screening-room-bg {
+  background-color: #110d0a;
+  background-image:
+    radial-gradient(circle at 50% -10%, rgba(212, 155, 53, 0.14), transparent 55%),
+    radial-gradient(circle at 15% 85%, rgba(185, 28, 28, 0.08), transparent 45%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.014) 0px,
+      rgba(255, 255, 255, 0.014) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+}
+
+/* Distressed rubber-stamp appearance */
+.rubber-stamp {
+  border-style: double;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  mask-image: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.96) 55%,
+    rgba(0, 0, 0, 0.82) 100%
+  );
+}
+
+/* Film sprocket holes strip */
+.sprocket-strip {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 10px,
+    rgba(243, 232, 205, 0.16) 10px,
+    rgba(243, 232, 205, 0.16) 20px,
+    transparent 20px,
+    transparent 28px
+  );
+}
+
+/* Custom sleek scrollbar for chat transcript */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(14, 11, 9, 0.6);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(212, 155, 53, 0.35);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 155, 53, 0.55);
+}

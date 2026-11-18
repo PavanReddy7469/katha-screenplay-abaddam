@@ -1,0 +1,1351 @@
+import { NextRequest, NextResponse } from "next/server";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import Fuse from "fuse.js";
+import moviesData from "@/data/movies.json";
+import {
+  BENCH_HECKLES,
+  evaluateLieRule,
+  GameModeId,
+  Movie,
+  PERSONAS,
+  PersonaId,
+  selectPanelForTurn,
+} from "@/lib/personas";
+
+const MOVIES = moviesData as Movie[];
+
+interface HistoryItem {
+  role: "user" | "witness";
+  speaker?: PersonaId;
+  text: string;
+}
+
+interface InterrogateRequest {
+  movieId: string;
+  personaId?: GameModeId;
+  question: string;
+  questionNumber: number;
+  gajalaLieReels?: number[];
+  history?: HistoryItem[];
+}
+
+interface PanelStatement {
+  personaId: PersonaId;
+  reply: string;
+  wasLie: boolean;
+  claimedAnswer: "YES" | "NO";
+}
+
+type GroundTruth = "YES" | "NO" | "UNCERTAIN";
+type QuestionTopic =
+  | "cast"
+  | "crew"
+  | "year"
+  | "hype"
+  | "comedy"
+  | "action"
+  | "general";
+
+const SHORT_CINEMA_ACRONYMS = new Set([
+  "rrr",
+  "ntr",
+  "dsp",
+  "dop",
+  "vfx",
+  "cgi",
+  "cbi",
+  "ips",
+  "bgm",
+  "ssr",
+  "mmk",
+  "avpl",
+  "tv",
+  "maa",
+]);
+
+const NON_QUESTION_FILLERS = new Set([
+  "hi",
+  "hello",
+  "hey",
+  "hii",
+  "yo",
+  "sup",
+  "test",
+  "testing",
+  "asdf",
+  "asdfg",
+  "qwerty",
+  "lol",
+  "lmao",
+  "haha",
+  "bruh",
+  "bro",
+  "wtf",
+  "ok",
+  "okay",
+  "yes",
+  "no",
+  "idk",
+  "nothing",
+  "random",
+  "shit",
+  "blah",
+  "blabla",
+  "abc",
+  "xyz",
+]);
+
+const KNOWN_TOL_PEOPLE = [
+  "mahesh babu",
+  "mahesh",
+  "ram charan",
+  "ramcharan",
+  "jr ntr",
+  "ntr",
+  "tarak",
+  "prabhas",
+  "allu arjun",
+  "alluarjun",
+  "pawan kalyan",
+  "pavan kalyan",
+  "pawan",
+  "pavan",
+  "chiranjeevi",
+  "chiru",
+  "balakrishna",
+  "balayya",
+  "nagarjuna",
+  "venkatesh",
+  "nani",
+  "vijay deverakonda",
+  "ravi teja",
+  "raviteja",
+  "siddharth",
+  "rana daggubati",
+  "rana",
+  "sharwanand",
+  "varun tej",
+  "naga chaitanya",
+  "nithiin",
+  "nitin",
+  "ram pothineni",
+  "gopichand",
+  "samantha",
+  "kajal",
+  "anushka",
+  "tamannaah",
+  "tamanna",
+  "rashmika",
+  "pooja hegde",
+  "ileana",
+  "genelia",
+  "alia bhatt",
+  "trisha",
+  "sai pallavi",
+  "keerthy suresh",
+  "sreeleela",
+  "shruti haasan",
+  "rakul preet",
+  "raashi khanna",
+  "mrunal thakur",
+  "rajamouli",
+  "trivikram",
+  "sukumar",
+  "puri jagannadh",
+  "puri",
+  "boyapati",
+  "koratala siva",
+  "sandeep reddy vanga",
+  "vamshi paidipally",
+  "sekhar kammula",
+  "nag ashwin",
+  "prashanth neel",
+  "harish shankar",
+  "anil ravipudi",
+  "bhaskar",
+  "mani sharma",
+  "keeravani",
+  "devi sri prasad",
+  "dsp",
+  "thaman",
+  "anirudh",
+  "mickey j meyer",
+  "ilayaraja",
+  "rahman",
+  "brahmanandam",
+  "prakash raj",
+  "sunil",
+  "ali",
+  "vennela kishore",
+  "sonu sood",
+  "jagapathi babu",
+  "rao ramesh",
+  "fahadh faasil",
+  "kota srinivasa rao",
+  "sayaji shinde",
+  "nassar",
+  "tanikella bharani",
+  "brahmaji",
+  "rajiv kanakala",
+  "rahul dev",
+  "murali mohan",
+  "k v guhan",
+  "kv guhan",
+  "guhan",
+  "sreekar prasad",
+  "peter hein",
+  "sirivennela",
+  "thota tharani",
+  "k viswanath",
+  "viswanath",
+  "allu aravind",
+  "geetha arts",
+  "senthil kumar",
+  "kk senthil kumar",
+  "kotagiri",
+  "vijayendra prasad",
+  "dev gill",
+  "srihari",
+  "sarath babu",
+  "chandrabose",
+  "mumaith khan",
+  "kim sharma",
+  "kamalakannan",
+  "ravinder",
+  "rathnavelu",
+  "naveen nooli",
+  "mythri",
+  "mythri movie makers",
+  "ram lakshman",
+  "aadhi pinisetty",
+  "aadhi",
+  "anasuya",
+  "naresh",
+  "rohini",
+  "ajay ghosh",
+  "sudeep",
+  "kiccha sudeep",
+  "sai korrapati",
+  "vaaraahi",
+  "makuta",
+  "srinivasa reddy",
+  "thagubothu ramesh",
+  "dhanraj",
+  "ramajogayya sastry",
+];
+
+function escapeRegex(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function matchesAlias(questionLower: string, alias: string): boolean {
+  const clean = alias.toLowerCase().replace(/\./g, "").trim();
+  if (!clean) return false;
+  const qNorm = questionLower.replace(/\./g, " ");
+  const regex = new RegExp(`\\b${escapeRegex(clean)}\\b`, "i");
+  return regex.test(qNorm);
+}
+
+function isObviousGibberish(rawQuestion: string): boolean {
+  const trimmed = rawQuestion.trim();
+  const clean = trimmed.toLowerCase().replace(/[^a-z0-9\s]/g, "").trim();
+
+  if (!clean) return true;
+  if (/^(19\d{2}|20\d{2})$/.test(clean)) return false;
+  if (SHORT_CINEMA_ACRONYMS.has(clean)) return false;
+  if (clean.length < 3) return true;
+  if (NON_QUESTION_FILLERS.has(clean)) return true;
+  if (/^(.)\1+$/.test(clean.replace(/\s+/g, ""))) return true;
+
+  const words = clean.split(/\s+/).filter(Boolean);
+  if (
+    words.every(
+      (w) =>
+        NON_QUESTION_FILLERS.has(w) ||
+        (/^\d+$/.test(w) && !/^(19\d{2}|20\d{2})$/.test(w))
+    )
+  ) {
+    return true;
+  }
+
+  if (words.length === 1) {
+    const w = words[0];
+    if (!/[aeiouy]/.test(w) && !SHORT_CINEMA_ACRONYMS.has(w)) {
+      return true;
+    }
+    if (/[bcdfghjklmnpqrstvwxz]{5,}/.test(w)) {
+      return true;
+    }
+  }
+
+  const validWords = words.filter(
+    (w) =>
+      /[aeiouy]/.test(w) ||
+      SHORT_CINEMA_ACRONYMS.has(w) ||
+      /^(19\d{2}|20\d{2})$/.test(w)
+  );
+  return validWords.length === 0;
+}
+
+function getInvalidQuestionRoast(
+  personaId: PersonaId,
+  rawQuestion: string,
+  history: HistoryItem[]
+): string {
+  const snippet = rawQuestion.trim().slice(0, 24);
+  const roasts: Record<PersonaId, string[]> = {
+    relangi: [
+      `Haha babu, "${snippet}" ante secret cinema code aa? Manushulu ante ne manchollu, kaani proper Yes/No movie question adugu raa—reel cut avvaledu!`,
+      `Ayyo babu, "${snippet}" artham kaaledu! Ask about a hero, director, year, song, or award—your film reel is completely safe!`,
+      `Choodu babu, smile tho oka real Tollywood Yes/No question adugu! "${snippet}" ki answer ela cheppanu? No reel deducted!`,
+    ],
+    gajala: [
+      `Ayyo, "${snippet}" ante enti sir?! Washing machine keyboard meeda padinda? Ask a proper Yes/No cinema question—CEO Gajala refunded your reel!`,
+      `Brain use cheyyandi! "${snippet}" is syntax error in Washington D.C. standards! Ask about cast, crew, release year, or hype—no reel cut!`,
+      `Hello, Sonic Solutions customer care kaadu idi! "${snippet}" is total corporate junk data. Ask a real Yes/No movie question—reel saved!`,
+    ],
+    pandey: [
+      `FRUSTRATION! What is "${snippet}"?! Are you typing with your elbows in my screening room?! Ask a real Yes/No movie question—no reel cut!`,
+      `Point ki raa! "${snippet}" makes zero sense! Ask about an actor, director, year, or scene before I lose my temper—reel refunded!`,
+      `Inspector Kill Bill Pandey doesn't answer gibberish like "${snippet}"! Ask a proper Yes/No question—your reel is still intact!`,
+    ],
+  };
+
+  const used = new Set(
+    history.filter((h) => h.role === "witness").map((h) => h.text.trim())
+  );
+  const options = roasts[personaId];
+  const fresh = options.filter((line) => !used.has(line));
+  const pool = fresh.length > 0 ? fresh : options;
+  return pool[rawQuestion.length % pool.length];
+}
+
+function detectTopic(rawQuestion: string): QuestionTopic {
+  const q = rawQuestion.toLowerCase();
+
+  if (
+    /\b(19\d{2}|20\d{2}|year|release|released|decade|80s|90s|2000s|2010s|2020s|january|february|march|april|may|june|july|august|september|october|november|december|old|recent|classic)\b/.test(
+      q
+    )
+  ) {
+    return "year";
+  }
+  if (
+    /\b(direct|director|directed|music|compos\w*|cinematograph\w*|dop|cameraman|editor|editing|produc\w*|banner|lyric\w*|stunt\w*|choreograph\w*|writer|written|art director)\b/.test(
+      q
+    )
+  ) {
+    return "crew";
+  }
+  if (
+    /\b(tv|maa tv|telecast|award|nandi|filmfare|national|oscar|box office|overseas|remake|hindi|bengali|poland|kurnool|1000 days|hype|record|delay|shoot|budget|hit|blockbuster|cult|meme|cameo|remix)\b/.test(
+      q
+    )
+  ) {
+    return "hype";
+  }
+  if (
+    /\b(brahmanandam|brahmi|sunil|comedy|funny|laugh|joke|pappu|humor)\b/.test(q)
+  ) {
+    return "comedy";
+  }
+  if (
+    /\b(action|fight|fights|fighting|stunt|sniper|gun|rain|train|faction|mass|revenge|police|cbi|sword|horse|war|battle|helicopter)\b/.test(
+      q
+    )
+  ) {
+    return "action";
+  }
+  if (
+    /\b(hero|heroine|actor|actress|acted|act|cast|starring|played|villain|cameo|role)\b/.test(
+      q
+    ) ||
+    KNOWN_TOL_PEOPLE.some((person) => matchesAlias(q, person))
+  ) {
+    return "cast";
+  }
+  return "general";
+}
+
+function looksLikeRealMovieQuestion(rawQuestion: string): boolean {
+  const q = rawQuestion.toLowerCase().trim();
+  const words = q
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (words.length >= 2) {
+    // Starts with or contains standard English question/movie verbs or ends with "?"
+    if (
+      q.endsWith("?") ||
+      /\b(is|are|was|were|did|does|do|has|have|had|can|will|acted|act|star|starring|hero|heroine|director|directed|music|composer|movie|film|release|released|year|song|fight|love|comedy|action|award|shot|remake|villain|cameo|producer|banner|character|story|scene|role|cast|crew|telugu)\b/.test(
+        q
+      )
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function evaluateMovieFact(movie: Movie, rawQuestion: string): GroundTruth {
+  const q = rawQuestion.toLowerCase().trim();
+  const qNorm = q.replace(/\./g, " ");
+
+  const betweenMatch = q.match(
+    /between\s+(19\d{2}|20\d{2})\s+(?:and|to|-)\s+(19\d{2}|20\d{2})/
+  );
+  if (betweenMatch) {
+    const start = parseInt(betweenMatch[1], 10);
+    const end = parseInt(betweenMatch[2], 10);
+    return movie.year >= Math.min(start, end) &&
+      movie.year <= Math.max(start, end)
+      ? "YES"
+      : "NO";
+  }
+
+  const afterMatch = q.match(
+    /(?:after|post|later than|newer than|since)\s+(19\d{2}|20\d{2})/
+  );
+  if (afterMatch) {
+    return movie.year > parseInt(afterMatch[1], 10) ? "YES" : "NO";
+  }
+
+  const beforeMatch = q.match(
+    /(?:before|pre|earlier than|older than|prior to)\s+(19\d{2}|20\d{2})/
+  );
+  if (beforeMatch) {
+    return movie.year < parseInt(beforeMatch[1], 10) ? "YES" : "NO";
+  }
+
+  const exactYearMatch = q.match(/\b(19\d{2}|20\d{2})\b/);
+  if (exactYearMatch) {
+    return movie.year === parseInt(exactYearMatch[1], 10) ? "YES" : "NO";
+  }
+
+  if (/\b(1980s|80s|eighties)\b/.test(q)) {
+    return movie.year >= 1980 && movie.year <= 1989 ? "YES" : "NO";
+  }
+  if (/\b(1990s|90s|nineties)\b/.test(q)) {
+    return movie.year >= 1990 && movie.year <= 1999 ? "YES" : "NO";
+  }
+  if (/\b(2000s|two thousands)\b/.test(q)) {
+    return movie.year >= 2000 && movie.year <= 2009 ? "YES" : "NO";
+  }
+  if (/\b(2010s)\b/.test(q)) {
+    return movie.year >= 2010 && movie.year <= 2019 ? "YES" : "NO";
+  }
+  if (/\b(2020s|recent|covid|pandemic)\b/.test(q)) {
+    return movie.year >= 2020 ? "YES" : "NO";
+  }
+  if (
+    movie.releaseMonth &&
+    /\b(january|february|march|april|may|june|july|august|september|october|november|december)\b/.test(
+      q
+    )
+  ) {
+    const monthAsked = q.match(
+      /\b(january|february|march|april|may|june|july|august|september|october|november|december)\b/
+    )?.[1];
+    if (monthAsked) {
+      return movie.releaseMonth.toLowerCase().includes(monthAsked)
+        ? "YES"
+        : "NO";
+    }
+  }
+
+  const askingAboutDirection = /\b(direct|director|directed)\b/.test(q);
+  const askingAboutMusic = /\b(music|composer|composed|score|bgm)\b/.test(q);
+  const askingAboutHero = /\b(hero|lead actor)\b/.test(q);
+  const askingAboutHeroine = /\b(heroine|lead actress)\b/.test(q);
+
+  if (movie.fullCrew && movie.fullCrew.length > 0) {
+    for (const crew of movie.fullCrew) {
+      const names = [crew.name, ...(crew.aliases ?? [])];
+      if (names.some((alias) => matchesAlias(qNorm, alias))) {
+        const dept = crew.department.toLowerCase();
+        if (askingAboutMusic && !dept.includes("music")) return "NO";
+        if (askingAboutDirection && !dept.includes("director")) return "NO";
+        return "YES";
+      }
+    }
+  }
+
+  if (movie.fullCast && movie.fullCast.length > 0) {
+    for (const member of movie.fullCast) {
+      const names = [member.name, ...(member.aliases ?? [])];
+      if (names.some((alias) => matchesAlias(qNorm, alias))) {
+        const roleLower = member.role.toLowerCase();
+        if (askingAboutDirection) return "NO";
+        if (askingAboutMusic) return "NO";
+        if (askingAboutHero && !roleLower.includes("hero")) return "NO";
+        if (askingAboutHeroine && !roleLower.includes("heroine")) return "NO";
+        return "YES";
+      }
+    }
+  }
+
+  // Fuzzy cast/crew check via Fuse.js (handles typos like "rajmouli", "samanta", "sudeepa")
+  const queryTokens = qNorm
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter(
+      (w) =>
+        w.length >= 4 &&
+        !/^(does|this|movie|film|have|there|with|from|that|what|about|made|release|released|directed|director|hero|heroine|acted|acting|actor|actress|music|composer|worked|starring|played|character|telugu|cinema|song|songs|fight|fights|love|story|award|awards)$/.test(
+          w
+        )
+    );
+
+  const queryPhrases: string[] = [...queryTokens];
+  for (let i = 0; i < queryTokens.length - 1; i++) {
+    queryPhrases.push(`${queryTokens[i]} ${queryTokens[i + 1]}`);
+  }
+
+  if (queryPhrases.length > 0) {
+    const moviePeopleEntries = [
+      ...(movie.fullCast?.flatMap((c) => [c.name, ...(c.aliases ?? [])]) ?? []),
+      ...(movie.fullCrew?.flatMap((c) => [c.name, ...(c.aliases ?? [])]) ?? []),
+    ].map((n) => n.toLowerCase().replace(/\./g, " ").trim());
+
+    if (moviePeopleEntries.length > 0) {
+      const moviePeopleFuse = new Fuse(moviePeopleEntries, {
+        threshold: 0.24,
+        includeScore: true,
+        minMatchCharLength: 4,
+      });
+
+      for (const phrase of queryPhrases) {
+        const res = moviePeopleFuse.search(phrase);
+        if (res.length > 0 && (res[0].score ?? 1) <= 0.24) {
+          if (
+            askingAboutDirection &&
+            !movie.director.toLowerCase().includes(res[0].item)
+          ) {
+            return "NO";
+          }
+          if (
+            askingAboutMusic &&
+            !movie.music.toLowerCase().includes(res[0].item)
+          ) {
+            return "NO";
+          }
+          return "YES";
+        }
+      }
+    }
+  }
+
+  const movieCastCrewText = [
+    movie.hero,
+    movie.heroine,
+    movie.director,
+    movie.music,
+    ...(movie.fullCast?.flatMap((c) => [c.name, ...(c.aliases ?? [])]) ?? []),
+    ...(movie.fullCrew?.flatMap((c) => [c.name, ...(c.aliases ?? [])]) ?? []),
+  ]
+    .join(" ")
+    .toLowerCase()
+    .replace(/\./g, " ");
+
+  for (const person of KNOWN_TOL_PEOPLE) {
+    if (matchesAlias(qNorm, person)) {
+      return movieCastCrewText.includes(person) ? "YES" : "NO";
+    }
+  }
+
+  const fullDossierText = [
+    movie.title,
+    movie.genre,
+    movie.iconicProp,
+    movie.hint,
+    ...(movie.tropes ?? []),
+    ...(movie.eraTrivia ?? []),
+    ...(movie.iconicMoments ?? []),
+    ...(movie.pressHints?.map((h) => `${h.headline} ${h.body}`) ?? []),
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  const domainChecks: Array<[RegExp, string[]]> = [
+    [
+      /\b(maa tv|star maa|television|tv telecast|satellite|sunday)\b/,
+      ["maa tv", "telecast"],
+    ],
+    [
+      /\b(national award|national film award)\b/,
+      ["national film award", "national award"],
+    ],
+    [/\b(nandi award|nandi)\b/, ["nandi"]],
+    [/\b(filmfare)\b/, ["filmfare"]],
+    [/\b(oscar|academy award|naatu)\b/, ["oscar", "naatu"]],
+    [
+      /\b(1000 days|thousand days|kurnool|industry hit|box office record|non-baahubali|200 crore)\b/,
+      ["1,000", "kurnool", "industry hit", "non-baahubali", "200+ crore"],
+    ],
+    [/\b(audiography|sound mixing|sound design)\b/, ["audiography", "sound mixing"]],
+    [/\b(fly|housefly|insect|makkhi|micro-art|miniature|goggles|billionaire|mansion|kannada)\b/, ["fly", "housefly", "makkhi", "micro-art", "miniature", "goggles", "billionaire", "kannada"]],
+    [/\b(toronto|cannes|festival|shanghai|tamil|naan ee)\b/, ["toronto", "cannes", "festival", "shanghai", "naan ee", "tamil"]],
+    [/\b(godavari|konaseema|rajahmundry|lungi|pump|motor|deaf|hearing|election)\b/, ["godavari", "konaseema", "rajahmundry", "lungi", "pump", "motor", "deaf", "election"]],
+    [/\b(item song|special song|jigelu|cameo|guest appearance|remix)\b/, ["cameo", "remix", "guest", "special song", "jigelu"]],
+    [
+      /\b(kutch|badami|rajasthan|desert|fort|horse|chariot|sword)\b/,
+      ["kutch", "badami", "rajasthan", "horse", "chariot", "sword"],
+    ],
+    [
+      /\b(vfx|special effects|cgi|choreograph\w*)\b/,
+      ["special effects", "vfx", "choreograph"],
+    ],
+    [/\b(poland|europe|foreign)\b/, ["poland", "europe"]],
+    [
+      /\b(remake|remade|hindi|bengali)\b/,
+      ["remade", "remake", "hindi", "bengali"],
+    ],
+    [/\b(overseas|usa|us box office)\b/, ["overseas", "united states"]],
+    [
+      /\b(delay|3 years|three years|long production)\b/,
+      ["three years", "delay"],
+    ],
+    [
+      /\b(first collaboration|first time|first film together)\b/,
+      ["first collaboration", "first feature film"],
+    ],
+    [
+      /\b(rain fight|rain action|slow motion|slow-motion)\b/,
+      ["rain", "slow-motion"],
+    ],
+    [/\b(pappu|dinner|wedding)\b/, ["pappu", "wedding", "dinner"]],
+    [/\b(faction|rayalaseema)\b/, ["faction", "rayalaseema"]],
+    [/\b(village|rural|joint family|family)\b/, ["village", "rural", "family"]],
+    [
+      /\b(sniper|hitman|assassin|gun|train|railway)\b/,
+      ["sniper", "hitman", "train", "railway"],
+    ],
+    [/\b(cbi|police|cop|investigation|officer)\b/, ["cbi", "police", "officer"]],
+    [
+      /\b(reincarnat\w*|rebirth|past life|previous birth|400 years)\b/,
+      ["reincarnat", "rebirth", "400-year"],
+    ],
+    [
+      /\b(period|historical|ancient|kingdom|british|princess|warrior)\b/,
+      ["period", "historical", "kingdom", "british", "princess", "warrior"],
+    ],
+    [/\b(pan[- ]?india|sequel|part 2|franchise)\b/, ["pan-india", "sequel"]],
+    [
+      /\b(action|fight|fights|fighting|stunt|helicopter|battle)\b/,
+      ["action", "stunt", "fight", "battle", "helicopter"],
+    ],
+    [
+      /\b(comedy|funny|humor|laugh)\b/,
+      ["comedy", "comic", "hilarious", "witty"],
+    ],
+    [/\b(love|romance|romantic)\b/, ["romance", "romantic", "love"]],
+    [
+      /\b(song|songs|soundtrack|album|music)\b/,
+      ["song", "soundtrack", "music", "chartbuster"],
+    ],
+  ];
+
+  for (const [regex, needles] of domainChecks) {
+    if (regex.test(q)) {
+      return needles.some((needle) => fullDossierText.includes(needle))
+        ? "YES"
+        : "NO";
+    }
+  }
+
+  const stopWords = new Set([
+    "does",
+    "this",
+    "movie",
+    "film",
+    "have",
+    "there",
+    "with",
+    "from",
+    "that",
+    "what",
+    "about",
+    "made",
+    "release",
+    "released",
+    "directed",
+    "hero",
+    "heroine",
+    "main",
+    "character",
+    "story",
+    "plot",
+    "telugu",
+    "tollywood",
+    "cinema",
+    "very",
+    "much",
+    "more",
+    "than",
+    "been",
+    "into",
+    "they",
+    "them",
+    "some",
+    "work",
+    "worked",
+    "acted",
+    "part",
+  ]);
+
+  const keywords = q
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter((w) => w.length >= 4 && !stopWords.has(w));
+
+  if (
+    keywords.length > 0 &&
+    keywords.some((kw) => fullDossierText.includes(kw))
+  ) {
+    return "YES";
+  }
+
+  // If it's a genuinely formed movie question (e.g. "did pavan kalyan act in it?" or "was it shot in London?")
+  // and none of its entities/facts exist in this movie's dossier -> cleanly answer NO!
+  if (looksLikeRealMovieQuestion(rawQuestion)) {
+    return "NO";
+  }
+
+  return "UNCERTAIN";
+}
+
+const SIMULATOR_BANKS: Record<
+  PersonaId,
+  Record<"YES" | "NO", Record<QuestionTopic, string[]>>
+> = {
+  relangi: {
+    YES: {
+      cast: [
+        "Ayyo babu, 100% correct cheppav! Yes raa, aa artist ee cinema lo chala adbhuthamga chesaru—manushulu ante ne manchollu!",
+        "Abba, entha sharp memory babu! Avunu, pakka unnaru ee casting lo—choodagane mukham lo chirunavvu vasthundi!",
+        "Correct-u babu! Yes, full screen presence icharu ee movie lo—nuvvu nijanga Tollywood encyclopedia raa!",
+      ],
+      crew: [
+        "Wah babu, technician credits kuda pattesava? Yes raa, 100% vaalle work chesaru—entha manchi team effort adi!",
+        "Avunu babu, exact match! Behind the camera magic motham aa talent valle vachindi—chala santhosham!",
+        "Spot on raa! Yes, aa crew member ee movie ki pranam posaru—keep smiling and keep digging!",
+      ],
+      year: [
+        "Yes babu, time calculation lo nuvvu topper raa! Aa era lo theatre atmosphere gurthosthe ippatiki happy ga anipisthundi!",
+        "100% avunu! Aa timeline pakka correct—appati rojulu entha bagundevo kadha babu!",
+        "Correct cheppav raa! Yes, aa release period exact ga match ayyindi—brilliant deduction!",
+      ],
+      hype: [
+        "Ayyo avunu babu! Aa buzz, aa cult status motham 100% nijame—prathi intlo adhe charcha appatlo!",
+        "Yes raa, chala goppa trivia pattesav! Aa hype and legacy ippatiki chekku chedaraledu—santhosham!",
+        "Pakka yes babu! News papers nundi theatre screens varaku adhi 100% confirmed history!",
+      ],
+      comedy: [
+        "Haha, yes babu! Navvulu puvvulu laaga poosthayi ee movie lo—aa comedy timing ki hats off!",
+        "Avunu raa! Family motham kurchoni navvukune aa iconic humor 100% ikkade undi!",
+        "100% yes babu! Smiling faces guarantee chese aa laughter track pakka undi!",
+      ],
+      action: [
+        "Yes babu, chala stylish ga untundi! Action kuda oka kala laaga teesarandi—100% avunu!",
+        "Correct-u raa! Aa adrenaline element pakka ee cinema lo blast avuthundi—bravo!",
+        "Avunu babu! Mass and class kalisina aa energy 100% ee film lo undi!",
+      ],
+      general: [
+        "Ayyo babu, 100% correct cheppav! Yes raa, nee brain chaala sharp ga panichesthondi!",
+        "Abba, entha santhosham! Absolutely yes babu—keep smiling, you're getting super close!",
+        "Avunu raa, pakka match! Manushulu ante ne manchollu, nee guesswork anthakanna manchidi!",
+      ],
+    },
+    NO: {
+      cast: [
+        "Ayyo babu, vaallu kuda goppa artists eh—kaani ee film lo vere adbhuthamaina casting team shine ayyaru raa!",
+        "Haha, entha manchi name cheppav! Vaallu vere superhit movies lo busy ga unnaru, ee cinema vere stars tho nadusthundi babu!",
+        "Manushulu ante ne manchollu babu, kaani ee role sheet lo aa name kanipinchakunda vere legends entry icharu!",
+      ],
+      crew: [
+        "Entha respectable technician name cheppav babu! Kaani ee movie credits lo vere brilliant crew member signature undi raa!",
+        "Haha, good try babu! Ee film lo aa department ni vere super talented artist handle chesaru—keep smiling!",
+        "Chala manchi guess raa, kaani ee project lo vere visionary crew team magic chesaru!",
+      ],
+      year: [
+        "Ayyo babu, calendar konchem atu itu ayyindi! Ee cinema vere golden era lo release ayyi andari manasulu geluchukundi raa!",
+        "Haha, close guess babu! Kaani timeline konchem shift chesi alochinchu—inkoka lovely period lo ee film vachindi!",
+        "Time anedi manchi mitra babu, kaani ee movie aa window bayata vere unforgettable year lo theatre lo ki vachindi!",
+      ],
+      hype: [
+        "Ayyo, adi kuda interesting trivia ne babu—kaani ee movie fame vere iconic record valla vachindi raa!",
+        "Entha creative thought babu! Kaani ee film news buzz oka completely different reason tho viral ayyindi!",
+        "Manchi angle pattav raa, kaani ee cinema hype story inkoka unique direction lo saagindi!",
+      ],
+      comedy: [
+        "Navvu eppudu manchide babu, kaani nuvvu adigina aa specific flavor kakunda vere style lo ee movie entertain chesthundi!",
+        "Haha, good smile babu! Aa exact element skip chesi director vere wonderful spice mix chesaru!",
+        "Chala cute question raa—kaani ee movie comedy track inkoka distinct route teesukundi!",
+      ],
+      action: [
+        "Ayyo babu, enduku antha serious tone? Adi kakapoyina ee movie vere thrilling, classy style lo saaguthundi raa!",
+        "Manchi guess babu, kaani aa specific action trope badulu vere sleek style pettaru ee cinemalo!",
+        "Cheer up babu! Ee screenplay aa route vellakunda oka completely different, super engaging path pick chesindi!",
+      ],
+      general: [
+        "Ayyo babu, enduku negative maatalu? Adi kakapoyina ee cinema inko completely different, adhbuthamaina direction lo velthundi raa!",
+        "Haha, manushulu ante ne manchollu babu! Nee thought bagundi, kaani ee story vere path lo happy ga nadusthundi!",
+        "Entha cute question babu! Adi ee film lo skip chesi, makers inko super unique flavor pettaru—try another angle!",
+      ],
+    },
+  },
+  gajala: {
+    YES: {
+      cast: [
+        "100% YES! As CEO of Sonic Solutions, I personally verified the casting payroll in Washington D.C.—that exact star is in this movie!",
+        "YES, obviously! Brain use cheyyandi—their name is printed in bold letters on this film's call sheet. Corporate guarantee!",
+        "Absolute YES! Even my washing machine knows that actor crushed their role in this cinema!",
+      ],
+      crew: [
+        "YES sir, 100% KPI-approved credit! That exact crew mastermind worked on this project—I audited their invoice myself!",
+        "Big fat corporate YES! Technical excellence certified by Gajala, Washington D.C.—they are definitely on the crew roster!",
+        "YES! Synergy level maximum—that exact behind-the-scenes legend delivered pure magic on this film!",
+      ],
+      year: [
+        "YES! Check my Washington D.C. Rolex calendar—that release timeframe is 100% benchmark-accurate!",
+        "Totally YES! My Sonic Solutions database timestamp confirms that exact era without a single bug!",
+        "Affirmative YES! Box-office fiscal quarter matches 100%—next KPI question please!",
+      ],
+      hype: [
+        "100% YES! That exact hype and news buzz broke box-office records bigger than my Sonic Solutions IPO!",
+        "YES, hundred percent! Trade analysts from Hyderabad to Washington D.C. couldn't stop talking about that exact fact!",
+        "Confirmed YES! Pure viral corporate synergy—that trivia is 100% legit!",
+      ],
+      comedy: [
+        "YES! Comedy ROI is off the charts—audiences laughed harder than when I explain software architecture!",
+        "100% YES! That exact humor track is peak entertainment equity, I am telling you!",
+        "YES sir! Zero bugs, 100% laughs—that comedic gold is right inside this film!",
+      ],
+      action: [
+        "YES! High-voltage action synergy—stunts smoother than a brand-new Sonic Solutions washing machine spin cycle!",
+        "100% YES! Action deliverable verified and signed off by CEO Gajala!",
+        "Absolute YES! Pure adrenaline KPI right there in the screenplay!",
+      ],
+      general: [
+        "100% YES! I am Gajala from Washington D.C., CEO of Sonic Solutions—take my corporate guarantee!",
+        "YES, obviously! Brain use cheyyandi—that exact detail is 100% inside this cinema!",
+        "Absolute YES, full boardroom approval! Write it down and move to the next agenda item!",
+      ],
+    },
+    NO: {
+      cast: [
+        "NO! Big fat corporate NO! That artist wasn't even in the same zip code during this movie's shoot—delete from RAM!",
+        "Ayyo, NO sir! I checked the IMDb and HR payroll in Washington D.C.—zero appearance in this film!",
+        "Definitely NO! Don't mix up your casting spreadsheets—that person is NOT in this movie!",
+      ],
+      crew: [
+        "NO! Totally wrong department! As CEO of Sonic Solutions, I am rejecting that crew credit with full authority!",
+        "Negative—NO! Even if you wash the end credits in my washing machine, that crew name won't show up!",
+        "Big NO sir! Wrong technician—brain use cheyyandi and check another crew member!",
+      ],
+      year: [
+        "NO! Your calendar is running Windows 95! That release timeline is completely off-target!",
+        "Ayyo, NO! Sonic Solutions fiscal audit says zero match for that era—recalculate!",
+        "Definitely NO! Wrong decade/year bracket—move your timeline slider immediately!",
+      ],
+      hype: [
+        "NO! Fake news! As CEO from Washington D.C., I can confirm that buzz belonged to a totally different cinema!",
+        "Big corporate NO! Zero synergy with that trivia—delete that rumor from your hard disk!",
+        "NO sir! My PR department audited that claim and stamped it 100% FALSE!",
+      ],
+      comedy: [
+        "NO! Zero comedy match there—you are barking up the wrong boardroom tree!",
+        "Definitely NO! That specific humor element is missing from the deliverable!",
+        "Ayyo, NO sir! Try a smarter comedic KPI on the next reel!",
+      ],
+      action: [
+        "NO! Straight corporate rejection! That action trope has zero presence in this file!",
+        "Negative—NO! Don't confuse this sleek screenplay with random masala tropes!",
+        "Big NO! Not a single frame of that in my audited print!",
+      ],
+      general: [
+        "NO! Big fat corporate NO! Washington D.C. standards lo adi zero percent match!",
+        "Ayyo, NO sir, totally false! As CEO of Sonic Solutions I reject that hypothesis immediately!",
+        "Definitely NO! Washing machine lo petti wash chesina adi ee cinemalo dorakadu!",
+      ],
+    },
+  },
+  pandey: {
+    YES: {
+      cast: [
+        "YES! Confirmed on the police dossier—that exact actor is in this movie! Next!",
+        "Point-blank YES! Inspector Kill Bill Pandey verified the cast list—stop blinking and write it down!",
+        "Affirmative—YES! They're in the film 100%! Move fast before my frustration spikes!",
+      ],
+      crew: [
+        "YES! That exact crew member worked on this case—100% locked in!",
+        "Sharp shot—YES! Credits match! Don't waste bullets celebrating, next question!",
+        "YES! Technical team confirmed by Kill Bill Pandey! Over and out!",
+      ],
+      year: [
+        "YES! Timeline locked! You actually got a date right—less frustration for me!",
+        "Confirmed YES! Right era, right release window—keep moving!",
+        "YES! Case file timestamp matches 100%! Next reel!",
+      ],
+      hype: [
+        "YES! Front-page news and 100% true! Even the police station talked about that buzz!",
+        "Affirmative—YES! That exact record/trivia is rock-solid fact!",
+        "YES! Dead-accurate trivia—Inspector Pandey approves!",
+      ],
+      comedy: [
+        "YES! Even I almost cracked a smile—100% present in this film! Next!",
+        "Confirmed YES! Comedy track verified—don't get too relaxed in my lockup!",
+        "YES! That exact comic streak is in the movie! Hurry up!",
+      ],
+      action: [
+        "YES! Full firepower confirmed! Frustration! Frustration! Lock it in!",
+        "100% YES! Pure adrenaline right there on screen—next question!",
+        "Point-blank YES! Shoot that clue straight into your notes!",
+      ],
+      general: [
+        "YES! Point-blank YES! Frustration! Don't make me repeat it—write it down!",
+        "YES! 100% confirmed by Inspector Kill Bill Pandey! Next reel!",
+        "Affirmative—YES! Lock it in your case file and move fast!",
+      ],
+    },
+    NO: {
+      cast: [
+        "NO! Wrong suspect! That actor is nowhere near this movie—frustration!",
+        "NEGATIVE—NO! Check your mugshots again, wrong casting call!",
+        "NO! Shoot that casting theory at sight! Ask smarter!",
+      ],
+      crew: [
+        "NO! Wrong crew member! Stop guessing random names in my screening room!",
+        "NEGATIVE—NO! Not on the credit roll! Frustration! Frustration!",
+        "Straight NO! That technician wasn't on this set—next reel!",
+      ],
+      year: [
+        "NO! Completely wrong timeline! Are you reading the calendar upside down?!",
+        "NEGATIVE—NO! Off the release window—adjust your radar fast!",
+        "NO! Wrong year bracket! Don't waste my bullets!",
+      ],
+      hype: [
+        "NO! Wrong news clipping! That buzz has nothing to do with this film!",
+        "NEGATIVE—NO! Zero match in the CBFC archive—frustration!",
+        "Straight NO! Don't bring fake trivia into Inspector Pandey's room!",
+      ],
+      comedy: [
+        "NO! Zero laughs on that guess—completely wrong track!",
+        "NEGATIVE—NO! Not that comedy angle! Point ki raa!",
+        "NO! Stop joking and ask a real question!",
+      ],
+      action: [
+        "NO! Wrong action trope! Frustration! Frustration! Try again!",
+        "NEGATIVE—NO! Not in this screenplay—move on!",
+        "NO! Shoot that theory down immediately! Next!",
+      ],
+      general: [
+        "NO! Straight NO! Frustration! Frustration! Are you guessing or joking?!",
+        "NEGATIVE—NO! Inspector Kill Bill Pandey says zero chance!",
+        "NO! Shoot that theory at sight! Next reel, hurry up!",
+      ],
+    },
+  },
+};
+
+function pickFreshSimulatorLine(
+  personaId: PersonaId,
+  claimed: "YES" | "NO",
+  topic: QuestionTopic,
+  question: string,
+  questionNumber: number,
+  history: HistoryItem[]
+): string {
+  const usedReplies = new Set(
+    history.filter((h) => h.role === "witness").map((h) => h.text.trim())
+  );
+
+  const personaBank = SIMULATOR_BANKS[personaId][claimed];
+  const primaryPool = personaBank[topic] ?? personaBank.general;
+  const freshPrimary = primaryPool.filter((line) => !usedReplies.has(line));
+
+  let poolToPick: string[];
+  if (freshPrimary.length > 0) {
+    poolToPick = freshPrimary;
+  } else {
+    const freshGeneral = personaBank.general.filter(
+      (line) => !usedReplies.has(line)
+    );
+    if (freshGeneral.length > 0) {
+      poolToPick = freshGeneral;
+    } else {
+      const allLines = Array.from(new Set(Object.values(personaBank).flat()));
+      const anyFresh = allLines.filter((line) => !usedReplies.has(line));
+      poolToPick = anyFresh.length > 0 ? anyFresh : primaryPool;
+    }
+  }
+
+  const index = (questionNumber * 7 + question.length) % poolToPick.length;
+  return poolToPick[index];
+}
+
+function pickFreshHeckle(
+  heckler: PersonaId,
+  questionNumber: number,
+  history: HistoryItem[]
+): string {
+  const used = new Set(history.map((h) => h.text.trim()));
+  const pool = BENCH_HECKLES[heckler];
+  const fresh = pool.filter((line) => !used.has(line));
+  const choices = fresh.length > 0 ? fresh : pool;
+  return choices[(questionNumber - 1) % choices.length];
+}
+
+interface GeminiPanelJson {
+  invalid?: boolean;
+  invalidReply?: string;
+  statements?: Array<{
+    personaId: PersonaId;
+    claimedAnswer: "YES" | "NO";
+    reply: string;
+  }>;
+  heckle?: {
+    personaId: PersonaId;
+    text: string;
+  };
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = (await req.json()) as InterrogateRequest;
+    const {
+      movieId,
+      question,
+      questionNumber,
+      gajalaLieReels,
+      history = [],
+    } = body;
+
+    if (!movieId || !question || !questionNumber) {
+      return NextResponse.json(
+        { error: "Missing required interrogation parameters." },
+        { status: 400 }
+      );
+    }
+
+    const movie = MOVIES.find((m) => m.id === movieId);
+    if (!movie) {
+      return NextResponse.json(
+        { error: "Invalid movie ID." },
+        { status: 404 }
+      );
+    }
+
+    // Select the 2 active panel speakers + 1 sideline heckler for this reel
+    const { speakers, heckler } = selectPanelForTurn(
+      questionNumber,
+      question,
+      gajalaLieReels
+    );
+    const speakerLieMap: Record<PersonaId, boolean> = {
+      relangi: evaluateLieRule("relangi", questionNumber, question),
+      gajala: evaluateLieRule(
+        "gajala",
+        questionNumber,
+        question,
+        gajalaLieReels
+      ),
+      pandey: evaluateLieRule("pandey", questionNumber, question),
+    };
+
+    // 1. Block obvious gibberish BEFORE burning a reel or unlocking any clue
+    if (isObviousGibberish(question)) {
+      const roaster = speakers[0];
+      const roastText = getInvalidQuestionRoast(roaster, question, history);
+      return NextResponse.json({
+        invalidQuestion: true,
+        roast: { personaId: roaster, reply: roastText },
+        statements: [],
+        hasContradiction: false,
+        unlocksClue: false,
+        reply: roastText,
+        wasLie: false,
+        mode: process.env.GEMINI_API_KEY?.trim() ? "gemini" : "simulator",
+      });
+    }
+
+    const apiKey = process.env.GEMINI_API_KEY?.trim()
+      .replace(/^["']|["']$/g, "")
+      .trim();
+
+    // 2. Single fast Gemini JSON call generating both witnesses' statements + 3rd witness heckle
+    if (apiKey && apiKey !== "your_gemini_api_key_here") {
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const modelCandidates = [
+        "gemini-3.8-flash",
+        "gemini-3.8-flash",
+        "gemini-3.8-flash-lite",
+        "gemini-2.5-flash",
+      ];
+
+      const historyContext = history
+        .slice(-12)
+        .map((h) => {
+          const who =
+            h.role === "user"
+              ? "INTERROGATOR"
+              : h.speaker
+              ? PERSONAS[h.speaker].name.toUpperCase()
+              : "WITNESS";
+          return `${who}: ${h.text}`;
+        })
+        .join("\n");
+
+      const castSection = movie.fullCast?.length
+        ? movie.fullCast.map((c) => `- ${c.name} (${c.role})`).join("\n")
+        : `- Hero: ${movie.hero}\n- Heroine: ${movie.heroine}`;
+
+      const crewSection = movie.fullCrew?.length
+        ? movie.fullCrew.map((c) => `- ${c.name} — ${c.department}`).join("\n")
+        : `- Director: ${movie.director}\n- Music: ${movie.music}`;
+
+      const triviaSection = movie.eraTrivia?.length
+        ? movie.eraTrivia.map((t) => `- ${t}`).join("\n")
+        : "";
+
+      const momentsSection = movie.iconicMoments?.length
+        ? movie.iconicMoments.map((m) => `- ${m}`).join("\n")
+        : "";
+
+      const speakerDirectives = speakers
+        .map((pid, idx) => {
+          const p = PERSONAS[pid];
+          const mustLie = speakerLieMap[pid];
+          return `SPEAKER ${idx + 1}: "${pid}" (${p.name})
+- Persona: ${p.shortDossier} Catchphrase vibe: "${p.signatureCatchphrase}".
+- ${
+            pid === "relangi"
+              ? `SPEECH RULE: NEVER use the harsh blunt word "No" or "Not" in reply text—when claimedAnswer is "NO", gently redirect positively in Tinglish while STILL setting claimedAnswer to "NO"!`
+              : `SPEECH RULE: Be hilarious, punchy (1-2 sentences), clearly conveying YES or NO.`
+          }
+- MANDATORY TRUTH/LIE DIRECTIVE: ${
+            mustLie
+              ? `MUST LIE! Determine the true factual answer about "${movie.title}" (using dossier + real-world IMDb/Telugu cinema facts), then COMPLETELY INVERT IT (true YES -> claimedAnswer "NO"; true NO -> claimedAnswer "YES") with supreme overconfidence. NEVER hint that you are lying!`
+              : `MUST TELL THE TRUTH accurately based on the dossier + verified IMDb/Telugu cinema facts!`
+          }`;
+        })
+        .join("\n\n");
+
+      const prompt = `You are writing live dialogue for an Indian Censor Board (CBFC) Telugu cinema interrogation panel where 3 iconic Tollywood comedy witnesses sit together on the same bench: Relangi Mavayya, Gajala (CEO Sonic Solutions, Washington D.C.), and Inspector Kill Bill Pandey.
+
+=== SECRET MOVIE DOSSIER (NEVER REVEAL THE MOVIE TITLE DIRECTLY) ===
+Title: ${movie.title}
+Release: ${movie.releaseMonth ?? movie.year}
+Genre: ${movie.genre}
+Iconic Prop: ${movie.iconicProp}
+
+FULL CAST:
+${castSection}
+
+FULL CREW:
+${crewSection}
+
+PLOT TROPES:
+${movie.tropes.map((t) => `- ${t}`).join("\n")}
+${triviaSection ? `\nRELEASE-ERA TRIVIA, HYPE & NEWS:\n${triviaSection}` : ""}
+${momentsSection ? `\nNON-SPOILER ICONIC MOMENTS:\n${momentsSection}` : ""}
+
+=== RECENT INTERROGATION LOG ===
+${historyContext || "(Opening question of the screening)"}
+
+=== CURRENT INTERROGATOR INPUT (Reel #${questionNumber} of 8) ===
+"${question}"
+
+STEP 1 — VALIDITY CHECK:
+If the input is gibberish, random letters, profanity without a question, or unrelated to guessing a Telugu movie, return JSON:
+{"invalid": true, "invalidReply": "<funny 1-2 sentence in-character roast from ${PERSONAS[speakers[0]].name} saying no reel was deducted>"}
+
+STEP 2 — IF VALID MOVIE QUESTION:
+Generate answers from BOTH active speakers AND a 1-sentence sideline heckle from the 3rd panelist "${heckler}" (${PERSONAS[heckler].name}).
+If Speaker 1 and Speaker 2 have opposite claimedAnswers, Speaker 2 can hilariously contradict Speaker 1 in character!
+NEVER repeat phrasing or jokes used earlier in the log.
+
+CRITICAL ANTI-SPOILER RULE (NON-NEGOTIABLE — ZERO LEAKS):
+- NEVER mention or hint at the movie title, the REAL hero/heroine/director/composer names, character names, fictional locations, time period, genre (e.g. sci-fi/period/village), or plot details UNLESS the interrogator explicitly asked about that exact word in their question!
+- If the interrogator asks "Is Chiranjeevi the hero?" and the answer is NO, ONLY joke about Chiranjeevi NOT being in the film—NEVER reveal who the actual hero is, NEVER mention character names, and NEVER mention the movie's setting or genre!
+- Keep all comedy strictly about what the player asked, plus your character's own Catchphrases/Universe (Washington D.C./washing machine/Sonic Solutions, Relangi Mavayya optimism, Kill Bill Pandey frustration).
+
+${speakerDirectives}
+
+SIDELINE HECKLER: "${heckler}" (${PERSONAS[heckler].name})
+- Give 1 funny short reaction/interruption (under 18 words) reacting to the bench drama WITHOUT revealing whether the answer is YES or NO and WITHOUT leaking ANY movie details!
+
+RETURN STRICT JSON ONLY:
+{
+  "invalid": false,
+  "statements": [
+    { "personaId": "${speakers[0]}", "claimedAnswer": "YES" | "NO", "reply": "..." },
+    { "personaId": "${speakers[1]}", "claimedAnswer": "YES" | "NO", "reply": "..." }
+  ],
+  "heckle": { "personaId": "${heckler}", "text": "..." }
+}`;
+
+      for (const modelName of modelCandidates) {
+        try {
+          const model = genAI.getGenerativeModel({
+            model: modelName,
+            generationConfig: {
+              responseMimeType: "application/json",
+            },
+          });
+          const result = await model.generateContent(prompt);
+          const rawText = result.response.text().trim();
+          const stripped = rawText
+            .replace(/^```json\s*/i, "")
+            .replace(/^```\s*/i, "")
+            .replace(/```$/i, "")
+            .trim();
+          const jsonMatch = stripped.match(/\{[\s\S]*\}/);
+          const jsonText = jsonMatch ? jsonMatch[0] : stripped;
+          const parsed = JSON.parse(jsonText) as GeminiPanelJson;
+
+          if (parsed.invalid) {
+            const roastReply =
+              parsed.invalidReply?.trim() ||
+              getInvalidQuestionRoast(speakers[0], question, history);
+            return NextResponse.json({
+              invalidQuestion: true,
+              roast: { personaId: speakers[0], reply: roastReply },
+              statements: [],
+              hasContradiction: false,
+              unlocksClue: false,
+              reply: roastReply,
+              wasLie: false,
+              mode: "gemini",
+            });
+          }
+
+          if (parsed.statements && parsed.statements.length >= 2) {
+            const normalizedStatements: PanelStatement[] = speakers.map(
+              (pid, i) => {
+                const found =
+                  parsed.statements?.find((s) => s.personaId === pid) ??
+                  parsed.statements?.[i];
+                const claimed: "YES" | "NO" =
+                  found?.claimedAnswer === "YES" ? "YES" : "NO";
+                return {
+                  personaId: pid,
+                  claimedAnswer: claimed,
+                  wasLie: speakerLieMap[pid],
+                  reply:
+                    found?.reply?.trim() ||
+                    pickFreshSimulatorLine(
+                      pid,
+                      claimed,
+                      detectTopic(question),
+                      question,
+                      questionNumber,
+                      history
+                    ),
+                };
+              }
+            );
+
+            const hasContradiction =
+              normalizedStatements[0].claimedAnswer !==
+              normalizedStatements[1].claimedAnswer;
+            const unlocksClue = normalizedStatements.every(
+              (s) => s.claimedAnswer === "NO"
+            );
+
+            return NextResponse.json({
+              invalidQuestion: false,
+              statements: normalizedStatements,
+              heckle: {
+                personaId: heckler,
+                text:
+                  parsed.heckle?.text?.trim() ||
+                  pickFreshHeckle(heckler, questionNumber, history),
+              },
+              hasContradiction,
+              unlocksClue,
+              reply: normalizedStatements.map((s) => s.reply).join(" "),
+              wasLie: normalizedStatements.some((s) => s.wasLie),
+              mode: "gemini",
+            });
+          }
+        } catch (geminiError) {
+          console.warn(
+            `Gemini model ${modelName} failed:`,
+            geminiError instanceof Error ? geminiError.message : geminiError
+          );
+        }
+      }
+    }
+
+    // 3. Built-In Smart Panel Simulator Fallback (topic-aware, zero repetition, zero random coin flips)
+    const truth = evaluateMovieFact(movie, question);
+
+    if (truth === "UNCERTAIN") {
+      const roaster = speakers[0];
+      const roastText = getInvalidQuestionRoast(roaster, question, history);
+      return NextResponse.json({
+        invalidQuestion: true,
+        roast: { personaId: roaster, reply: roastText },
+        statements: [],
+        hasContradiction: false,
+        unlocksClue: false,
+        reply: roastText,
+        wasLie: false,
+        mode: "simulator",
+      });
+    }
+
+    const topic = detectTopic(question);
+    const runningHistory = [...history];
+
+    const statements: PanelStatement[] = speakers.map((pid) => {
+      const mustLie = speakerLieMap[pid];
+      const claimedAnswer: "YES" | "NO" = mustLie
+        ? truth === "YES"
+          ? "NO"
+          : "YES"
+        : truth;
+      const reply = pickFreshSimulatorLine(
+        pid,
+        claimedAnswer,
+        topic,
+        question,
+        questionNumber,
+        runningHistory
+      );
+      runningHistory.push({ role: "witness", speaker: pid, text: reply });
+      return {
+        personaId: pid,
+        reply,
+        wasLie: mustLie,
+        claimedAnswer,
+      };
+    });
+
+    const hasContradiction =
+      statements[0].claimedAnswer !== statements[1].claimedAnswer;
+    const unlocksClue = statements.every((s) => s.claimedAnswer === "NO");
+
+    return NextResponse.json({
+      invalidQuestion: false,
+      statements,
+      heckle: {
+        personaId: heckler,
+        text: pickFreshHeckle(heckler, questionNumber, runningHistory),
+      },
+      hasContradiction,
+      unlocksClue,
+      reply: statements.map((s) => s.reply).join(" "),
+      wasLie: statements.some((s) => s.wasLie),
+      mode: "simulator",
+    });
+  } catch (error) {
+    console.error("Interrogation API error:", error);
+    return NextResponse.json(
+      { error: "Screening room projector jammed! Please try again." },
+      { status: 500 }
+    );
+  }
+}

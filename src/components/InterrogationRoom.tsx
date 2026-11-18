@@ -1,0 +1,1570 @@
+"use client";
+
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import Fuse from "fuse.js";
+import {
+  AlertOctagon,
+  ArrowLeft,
+  BarChart3,
+  CalendarDays,
+  Disc3,
+  Film,
+  Gavel,
+  Lock,
+  MessageSquareQuote,
+  Mic,
+  Newspaper,
+  Send,
+  ShieldAlert,
+  Sparkles,
+  Unlock,
+  X,
+  Zap,
+} from "lucide-react";
+import moviesData from "@/data/movies.json";
+import {
+  Movie,
+  PERSONA_LIST,
+  PERSONAS,
+  PersonaId,
+  pickRandomGajalaLieReels,
+  PressHint,
+} from "@/lib/personas";
+import {
+  DailyRecord,
+  formatReadableDate,
+  getLocalDateKey,
+  PlayerStats,
+} from "@/lib/gameStats";
+import VerdictCard, { AuditEntry, CensorRating } from "./VerdictCard";
+
+const ALL_MOVIES = moviesData as Movie[];
+const MAX_TOKENS = 8;
+
+const RATING_ORDER: CensorRating[] = ["U", "U/A", "A", "S", "BANNED"];
+
+const RATING_META: Record<
+  CensorRating,
+  {
+    label: string;
+    subtitle: string;
+    badgeClass: string;
+    barClass: string;
+    fillPercent: number;
+  }
+> = {
+  U: {
+    label: "U",
+    subtitle: "Universal Clean Chit • Upgraded!",
+    badgeClass:
+      "bg-emerald-950 text-emerald-200 border-emerald-400 shadow-[0_0_16px_rgba(16,185,129,0.35)]",
+    barClass: "bg-emerald-500",
+    fillPercent: 100,
+  },
+  "U/A": {
+    label: "U/A",
+    subtitle: "Unrestricted Public Exhibition — Caution",
+    badgeClass:
+      "bg-parchment-100 text-censor-ink border-censor-gold shadow-[0_0_14px_rgba(212,155,53,0.3)]",
+    barClass: "bg-censor-gold",
+    fillPercent: 80,
+  },
+  A: {
+    label: "A",
+    subtitle: "Adults Only — Danger Zone!",
+    badgeClass:
+      "bg-orange-950 text-orange-200 border-orange-500 shadow-[0_0_16px_rgba(249,115,22,0.4)]",
+    barClass: "bg-orange-500",
+    fillPercent: 50,
+  },
+  S: {
+    label: "S",
+    subtitle: "Strictly Restricted — Critical Alert!",
+    badgeClass:
+      "bg-red-950 text-red-200 border-red-500 shadow-[0_0_18px_rgba(239,68,68,0.5)] animate-pulse",
+    barClass: "bg-red-600",
+    fillPercent: 24,
+  },
+  BANNED: {
+    label: "BANNED",
+    subtitle: "BANNED BY CENSOR BOARD",
+    badgeClass:
+      "bg-censor-red text-parchment-50 border-parchment-100 shadow-[0_0_24px_rgba(220,38,38,0.75)]",
+    barClass: "bg-censor-red",
+    fillPercent: 0,
+  },
+};
+
+const TACTICAL_CHIP_POOL = [
+  "Did it release after 2015?",
+  "Is Brahmanandam in it?",
+  "Is there a faction or village backdrop?",
+  "Did S.S. Rajamouli direct it?",
+  "Did it win a National Film Award?",
+  "Is it a period or historical movie?",
+  "Was Peter Hein the stunt choreographer?",
+  "Did M.M. Keeravani compose the music?",
+  "Is Prakash Raj in this movie?",
+  "Does it feature a surprise cameo or remix song?",
+];
+
+interface PanelStatement {
+  personaId: PersonaId;
+  reply: string;
+  wasLie: boolean;
+  claimedAnswer: "YES" | "NO";
+}
+
+interface ChatMessage {
+  id: string;
+  sender: "user" | "witness" | "heckle" | "system";
+  personaId?: PersonaId;
+  text: string;
+  reelNumber?: number;
+  wasLie?: boolean;
+  isInvalid?: boolean;
+  isContradictionBanner?: boolean;
+  isObjectionResult?: "caught" | "wrong";
+}
+
+interface LastPanelTurn {
+  reelNumber: number;
+  statements: PanelStatement[];
+  heckler?: PersonaId;
+}
+
+interface InterrogationRoomProps {
+  movie: Movie;
+  activeDateKey: string;
+  stats: PlayerStats;
+  onGameComplete: (record: Omit<DailyRecord, "playedAt">) => void;
+  onPlayAgain: () => void;
+  onReturnSplash: () => void;
+  onOpenStats: () => void;
+  onOpenCalendar: () => void;
+}
+
+function getBaseRatingIndex(tokensLeft: number): number {
+  if (tokensLeft >= 6) return 1; // U/A
+  if (tokensLeft >= 3) return 2; // A
+  if (tokensLeft >= 1) return 3; // S
+  return 3;
+}
+
+function normalizeTitle(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function checkFuzzyMatch(guess: string, targetMovie: Movie): boolean {
+  const cleanedGuess = normalizeTitle(guess);
+  if (cleanedGuess.length < 3) return false;
+
+  const targetVariants = Array.from(
+    new Set(
+      [targetMovie.title, ...targetMovie.alternateSpellings].map(normalizeTitle)
+    )
+  );
+
+  if (targetVariants.includes(cleanedGuess)) {
+    return true;
+  }
+
+  const allEntries = ALL_MOVIES.flatMap((m) =>
+    Array.from(new Set([m.title, ...m.alternateSpellings])).map((variant) => ({
+      movieId: m.id,
+      variant: normalizeTitle(variant),
+    }))
+  );
+
+  const globalFuse = new Fuse(allEntries, {
+    keys: ["variant"],
+    includeScore: true,
+    threshold: 0.36,
+    ignoreLocation: true,
+    minMatchCharLength: 3,
+  });
+
+  const globalResults = globalFuse.search(cleanedGuess);
+  if (globalResults.length === 0) return false;
+
+  const topMatch = globalResults[0];
+  if (
+    topMatch.item.movieId === targetMovie.id &&
+    (topMatch.score ?? 1) <= 0.34
+  ) {
+    return true;
+  }
+
+  const targetFuse = new Fuse(targetVariants, {
+    includeScore: true,
+    threshold: 0.32,
+    ignoreLocation: true,
+    minMatchCharLength: 3,
+  });
+
+  const targetResults = targetFuse.search(cleanedGuess);
+  if (
+    targetResults.length > 0 &&
+    (targetResults[0].score ?? 1) <= 0.3 &&
+    topMatch.item.movieId === targetMovie.id
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+export default function InterrogationRoom({
+  movie,
+  activeDateKey,
+  stats,
+  onGameComplete,
+  onPlayAgain,
+  onReturnSplash,
+  onOpenStats,
+  onOpenCalendar,
+}: InterrogationRoomProps) {
+  const isTodayCase = activeDateKey === getLocalDateKey();
+  const hasRecordedOutcomeRef = useRef<boolean>(false);
+
+  const [tokensLeft, setTokensLeft] = useState<number>(MAX_TOKENS);
+  const [questionCount, setQuestionCount] = useState<number>(0);
+  const [gajalaLieReels] = useState<number[]>(() => pickRandomGajalaLieReels());
+  const [tierOffset, setTierOffset] = useState<number>(0);
+  const [objectionUsed, setObjectionUsed] = useState<boolean>(false);
+  const [accusePickerOpen, setAccusePickerOpen] = useState<boolean>(false);
+  const [aiMode, setAiMode] = useState<"gemini" | "simulator" | null>(null);
+  const [lastPanelTurn, setLastPanelTurn] = useState<LastPanelTurn | null>(
+    null
+  );
+
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      id: "opening-system",
+      sender: "system",
+      text: `JOINT PANEL CONVENED • Relangi Mavayya, Gajala & Inspector Kill Bill Pandey are all seated together! 2 witnesses testify on each reel while the 3rd heckles. Watch for contradictions!`,
+    },
+    {
+      id: "opening-relangi",
+      sender: "witness",
+      personaId: "relangi",
+      text: "Ayyo babu, screening room lo ki vachava? Manushulu ante ne manchollu raa—ask away, we are all ready!",
+    },
+    {
+      id: "opening-gajala",
+      sender: "witness",
+      personaId: "gajala",
+      text: "Hello! Gajala from Washington D.C., CEO of Sonic Solutions—ignore these amateurs and listen to my KPI facts!",
+    },
+    {
+      id: "opening-pandey",
+      sender: "heckle",
+      personaId: "pandey",
+      text: "FRUSTRATION! Stop bragging about Washington D.C., Gajala—start the interrogation fast!",
+    },
+  ]);
+
+  const [auditLog, setAuditLog] = useState<AuditEntry[]>([]);
+  const [input, setInput] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [usedChips, setUsedChips] = useState<string[]>([]);
+
+  // Press Clippings / Non-Spoiler Hints Column State (unlocks strictly on wrong/NO leads!)
+  const pressHints: PressHint[] = useMemo(() => {
+    if (movie.pressHints && movie.pressHints.length > 0) {
+      return movie.pressHints;
+    }
+    return [
+      {
+        id: "fallback-prop",
+        category: "SEIZED EXHIBIT",
+        headline: "Iconic Prop Logged in Evidence Locker",
+        body: `Witnesses remember spotting: ${movie.iconicProp}.`,
+        unlockAfterReel: 0,
+      },
+      {
+        id: "fallback-era",
+        category: "RELEASE ARCHIVE",
+        headline: "Censor Filing Era",
+        body: `Filed under the ${movie.genre} category at CBFC Hyderabad.`,
+        unlockAfterReel: 2,
+      },
+    ];
+  }, [movie]);
+
+  const [wrongAnswerCount, setWrongAnswerCount] = useState<number>(0);
+  const [newlyUnlockedClipId, setNewlyUnlockedClipId] = useState<string | null>(
+    null
+  );
+  const [mobileHintsOpen, setMobileHintsOpen] = useState<boolean>(false);
+
+  // Modals & Dramatic Overlays
+  const [verdictModalOpen, setVerdictModalOpen] = useState<boolean>(false);
+  const [guessInput, setGuessInput] = useState<string>("");
+  const [guessError, setGuessError] = useState<string>("");
+
+  const [objectionBanner, setObjectionBanner] = useState<{
+    status: "caught" | "wrong";
+    headline: string;
+    subtext: string;
+  } | null>(null);
+
+  const [bannedSlamActive, setBannedSlamActive] = useState<boolean>(false);
+  const [screenShake, setScreenShake] = useState<boolean>(false);
+
+  const [gameOutcome, setGameOutcome] = useState<{
+    status: "won" | "lost";
+    wrongGuess?: string;
+    lossReason?: string;
+    showCard: boolean;
+  } | null>(null);
+
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading]);
+
+  const currentRating: CensorRating = useMemo(() => {
+    if (gameOutcome?.status === "lost" || bannedSlamActive) {
+      return "BANNED";
+    }
+    const baseIdx = getBaseRatingIndex(tokensLeft);
+    const adjustedIdx = Math.max(0, Math.min(3, baseIdx + tierOffset));
+    return RATING_ORDER[adjustedIdx];
+  }, [tokensLeft, tierOffset, gameOutcome, bannedSlamActive]);
+
+  const ratingInfo = RATING_META[currentRating];
+
+  const activeChips = useMemo(() => {
+    return TACTICAL_CHIP_POOL.filter((chip) => !usedChips.includes(chip)).slice(
+      0,
+      3
+    );
+  }, [usedChips]);
+
+  const unlockedHintsCount = useMemo(
+    () => Math.min(pressHints.length, wrongAnswerCount),
+    [pressHints.length, wrongAnswerCount]
+  );
+
+  const canObject =
+    !objectionUsed && !isLoading && !gameOutcome && lastPanelTurn !== null;
+
+  const canAskQuestion = !isLoading && !gameOutcome && tokensLeft > 0;
+
+  const triggerShake = () => {
+    setScreenShake(true);
+    setTimeout(() => setScreenShake(false), 450);
+  };
+
+  const recordOutcomeOnce = (
+    outcome: "won" | "lost",
+    finalRating: CensorRating
+  ) => {
+    if (hasRecordedOutcomeRef.current) return;
+    hasRecordedOutcomeRef.current = true;
+    onGameComplete({
+      dateKey: activeDateKey,
+      movieId: movie.id,
+      movieTitle: movie.title,
+      outcome,
+      questionsUsed: questionCount,
+      personaId: "panel",
+      finalRating,
+      liesCaught: auditLog.filter((a) => Boolean(a.caughtLiar)).length,
+    });
+  };
+
+  const triggerBannedLoss = (options: {
+    wrongGuess?: string;
+    lossReason?: string;
+  }) => {
+    setVerdictModalOpen(false);
+    setAccusePickerOpen(false);
+    setBannedSlamActive(true);
+    triggerShake();
+    recordOutcomeOnce("lost", "BANNED");
+    setGameOutcome({
+      status: "lost",
+      wrongGuess: options.wrongGuess,
+      lossReason: options.lossReason,
+      showCard: false,
+    });
+    setTimeout(() => {
+      setBannedSlamActive(false);
+      setGameOutcome((prev) => (prev ? { ...prev, showCard: true } : null));
+    }, 1250);
+  };
+
+  const handleAskQuestion = async (rawQuestion: string) => {
+    const trimmed = rawQuestion.trim();
+    if (!trimmed || !canAskQuestion) return;
+
+    const nextQuestionNum = questionCount + 1;
+    const nextTokens = Math.max(0, tokensLeft - 1);
+    const userMsgId = `user-${Date.now()}`;
+
+    setInput("");
+    setAccusePickerOpen(false);
+    setQuestionCount(nextQuestionNum);
+    setTokensLeft(nextTokens);
+    setIsLoading(true);
+
+    if (TACTICAL_CHIP_POOL.includes(trimmed)) {
+      setUsedChips((prev) =>
+        prev.includes(trimmed) ? prev : [...prev, trimmed]
+      );
+    }
+
+    const userMsg: ChatMessage = {
+      id: userMsgId,
+      sender: "user",
+      text: trimmed,
+      reelNumber: nextQuestionNum,
+    };
+
+    setMessages((prev) => [...prev, userMsg]);
+
+    try {
+      const historyPayload = messages
+        .filter(
+          (m) =>
+            (m.sender === "user" || m.sender === "witness") && !m.isInvalid
+        )
+        .map((m) => ({
+          role: m.sender === "user" ? "user" : "witness",
+          speaker: m.personaId,
+          text: m.text,
+        }));
+
+      const res = await fetch("/api/interrogate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          movieId: movie.id,
+          personaId: "panel",
+          question: trimmed,
+          questionNumber: nextQuestionNum,
+          gajalaLieReels,
+          history: historyPayload,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Interrogation failed");
+      }
+
+      if (data.mode === "gemini" || data.mode === "simulator") {
+        setAiMode(data.mode);
+      }
+
+      // Gibberish / non-movie input -> refund reel, zero clues unlocked!
+      if (data.invalidQuestion) {
+        setTokensLeft((prev) => Math.min(MAX_TOKENS, prev + 1));
+        setQuestionCount((prev) => Math.max(0, prev - 1));
+        const roasterId: PersonaId = data.roast?.personaId ?? "gajala";
+        const roastReply: string = data.roast?.reply ?? data.reply;
+
+        setMessages((prev) => [
+          ...prev.map((m) =>
+            m.id === userMsgId
+              ? { ...m, reelNumber: undefined, isInvalid: true }
+              : m
+          ),
+          {
+            id: `witness-invalid-${Date.now()}`,
+            sender: "witness",
+            personaId: roasterId,
+            text: roastReply,
+            isInvalid: true,
+          },
+        ]);
+        return;
+      }
+
+      const statements: PanelStatement[] = data.statements ?? [];
+      const heckle: { personaId: PersonaId; text: string } | undefined =
+        data.heckle;
+
+      setLastPanelTurn({
+        reelNumber: nextQuestionNum,
+        statements,
+        heckler: heckle?.personaId,
+      });
+
+      const newMessages: ChatMessage[] = statements.map((stmt, idx) => ({
+        id: `witness-${Date.now()}-${idx}`,
+        sender: "witness",
+        personaId: stmt.personaId,
+        text: stmt.reply,
+        reelNumber: nextQuestionNum,
+        wasLie: Boolean(stmt.wasLie),
+      }));
+
+      if (heckle?.text) {
+        newMessages.push({
+          id: `heckle-${Date.now() + 5}`,
+          sender: "heckle",
+          personaId: heckle.personaId,
+          text: heckle.text,
+          reelNumber: nextQuestionNum,
+        });
+      }
+
+      if (data.hasContradiction) {
+        newMessages.push({
+          id: `contradiction-${Date.now() + 8}`,
+          sender: "system",
+          isContradictionBanner: true,
+          text: `PANEL CONTRADICTION ON REEL #${nextQuestionNum}! The witnesses just gave opposite answers — ONE OF THEM IS LYING! Use OBJECTION! (ABADDAM!) to accuse the liar.`,
+        });
+      }
+
+      // Unlock 1 non-spoiler Press Clipping Clue ONLY on a clear WRONG / NO answer!
+      if (data.unlocksClue && wrongAnswerCount < pressHints.length) {
+        const unlockedClip = pressHints[wrongAnswerCount];
+        const newCount = wrongAnswerCount + 1;
+        setWrongAnswerCount(newCount);
+        setNewlyUnlockedClipId(unlockedClip.id);
+        setTimeout(() => setNewlyUnlockedClipId(null), 3500);
+
+        newMessages.push({
+          id: `clue-unlock-${Date.now() + 10}`,
+          sender: "system",
+          text: `WRONG LEAD — BONUS CLUE UNLOCKED! Press Clipping #${newCount} ("${unlockedClip.category}") is now open in the Hints column.`,
+        });
+      }
+
+      if (nextTokens === 0) {
+        newMessages.push({
+          id: `final-warning-${Date.now() + 12}`,
+          sender: "system",
+          text: "ALL 8 FILM REELS EXHAUSTED! Slam 'DECLARE FINAL VERDICT' to name the movie now—or call 'OBJECTION!' if you caught a liar on Reel #8!",
+        });
+      }
+
+      setMessages((prev) => [...prev, ...newMessages]);
+      setAuditLog((prev) => [
+        ...prev,
+        {
+          questionNumber: nextQuestionNum,
+          question: trimmed,
+          liars: statements.filter((s) => s.wasLie).map((s) => s.personaId),
+        },
+      ]);
+    } catch {
+      setTokensLeft((prev) => Math.min(MAX_TOKENS, prev + 1));
+      setQuestionCount((prev) => Math.max(0, prev - 1));
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `err-${Date.now()}`,
+          sender: "system",
+          text: "Projector reel jammed! Your token was refunded—please ask your question again.",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAccuseWitness = (accusedId: PersonaId) => {
+    if (!canObject || !lastPanelTurn) return;
+
+    const targetStatement = lastPanelTurn.statements.find(
+      (s) => s.personaId === accusedId
+    );
+    if (!targetStatement) return;
+
+    const accusedPersona = PERSONAS[accusedId];
+
+    setObjectionUsed(true);
+    setAccusePickerOpen(false);
+    triggerShake();
+
+    const prevRatingIdx = RATING_ORDER.indexOf(currentRating);
+
+    if (targetStatement.wasLie) {
+      // CAUGHT THE EXACT LIAR!
+      const refundedTokens = Math.min(MAX_TOKENS, tokensLeft + 2);
+      const targetRatingIdx = Math.max(0, prevRatingIdx - 1);
+      const newBaseIdx = getBaseRatingIndex(refundedTokens);
+      const requiredOffset = targetRatingIdx - newBaseIdx;
+
+      setTokensLeft(refundedTokens);
+      setTierOffset(requiredOffset);
+
+      const caughtLine =
+        accusedPersona.objectionCaughtLines[
+          questionCount % accusedPersona.objectionCaughtLines.length
+        ];
+
+      setAuditLog((prev) =>
+        prev.map((entry) =>
+          entry.questionNumber === lastPanelTurn.reelNumber
+            ? { ...entry, caughtLiar: accusedId }
+            : entry
+        )
+      );
+
+      setObjectionBanner({
+        status: "caught",
+        headline: `${accusedPersona.name.toUpperCase()} CAUGHT LYING!`,
+        subtext: `అబద్ధం! +2 FILM REELS REFUNDED • CERT UPGRADED TO ${RATING_ORDER[targetRatingIdx]}`,
+      });
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `obj-sys-${Date.now()}`,
+          sender: "system",
+          text: `OBJECTION SUSTAINED! You nailed ${accusedPersona.name} lying on Reel #${lastPanelTurn.reelNumber}! +2 Film Reels refunded & Certificate upgraded to ${RATING_ORDER[targetRatingIdx]}.`,
+          isObjectionResult: "caught",
+        },
+        {
+          id: `obj-wit-${Date.now() + 1}`,
+          sender: "witness",
+          personaId: accusedId,
+          text: caughtLine,
+          isObjectionResult: "caught",
+        },
+      ]);
+
+      setTimeout(() => setObjectionBanner(null), 2200);
+    } else {
+      // ACCUSED AN HONEST WITNESS!
+      const penalizedTokens = Math.max(0, tokensLeft - 2);
+      const wrongLine =
+        accusedPersona.objectionWrongLines[
+          questionCount % accusedPersona.objectionWrongLines.length
+        ];
+
+      setTokensLeft(penalizedTokens);
+
+      if (penalizedTokens === 0) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `obj-sys-fail-${Date.now()}`,
+            sender: "system",
+            text: `OBJECTION OVERRULED! ${accusedPersona.name} was telling the TRUTH on Reel #${lastPanelTurn.reelNumber}! -2 Reels penalty dropped you to 0 reels!`,
+            isObjectionResult: "wrong",
+          },
+          {
+            id: `obj-wit-fail-${Date.now() + 1}`,
+            sender: "witness",
+            personaId: accusedId,
+            text: wrongLine,
+            isObjectionResult: "wrong",
+          },
+        ]);
+
+        triggerBannedLoss({
+          lossReason: `Falsely accused ${accusedPersona.name} (who told the truth) and lost your remaining reels!`,
+        });
+        return;
+      }
+
+      const targetRatingIdx = Math.min(3, Math.max(2, prevRatingIdx + 1));
+      const newBaseIdx = getBaseRatingIndex(penalizedTokens);
+      const requiredOffset = targetRatingIdx - newBaseIdx;
+
+      setTierOffset(requiredOffset);
+
+      setObjectionBanner({
+        status: "wrong",
+        headline: "OBJECTION OVERRULED!",
+        subtext: `${accusedPersona.name.toUpperCase()} TOLD THE TRUTH • -2 REELS • DOWNGRADED TO ${RATING_ORDER[targetRatingIdx]}`,
+      });
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `obj-sys-${Date.now()}`,
+          sender: "system",
+          text: `OBJECTION OVERRULED! ${accusedPersona.name} told the TRUTH on Reel #${lastPanelTurn.reelNumber}. Penalty: -2 Film Reels & Certificate downgraded to ${RATING_ORDER[targetRatingIdx]}!`,
+          isObjectionResult: "wrong",
+        },
+        {
+          id: `obj-wit-${Date.now() + 1}`,
+          sender: "witness",
+          personaId: accusedId,
+          text: wrongLine,
+          isObjectionResult: "wrong",
+        },
+      ]);
+
+      setTimeout(() => setObjectionBanner(null), 2200);
+    }
+  };
+
+  const handleSubmitVerdict = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = guessInput.trim();
+    if (trimmed.length < 2) {
+      setGuessError("Enter a Telugu movie title before slamming the verdict!");
+      return;
+    }
+
+    setGuessError("");
+    const isCorrect = checkFuzzyMatch(trimmed, movie);
+
+    if (isCorrect) {
+      setVerdictModalOpen(false);
+      recordOutcomeOnce("won", currentRating);
+      setGameOutcome({
+        status: "won",
+        showCard: true,
+      });
+    } else {
+      triggerBannedLoss({
+        wrongGuess: trimmed,
+      });
+    }
+  };
+
+  const handleSurrender = () => {
+    triggerBannedLoss({
+      lossReason: "Walked out of the Censor Screening Room without a verdict!",
+    });
+  };
+
+  const activeSpeakerIds = new Set(
+    lastPanelTurn?.statements.map((s) => s.personaId) ?? []
+  );
+
+  const renderHintsColumnContent = () => (
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between gap-2 border-b border-censor-gold/35 pb-2.5 mb-2.5">
+        <div className="flex items-center gap-2">
+          <Newspaper className="w-4 h-4 text-censor-gold shrink-0" />
+          <div>
+            <h2 className="font-typewriter text-xs font-bold uppercase tracking-[0.14em] text-parchment-100">
+              Press Clippings &amp; Hype
+            </h2>
+            <p className="font-sans text-[11px] text-parchment-300/75">
+              Starts <strong>HARD → EASY</strong> • 1 clue per wrong (NO) lead
+            </p>
+          </div>
+        </div>
+        <span className="font-typewriter text-[10px] font-bold px-2 py-0.5 rounded-[2px] bg-censor-gold/15 border border-censor-gold/40 text-censor-gold shrink-0">
+          {unlockedHintsCount}/{pressHints.length} OPEN
+        </span>
+      </div>
+
+      <div className="space-y-3 overflow-y-auto custom-scrollbar pr-1 flex-1">
+        {pressHints.map((hint, idx) => {
+          const isUnlocked = idx < wrongAnswerCount;
+          const isJustUnlocked = newlyUnlockedClipId === hint.id;
+          const levelLabel =
+            hint.difficulty ??
+            (idx === 0
+              ? "HARD"
+              : idx <= 2
+              ? "MEDIUM"
+              : idx === 3
+              ? "WARM"
+              : "EASY");
+
+          const levelBadgeClass =
+            levelLabel === "HARD"
+              ? "bg-red-900 text-red-100"
+              : levelLabel === "MEDIUM"
+              ? "bg-amber-800 text-amber-100"
+              : levelLabel === "WARM"
+              ? "bg-amber-600 text-booth-950"
+              : "bg-emerald-800 text-emerald-100";
+
+          return (
+            <div
+              key={hint.id}
+              className={`rounded-sm border transition-all ${
+                isUnlocked
+                  ? `cbfc-paper text-censor-ink border-censor-gold/80 p-3.5 shadow-md ${
+                      isJustUnlocked
+                        ? "ring-2 ring-censor-gold animate-fade-up"
+                        : ""
+                    }`
+                  : "bg-booth-950/75 border-booth-700/80 p-3 opacity-75"
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2 mb-1.5">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span
+                    className={`font-typewriter text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded-[2px] ${levelBadgeClass}`}
+                  >
+                    {levelLabel}
+                  </span>
+                  <span
+                    className={`font-typewriter text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded-[2px] ${
+                      isUnlocked
+                        ? "bg-censor-ink text-parchment-100"
+                        : "bg-booth-800 text-parchment-300/60"
+                    }`}
+                  >
+                    CLUE #{idx + 1} • {isUnlocked ? hint.category : "SEALED FILE"}
+                  </span>
+                </div>
+
+                {isUnlocked ? (
+                  <Unlock className="w-3.5 h-3.5 text-censor-teal shrink-0" />
+                ) : (
+                  <Lock className="w-3.5 h-3.5 text-parchment-300/45 shrink-0" />
+                )}
+              </div>
+
+              {isUnlocked ? (
+                <div className="animate-fade-up">
+                  <h3 className="font-display font-bold text-sm text-censor-ink leading-snug mb-1">
+                    {hint.headline}
+                  </h3>
+                  <p className="font-sans text-xs text-censor-ink/90 leading-relaxed">
+                    {hint.body}
+                  </p>
+                </div>
+              ) : (
+                <p className="font-typewriter text-[11px] text-parchment-300/60">
+                  Sealed • Unlocks automatically on Wrong Lead #{idx + 1}
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-3 pt-2.5 border-t border-booth-700/80 text-[11px] font-sans text-parchment-300/75 leading-relaxed">
+        <strong className="font-typewriter text-[10px] uppercase tracking-wider text-censor-gold block mb-0.5">
+          How to Beat the 3-Witness Panel:
+        </strong>
+        Watch for contradictions! When 2 witnesses give opposite answers, slam{" "}
+        <strong>OBJECTION!</strong> and accuse the exact liar.
+      </div>
+    </div>
+  );
+
+  return (
+    <div
+      className={`min-h-screen w-full screening-room-bg flex flex-col relative ${
+        screenShake ? "animate-screen-shake" : ""
+      }`}
+    >
+      {/* TOP BAR: Live Censor Board Certificate Meter + 8 Vintage Film Reels */}
+      <header className="sticky top-0 z-30 border-b border-censor-gold/30 bg-booth-950/95 backdrop-blur-md shadow-xl">
+        <div className="h-2 sprocket-strip opacity-75" />
+
+        <div className="max-w-7xl mx-auto px-3 sm:px-5 py-3 flex flex-col gap-3">
+          {/* Row 1: Title, Case Date, Engine Badge, Stats/Calendar & Verdict */}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <button
+                type="button"
+                onClick={onReturnSplash}
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-sm border border-parchment-300/25 bg-booth-800 hover:bg-booth-700 text-parchment-200 font-typewriter text-[11px] uppercase tracking-wider transition-colors shrink-0"
+                title="Return to Censor Certificate Splash"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">CBFC Form</span>
+              </button>
+
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <h1 className="font-display font-extrabold text-sm sm:text-base text-parchment-100 truncate tracking-wide">
+                    KATHA • SCREENPLAY • ABADDAM : MEERE!
+                  </h1>
+                  {aiMode && (
+                    <span
+                      className={`hidden sm:inline-block font-typewriter text-[9px] uppercase px-1.5 py-0.5 rounded-[2px] border ${
+                        aiMode === "gemini"
+                          ? "bg-emerald-950/80 border-emerald-500/50 text-emerald-300"
+                          : "bg-booth-800 border-booth-600 text-parchment-300/75"
+                      }`}
+                    >
+                      {aiMode === "gemini" ? "GEMINI LIVE" : "SIMULATOR MODE"}
+                    </span>
+                  )}
+                </div>
+                <p className="font-typewriter text-[10px] text-censor-gold/90 truncate">
+                  {isTodayCase ? "DAILY" : "ARCHIVE"} •{" "}
+                  {formatReadableDate(activeDateKey)} •{" "}
+                  <strong className="text-parchment-50 uppercase">
+                    3-WITNESS CHAOS PANEL
+                  </strong>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <button
+                type="button"
+                onClick={onOpenStats}
+                className="inline-flex items-center gap-1 px-2.5 py-2 rounded-sm bg-booth-800 hover:bg-booth-700 border border-booth-600 text-parchment-200 font-typewriter text-xs uppercase transition-colors"
+                title="Officer Stats"
+              >
+                <BarChart3 className="w-4 h-4 text-censor-gold" />
+                <span className="hidden md:inline">Stats</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={onOpenCalendar}
+                className="inline-flex items-center gap-1 px-2.5 py-2 rounded-sm bg-booth-800 hover:bg-booth-700 border border-booth-600 text-parchment-200 font-typewriter text-xs uppercase transition-colors"
+                title="Previous Days Calendar"
+              >
+                <CalendarDays className="w-4 h-4 text-censor-gold" />
+                <span className="hidden md:inline">Archive</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setMobileHintsOpen(true)}
+                className="lg:hidden inline-flex items-center gap-1.5 px-3 py-2 rounded-sm bg-booth-800 hover:bg-booth-700 border border-censor-gold/55 text-parchment-100 font-typewriter font-bold text-xs uppercase tracking-wider"
+              >
+                <Newspaper className="w-4 h-4 text-censor-gold" />
+                <span>
+                  Hints ({unlockedHintsCount}/{pressHints.length})
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setGuessError("");
+                  setVerdictModalOpen(true);
+                }}
+                disabled={Boolean(gameOutcome)}
+                className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-sm bg-censor-gold hover:bg-amber-400 text-booth-950 font-typewriter font-bold text-xs uppercase tracking-wider shadow-[0_0_16px_rgba(212,155,53,0.35)] transition-all disabled:opacity-40"
+              >
+                <Gavel className="w-4 h-4" />
+                <span>Final Verdict</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Row 2: Live Censor Certificate Health Bar + 8 Vintage Film Reels */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-booth-900/90 border border-booth-600/70 rounded-sm p-2.5 sm:p-3">
+            <div className="md:col-span-6 flex items-center gap-3">
+              <div
+                className={`min-w-[66px] px-2.5 py-1.5 text-center border-2 rounded-[2px] font-display font-black text-xl sm:text-2xl leading-none transition-all duration-300 ${ratingInfo.badgeClass}`}
+              >
+                {ratingInfo.label}
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <span className="font-typewriter text-[10px] uppercase tracking-wider text-parchment-300/80">
+                    Censor Certificate Meter
+                  </span>
+                  <span className="font-typewriter text-[10px] font-bold text-parchment-200">
+                    U/A → A → S → BANNED
+                  </span>
+                </div>
+
+                <div className="h-2.5 w-full bg-booth-950 rounded-full overflow-hidden border border-booth-600">
+                  <div
+                    className={`h-full transition-all duration-500 ${ratingInfo.barClass}`}
+                    style={{ width: `${ratingInfo.fillPercent}%` }}
+                  />
+                </div>
+
+                <p className="font-typewriter text-[10px] sm:text-[11px] text-parchment-200/90 mt-1 truncate">
+                  {ratingInfo.subtitle}
+                </p>
+              </div>
+            </div>
+
+            <div className="md:col-span-6 flex flex-col sm:flex-row md:flex-col lg:flex-row sm:items-center justify-between gap-2 md:border-l md:border-booth-700 md:pl-3.5">
+              <div className="flex items-center justify-between sm:justify-start gap-2">
+                <span className="font-typewriter text-[10px] uppercase tracking-widest text-parchment-300/80">
+                  Interrogation Reels
+                </span>
+                <span
+                  className={`font-typewriter text-xs font-bold px-2 py-0.5 rounded-[2px] ${
+                    tokensLeft <= 2
+                      ? "bg-red-950 text-red-200 border border-red-500/60"
+                      : "bg-booth-800 text-censor-gold border border-censor-gold/40"
+                  }`}
+                >
+                  {tokensLeft}/{MAX_TOKENS} LEFT
+                </span>
+              </div>
+
+              <div
+                className="flex items-center gap-1.5 flex-wrap"
+                aria-label={`${tokensLeft} of ${MAX_TOKENS} film reels remaining`}
+              >
+                {Array.from({ length: MAX_TOKENS }).map((_, idx) => {
+                  const isActive = idx < tokensLeft;
+                  return (
+                    <div
+                      key={idx}
+                      title={
+                        isActive
+                          ? `Film Reel #${idx + 1} (Available)`
+                          : `Film Reel #${idx + 1} (Spent)`
+                      }
+                      className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                        isActive
+                          ? "border-censor-gold bg-censor-gold/15 text-censor-gold shadow-[0_0_8px_rgba(212,155,53,0.3)] scale-100"
+                          : "border-booth-700 bg-booth-950 text-booth-600 opacity-45 scale-90"
+                      }`}
+                    >
+                      <Disc3
+                        className={`w-4 h-4 ${
+                          isActive && isLoading && idx === tokensLeft - 1
+                            ? "animate-reel-spin"
+                            : ""
+                        }`}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* MAIN 2-COLUMN WORKSPACE: 3-Witness Interrogation Bench (Left) + Press Clippings Column (Right) */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-5 py-4 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+        {/* LEFT COLUMN (8 cols) */}
+        <div className="lg:col-span-8 flex flex-col gap-3 min-w-0">
+          {/* LIVE 3-WITNESS BENCH BAR */}
+          <div className="grid grid-cols-3 gap-2">
+            {PERSONA_LIST.map((p) => {
+              const isOnMic = activeSpeakerIds.has(p.id);
+              const isHeckling = lastPanelTurn?.heckler === p.id;
+              return (
+                <div
+                  key={p.id}
+                  className={`flex items-center gap-2 px-2.5 py-2 rounded-sm border transition-all ${
+                    isOnMic
+                      ? "bg-booth-800 border-censor-gold shadow-[0_0_12px_rgba(212,155,53,0.22)]"
+                      : "bg-booth-900/75 border-booth-700/80 opacity-80"
+                  }`}
+                >
+                  <div
+                    className="w-8 h-8 rounded-sm font-display font-black text-xs flex items-center justify-center text-parchment-50 shrink-0 border border-parchment-200/30"
+                    style={{ backgroundColor: p.accentColor }}
+                  >
+                    {p.monogram}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-display font-bold text-xs text-parchment-100 truncate">
+                      {p.name}
+                    </p>
+                    <p className="font-typewriter text-[9px] uppercase tracking-wider flex items-center gap-1 text-parchment-300/75 truncate">
+                      {isOnMic ? (
+                        <>
+                          <Mic className="w-2.5 h-2.5 text-censor-gold shrink-0" />
+                          <span className="text-censor-gold font-bold">
+                            TESTIFIED
+                          </span>
+                        </>
+                      ) : isHeckling ? (
+                        <span>BENCH HECKLE</span>
+                      ) : (
+                        <span>ON BENCH</span>
+                      )}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Chat History Container */}
+          <div className="flex-1 min-h-[320px] max-h-[calc(100vh-425px)] overflow-y-auto custom-scrollbar bg-booth-900/65 border border-booth-700/80 rounded-sm p-3.5 sm:p-5 space-y-3.5 shadow-inner">
+            {messages.map((msg) => {
+              if (msg.sender === "system") {
+                const sysStyle = msg.isContradictionBanner
+                  ? "bg-amber-950/85 border-censor-gold text-amber-100 shadow-[0_0_14px_rgba(212,155,53,0.25)]"
+                  : msg.isObjectionResult === "caught"
+                  ? "bg-emerald-950/80 border-emerald-500/60 text-emerald-100"
+                  : msg.isObjectionResult === "wrong"
+                  ? "bg-red-950/85 border-red-500/70 text-red-100"
+                  : "bg-booth-800/80 border-censor-gold/35 text-parchment-200/90";
+
+                return (
+                  <div
+                    key={msg.id}
+                    className={`mx-auto max-w-2xl text-center border px-3.5 py-2 rounded-sm font-typewriter text-[11px] sm:text-xs leading-relaxed animate-fade-up flex items-center justify-center gap-2 ${sysStyle}`}
+                  >
+                    {msg.isContradictionBanner && (
+                      <Zap className="w-4 h-4 text-censor-gold shrink-0" />
+                    )}
+                    <span>{msg.text}</span>
+                  </div>
+                );
+              }
+
+              if (msg.sender === "user") {
+                return (
+                  <div
+                    key={msg.id}
+                    className="flex justify-end items-end gap-2.5 animate-fade-up"
+                  >
+                    <div className="max-w-[85%] sm:max-w-[78%]">
+                      <div className="flex items-center justify-end gap-2 mb-1">
+                        <span className="font-typewriter text-[10px] uppercase tracking-wider text-censor-gold/90">
+                          {msg.isInvalid
+                            ? "Invalid Query • Reel Refunded"
+                            : `Censor Officer • Reel #${msg.reelNumber}`}
+                        </span>
+                      </div>
+                      <div className="bg-parchment-100 text-censor-ink border-2 border-censor-gold/80 px-4 py-2.5 rounded-sm rounded-br-none shadow-md font-sans text-sm font-medium leading-relaxed">
+                        {msg.text}
+                      </div>
+                    </div>
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-sm bg-censor-gold text-booth-950 font-typewriter font-bold text-xs flex items-center justify-center shrink-0 border border-parchment-50/40 shadow-sm">
+                      YOU
+                    </div>
+                  </div>
+                );
+              }
+
+              if (msg.sender === "heckle" && msg.personaId) {
+                const p = PERSONAS[msg.personaId];
+                return (
+                  <div
+                    key={msg.id}
+                    className="flex items-center gap-2 pl-6 sm:pl-11 animate-fade-up"
+                  >
+                    <MessageSquareQuote className="w-3.5 h-3.5 text-parchment-300/50 shrink-0" />
+                    <div className="bg-booth-950/70 border border-dashed border-booth-600 px-3 py-1.5 rounded-sm text-xs font-sans italic text-parchment-300/85">
+                      <span
+                        className="font-typewriter not-italic font-bold text-[10px] uppercase mr-1.5"
+                        style={{ color: "#E1C890" }}
+                      >
+                        {p.name} (Sideline):
+                      </span>
+                      &ldquo;{msg.text}&rdquo;
+                    </div>
+                  </div>
+                );
+              }
+
+              const speakerPersona = PERSONAS[msg.personaId ?? "gajala"];
+
+              return (
+                <div
+                  key={msg.id}
+                  className="flex justify-start items-start gap-2.5 sm:gap-3 animate-fade-up"
+                >
+                  <div
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-sm font-display font-black text-sm flex items-center justify-center text-parchment-50 shrink-0 border-2 border-parchment-200/40 shadow-md mt-4"
+                    style={{ backgroundColor: speakerPersona.accentColor }}
+                    title={speakerPersona.name}
+                  >
+                    {speakerPersona.monogram}
+                  </div>
+
+                  <div className="max-w-[85%] sm:max-w-[80%]">
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <span className="font-display font-bold text-xs sm:text-sm text-parchment-100">
+                        {speakerPersona.name}
+                      </span>
+                      <span
+                        className={`font-typewriter text-[9px] uppercase px-1.5 py-0.5 rounded-[2px] border ${speakerPersona.badgeBg}`}
+                      >
+                        {msg.isInvalid ? "PANEL ROAST" : "TESTIMONY"}
+                      </span>
+                      {msg.reelNumber && (
+                        <span className="font-typewriter text-[10px] text-parchment-300/60">
+                          • Reel #{msg.reelNumber}
+                        </span>
+                      )}
+                    </div>
+
+                    <div
+                      className={`px-4 py-3 rounded-sm rounded-tl-none border shadow-md font-sans text-sm leading-relaxed ${
+                        msg.isObjectionResult === "caught"
+                          ? "bg-emerald-950/70 border-emerald-500/60 text-emerald-50"
+                          : msg.isObjectionResult === "wrong"
+                          ? "bg-red-950/75 border-red-500/60 text-red-50"
+                          : "bg-booth-800 border-booth-600 text-parchment-50"
+                      }`}
+                    >
+                      {msg.text}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            {isLoading && (
+              <div className="flex items-center gap-3 animate-fade-up">
+                <div className="w-9 h-9 rounded-sm bg-booth-800 border border-censor-gold/50 flex items-center justify-center shrink-0">
+                  <Film className="w-4 h-4 text-censor-gold animate-spin" />
+                </div>
+                <div className="bg-booth-800 border border-booth-600 px-4 py-2.5 rounded-sm text-xs font-typewriter text-parchment-300">
+                  The 3 witnesses are arguing over the microphone...
+                </div>
+              </div>
+            )}
+
+            <div ref={chatEndRef} />
+          </div>
+
+          {/* BOTTOM CONTROLS DOCK */}
+          <section className="bg-booth-900/95 border border-booth-700 rounded-sm p-3 sm:p-4 space-y-3 shadow-2xl">
+            {/* TARGETED OBJECTION! ACCUSE-THE-LIAR BAR */}
+            {accusePickerOpen && lastPanelTurn && !objectionUsed && (
+              <div className="bg-red-950/85 border-2 border-red-400 p-3 rounded-sm animate-fade-up">
+                <div className="flex items-center justify-between gap-2 mb-2.5">
+                  <span className="font-typewriter text-xs font-bold uppercase tracking-wider text-red-100 flex items-center gap-1.5">
+                    <AlertOctagon className="w-4 h-4 text-red-300" />
+                    WHO LIED ON REEL #{lastPanelTurn.reelNumber}? POINT AT THE
+                    LIAR:
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setAccusePickerOpen(false)}
+                    className="text-red-200 hover:text-white p-0.5"
+                    aria-label="Cancel accusation"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {lastPanelTurn.statements.map((stmt) => {
+                    const p = PERSONAS[stmt.personaId];
+                    return (
+                      <button
+                        key={stmt.personaId}
+                        type="button"
+                        onClick={() => handleAccuseWitness(stmt.personaId)}
+                        className="flex items-center justify-between gap-2 px-3.5 py-2.5 bg-booth-950 hover:bg-censor-crimson border-2 border-red-400/70 hover:border-parchment-100 rounded-sm text-left transition-all group"
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <span
+                            className="w-7 h-7 rounded-sm font-display font-black text-xs flex items-center justify-center text-parchment-50 shrink-0"
+                            style={{ backgroundColor: p.accentColor }}
+                          >
+                            {p.monogram}
+                          </span>
+                          <div className="min-w-0">
+                            <span className="font-typewriter font-bold text-xs text-parchment-50 uppercase block truncate">
+                              Accuse {p.name}
+                            </span>
+                            <span className="font-sans text-[10px] text-parchment-300/75 block truncate">
+                              &ldquo;{stmt.reply.slice(0, 38)}...&rdquo;
+                            </span>
+                          </div>
+                        </div>
+                        <span className="font-typewriter text-[10px] font-bold uppercase px-2 py-0.5 bg-red-600 text-white rounded-[2px] shrink-0">
+                          LIAR!
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* 3 Quick-Tap Tactical Question Chips */}
+            {tokensLeft > 0 && !gameOutcome && activeChips.length > 0 && (
+              <div>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Sparkles className="w-3.5 h-3.5 text-censor-gold" />
+                  <span className="font-typewriter text-[10px] uppercase tracking-widest text-parchment-300/80">
+                    Quick-Tap Tactical Questions
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {activeChips.map((chip) => (
+                    <button
+                      key={chip}
+                      type="button"
+                      disabled={!canAskQuestion}
+                      onClick={() => handleAskQuestion(chip)}
+                      className="px-3 py-1.5 rounded-sm bg-booth-800 hover:bg-booth-700 border border-censor-gold/40 hover:border-censor-gold text-parchment-100 font-sans text-xs transition-all disabled:opacity-40 text-left"
+                    >
+                      &ldquo;{chip}&rdquo;
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Out-of-reels Final Verdict Prompt */}
+            {tokensLeft === 0 && !gameOutcome ? (
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-red-950/60 border border-red-500/60 p-3 rounded-sm">
+                <div className="text-center sm:text-left">
+                  <p className="font-typewriter text-xs font-bold uppercase text-red-200 tracking-wider">
+                    0 FILM REELS REMAINING — SUBMIT YOUR FINAL VERDICT!
+                  </p>
+                  <p className="font-sans text-xs text-red-200/80">
+                    Make your guess now, call a last-second OBJECTION!, or
+                    surrender.
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setVerdictModalOpen(true)}
+                    className="px-4 py-2 bg-censor-gold hover:bg-amber-400 text-booth-950 font-typewriter font-bold text-xs uppercase tracking-wider rounded-sm flex items-center gap-1.5"
+                  >
+                    <Gavel className="w-4 h-4" />
+                    <span>Guess Movie Now</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSurrender}
+                    className="px-3 py-2 bg-red-900/80 hover:bg-red-800 text-red-100 border border-red-400/50 font-typewriter text-xs uppercase rounded-sm"
+                  >
+                    Surrender
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleAskQuestion(input);
+                }}
+                className="flex items-stretch gap-2"
+              >
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  disabled={!canAskQuestion}
+                  placeholder="Interrogate the 3 witnesses (cast, crew, year, awards, hype)..."
+                  className="flex-1 bg-booth-950 border border-booth-600 focus:border-censor-gold focus:outline-none focus:ring-1 focus:ring-censor-gold/50 rounded-sm px-3.5 py-2.5 text-sm text-parchment-50 placeholder:text-parchment-300/40 disabled:opacity-50"
+                />
+                <button
+                  type="submit"
+                  disabled={!canAskQuestion || !input.trim()}
+                  className="px-4 sm:px-5 bg-parchment-100 hover:bg-parchment-50 text-censor-ink font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider rounded-sm border-2 border-censor-gold inline-flex items-center gap-2 transition-colors disabled:opacity-40"
+                >
+                  <Send className="w-4 h-4" />
+                  <span className="hidden sm:inline">Ask</span>
+                </button>
+              </form>
+            )}
+
+            {/* Action Row: OBJECTION! (ABADDAM!) & DECLARE FINAL VERDICT */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-1 border-t border-booth-700/80">
+              <button
+                type="button"
+                onClick={() => setAccusePickerOpen((prev) => !prev)}
+                disabled={!canObject}
+                className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider border-2 transition-all ${
+                  canObject
+                    ? "bg-censor-crimson hover:bg-censor-red text-parchment-50 border-red-400 shadow-[0_0_16px_rgba(185,28,28,0.45)] cursor-pointer"
+                    : "bg-booth-800 text-parchment-300/40 border-booth-700 cursor-not-allowed"
+                }`}
+              >
+                <AlertOctagon className="w-4 h-4" />
+                <span>OBJECTION! (ABADDAM!)</span>
+                <span className="ml-1 px-1.5 py-0.5 text-[10px] rounded-[2px] bg-black/30">
+                  {objectionUsed ? "USED" : "1 LEFT"}
+                </span>
+              </button>
+
+              <div className="flex items-center justify-between sm:justify-end gap-2.5">
+                <span className="font-typewriter text-[10px] text-parchment-300/65 hidden xl:inline">
+                  Accuse liar = +2 Reels &amp; Upgrade • Wrong = -2 Reels &amp;
+                  Downgrade
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setGuessError("");
+                    setVerdictModalOpen(true);
+                  }}
+                  disabled={Boolean(gameOutcome)}
+                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm bg-booth-800 hover:bg-booth-700 text-censor-gold border-2 border-censor-gold/70 font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider transition-colors disabled:opacity-40"
+                >
+                  <Gavel className="w-4 h-4" />
+                  <span>Declare Final Verdict</span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* RIGHT COLUMN (4 cols on Desktop): Dedicated Non-Spoiler Press Clippings & Hype Hints Column */}
+        <aside className="hidden lg:flex lg:col-span-4 flex-col bg-booth-900/80 border border-booth-700 rounded-sm p-4 max-h-[calc(100vh-195px)] shadow-xl">
+          {renderHintsColumnContent()}
+        </aside>
+      </main>
+
+      {/* MOBILE / TABLET PRESS HINTS DRAWER */}
+      {mobileHintsOpen && (
+        <div className="fixed inset-0 z-40 lg:hidden bg-black/75 backdrop-blur-sm flex justify-end">
+          <div className="w-full max-w-sm h-full bg-booth-900 border-l border-censor-gold/40 p-4 flex flex-col relative shadow-2xl">
+            <button
+              type="button"
+              onClick={() => setMobileHintsOpen(false)}
+              className="absolute top-3.5 right-3.5 p-1.5 rounded-sm bg-booth-800 hover:bg-booth-700 text-parchment-100"
+              aria-label="Close Press Clippings drawer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <div className="pt-2 h-full overflow-hidden">
+              {renderHintsColumnContent()}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* OBJECTION! DRAMATIC FLASH OVERLAY */}
+      {objectionBanner && (
+        <div className="fixed inset-0 z-40 pointer-events-none flex items-center justify-center bg-black/45 backdrop-blur-[1px] p-4">
+          <div
+            className={`animate-stamp-slam rubber-stamp border-[6px] px-6 sm:px-10 py-5 text-center shadow-2xl max-w-lg ${
+              objectionBanner.status === "caught"
+                ? "border-emerald-400 bg-emerald-950/95 text-emerald-100"
+                : "border-red-500 bg-red-950/95 text-red-100"
+            }`}
+          >
+            <div className="font-display font-black text-2xl sm:text-4xl tracking-wider">
+              {objectionBanner.headline}
+            </div>
+            <div className="font-typewriter text-xs sm:text-sm font-bold tracking-widest mt-2">
+              {objectionBanner.subtext}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* GIANT RED "BANNED BY CENSOR BOARD" FULL-SCREEN SLAM */}
+      {bannedSlamActive && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-xs p-4">
+          <div className="animate-stamp-slam rubber-stamp border-[8px] border-censor-red bg-parchment-50/95 text-censor-red px-6 sm:px-12 py-6 sm:py-8 text-center shadow-[0_0_80px_rgba(220,38,38,0.75)]">
+            <div className="font-typewriter text-xs sm:text-sm font-bold tracking-[0.28em]">
+              CENTRAL BOARD OF FILM CERTIFICATION
+            </div>
+            <div className="font-display font-black text-3xl sm:text-5xl md:text-6xl tracking-wider mt-1 leading-none">
+              BANNED BY
+              <br />
+              CENSOR BOARD
+            </div>
+            <div className="font-telugu text-base sm:text-xl font-extrabold mt-2">
+              సెన్సార్ బోర్డ్ నిషేధం • UTTER FLOP!
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* FINAL VERDICT MODAL / DRAWER (FUZZY MATCHING VIA FUSE.JS) */}
+      {verdictModalOpen && !gameOutcome && (
+        <div className="fixed inset-0 z-40 bg-black/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+          <div className="w-full max-w-lg cbfc-paper cbfc-frame text-censor-ink rounded-t-md sm:rounded-sm p-5 sm:p-7 relative animate-fade-up">
+            <button
+              type="button"
+              onClick={() => setVerdictModalOpen(false)}
+              className="absolute top-4 right-4 p-1.5 rounded-sm hover:bg-censor-ink/10 text-censor-ink transition-colors"
+              aria-label="Close Final Verdict modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2.5 border-b-2 border-censor-ink/70 pb-3 mb-4">
+              <div className="w-10 h-10 rounded-sm bg-censor-ink text-parchment-50 flex items-center justify-center shrink-0">
+                <Gavel className="w-5 h-5 text-censor-gold" />
+              </div>
+              <div>
+                <p className="font-typewriter text-[10px] uppercase tracking-[0.18em] text-censor-ink/70">
+                  CBFC OFFICIAL JUDGMENT FORM
+                </p>
+                <h2 className="font-display font-black text-xl sm:text-2xl text-censor-ink">
+                  DECLARE FINAL VERDICT
+                </h2>
+              </div>
+            </div>
+
+            <p className="font-sans text-xs sm:text-sm text-censor-ink/85 leading-relaxed mb-4">
+              Type the secret Telugu movie title below.{" "}
+              <strong>Minor spelling differences are forgiven</strong> (e.g.{" "}
+              <em>&ldquo;Magadira&rdquo;</em>, <em>&ldquo;Bahubali&rdquo;</em>,{" "}
+              <em>&ldquo;AVPL&rdquo;</em>).
+            </p>
+
+            <div className="flex items-center gap-2 bg-censor-crimson/10 border border-censor-crimson/40 px-3 py-2 rounded-sm mb-4">
+              <ShieldAlert className="w-4 h-4 text-censor-crimson shrink-0" />
+              <span className="font-typewriter text-[11px] text-censor-crimson font-bold">
+                ONE SHOT ONLY! A wrong guess slams the BANNED BY CENSOR BOARD
+                stamp!
+              </span>
+            </div>
+
+            <form onSubmit={handleSubmitVerdict} className="space-y-4">
+              <div>
+                <label
+                  htmlFor="verdict-guess"
+                  className="block font-typewriter text-xs font-bold uppercase tracking-wider text-censor-ink mb-1.5"
+                >
+                  Suspected Telugu Film Title:
+                </label>
+                <input
+                  id="verdict-guess"
+                  type="text"
+                  autoFocus
+                  value={guessInput}
+                  onChange={(e) => {
+                    setGuessInput(e.target.value);
+                    if (guessError) setGuessError("");
+                  }}
+                  placeholder="Type Telugu movie name..."
+                  className="w-full bg-parchment-50 border-2 border-censor-ink px-3.5 py-3 rounded-sm font-display font-bold text-lg text-censor-ink placeholder:text-censor-ink/40 focus:outline-none focus:ring-2 focus:ring-censor-crimson"
+                />
+                {guessError && (
+                  <p className="mt-1.5 font-typewriter text-xs text-censor-crimson font-bold">
+                    {guessError}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setVerdictModalOpen(false)}
+                  className="px-4 py-2.5 bg-parchment-200 hover:bg-parchment-300 border-2 border-censor-ink font-typewriter font-bold text-xs uppercase tracking-wider text-censor-ink rounded-sm"
+                >
+                  Keep Interrogating
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 bg-censor-crimson hover:bg-censor-red text-parchment-50 border-2 border-censor-ink shadow-[3px_3px_0px_#261B12] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider rounded-sm inline-flex items-center justify-center gap-2"
+                >
+                  <Gavel className="w-4 h-4" />
+                  <span>SLAM FINAL VERDICT</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* STAGE 3: END-OF-GAME CENSOR BOARD VERDICT SHARE CARD */}
+      {gameOutcome?.showCard && (
+        <VerdictCard
+          outcome={gameOutcome.status}
+          movie={movie}
+          activeDateKey={activeDateKey}
+          stats={stats}
+          gajalaLieReels={gajalaLieReels}
+          questionsUsed={questionCount}
+          maxQuestions={MAX_TOKENS}
+          finalRating={gameOutcome.status === "lost" ? "BANNED" : currentRating}
+          wrongGuess={gameOutcome.wrongGuess}
+          lossReason={gameOutcome.lossReason}
+          auditLog={auditLog}
+          onPlayAgain={onPlayAgain}
+          onReturnSplash={onReturnSplash}
+          onOpenCalendar={onOpenCalendar}
+          onOpenStats={onOpenStats}
+        />
+      )}
+    </div>
+  );
+}
