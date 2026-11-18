@@ -305,11 +305,7 @@ export default function InterrogationRoom({
   const [tierOffset, setTierOffset] = useState<number>(0);
   const [objectionUsed, setObjectionUsed] = useState<boolean>(false);
   const [accusePickerOpen, setAccusePickerOpen] = useState<boolean>(false);
-<<<<<<< HEAD
   const [aiMode, setAiMode] = useState<"groq" | "gemini" | "simulator" | null>(null);
-=======
-  const [aiMode, setAiMode] = useState<"groq" | "simulator" | null>(null);
->>>>>>> 7480616d96e8edbdf146c58fac2d2f6342207913
   const [lastPanelTurn, setLastPanelTurn] = useState<LastPanelTurn | null>(
     null
   );

@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-const ADMIN_COOKIE_NAME = "cbfc_admin_session";
+export const ADMIN_COOKIE_NAME = "cbfc_admin_session";
 const DEFAULT_ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
 const DEFAULT_ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "password123";
 const SESSION_SECRET = process.env.ADMIN_SECRET || "cbfc-hyderabad-secret-key-2026";
