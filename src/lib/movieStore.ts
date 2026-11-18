@@ -401,25 +401,9 @@ export async function saveMovie(movie: Movie): Promise<{
     updatedList = [...cleanedMovies, movie];
   }
 
-<<<<<<< HEAD
-  // If this movie has a featuredDate, ensure any other movie with this date is unassigned
-  if (movie.featuredDate) {
-    updatedList = updatedList.map((m) => {
-      if (m.id !== movie.id && m.featuredDate === movie.featuredDate) {
-        const { featuredDate: _, ...rest } = m;
-        return rest as Movie;
-      }
-      return m;
-    });
-  }
-
-  // Update in-memory cache immediately
-  cachedMovies = updatedList;
-=======
   const action = index >= 0 ? "update" : "schedule";
   const dateTag = movie.featuredDate ? ` for ${movie.featuredDate}` : "";
   const commitMsg = `chore(vault): ${action} "${movie.title}"${dateTag} via CBFC Admin`;
->>>>>>> 0421d9ca4bef3b5376e8515fc60ce98489534089
 
   const { persistent, storage } = await persistMovies(updatedList, commitMsg);
   return { success: true, persistent, storage, movies: updatedList };

@@ -180,7 +180,7 @@ export default function CensorSplash({
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-            <div className="border-[3px] border-censor-ink bg-parchment-50/75 px-3.5 py-1.5 text-center shadow-sm">
+            <div className="border-[3px] border-censor-ink bg-parchment-50/90 px-3.5 py-1.5 text-center shadow-md rotate-[-3deg] hover:rotate-0 transition-transform">
               <div className="font-display font-black text-3xl sm:text-4xl leading-none tracking-tight text-censor-ink">
                 U/A
               </div>
@@ -291,16 +291,24 @@ export default function CensorSplash({
                   ? "THE CORPORATE CEO"
                   : "THE FRUSTRATED COP";
 
+              const borderAccent =
+                persona.id === "relangi"
+                  ? "border-amber-700/60 hover:border-amber-600 bg-amber-500/[0.04]"
+                  : persona.id === "gajala"
+                  ? "border-sky-800/60 hover:border-sky-600 bg-sky-500/[0.04]"
+                  : "border-red-700/60 hover:border-red-600 bg-red-500/[0.04]";
+
               return (
                 <div
                   key={persona.id}
-                  className="text-left p-3.5 rounded-sm border-2 border-censor-ink/60 bg-parchment-50/75 shadow-sm relative"
+                  className={`text-left p-3.5 rounded-sm border-2 bg-parchment-50/80 shadow-sm relative transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${borderAccent}`}
                 >
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <span className="font-typewriter text-[9px] font-bold px-2 py-0.5 tracking-wider uppercase rounded-[2px] bg-censor-ink text-parchment-50">
                       {roleBadge}
                     </span>
-                    <span className="font-typewriter text-[9px] uppercase text-censor-crimson font-bold">
+                    <span className="font-typewriter text-[9px] uppercase text-censor-crimson font-bold flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-censor-crimson animate-pulse" />
                       ON BENCH
                     </span>
                   </div>
@@ -357,7 +365,7 @@ export default function CensorSplash({
             type="button"
             onClick={handleEnter}
             disabled={isSlamming || loadingCase}
-            className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3.5 bg-censor-crimson hover:bg-censor-red text-parchment-50 font-typewriter font-bold text-xs min-[375px]:text-sm sm:text-base tracking-[0.12em] uppercase border-[3px] border-censor-ink shadow-[4px_4px_0px_#261B12] hover:shadow-[2px_2px_0px_#261B12] hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all disabled:opacity-90"
+            className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 bg-gradient-to-r from-censor-crimson via-red-700 to-censor-crimson hover:from-censor-red hover:to-red-600 text-parchment-50 font-typewriter font-black text-xs min-[375px]:text-sm sm:text-base tracking-[0.14em] uppercase border-[3px] border-censor-ink shadow-[4px_4px_0px_#261B12] hover:shadow-[2px_2px_0px_#261B12] hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all disabled:opacity-90 cursor-pointer glow-crimson"
           >
             <Stamp className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-rotate-12 transition-transform shrink-0" />
             <span>

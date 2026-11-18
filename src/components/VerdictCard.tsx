@@ -336,7 +336,11 @@ export default function VerdictCard({
           <button
             type="button"
             onClick={handleCopyScorecard}
-            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-censor-ink hover:bg-booth-800 text-parchment-50 font-typewriter font-bold text-xs sm:text-sm tracking-wider uppercase border-2 border-censor-ink shadow-[3px_3px_0px_#991B1B] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
+            className={`flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 font-typewriter font-black text-xs sm:text-sm tracking-wider uppercase border-2 transition-all cursor-pointer ${
+              copied
+                ? "bg-emerald-900 text-emerald-100 border-emerald-500 shadow-md"
+                : "bg-censor-ink hover:bg-booth-800 text-parchment-50 border-censor-ink shadow-[3px_3px_0px_#991B1B] hover:shadow-[1px_1px_0px_#991B1B] hover:translate-x-[2px] hover:translate-y-[2px]"
+            }`}
           >
             {copied ? (
               <>
