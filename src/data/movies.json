@@ -3,7 +3,12 @@
     "id": "sankarabharanam",
     "featuredDate": "2026-11-01",
     "title": "Sankarabharanam",
-    "alternateSpellings": ["Sankarabharanam", "Shankarabharanam", "Sankara Bharanam", "Shankara Bharanam"],
+    "alternateSpellings": [
+      "Sankarabharanam",
+      "Shankarabharanam",
+      "Sankara Bharanam",
+      "Shankara Bharanam"
+    ],
     "year": 1980,
     "releaseMonth": "February 1980",
     "hero": "J.V. Somayajulu",
@@ -22,22 +27,114 @@
     "iconicProp": "Carnatic Tambura & traditional silk angavastram",
     "hint": "A 1980 National Award musical classic where Carnatic ragas triumph over prejudice.",
     "fullCast": [
-      { "name": "J.V. Somayajulu", "role": "Lead (Sankara Sastry)", "aliases": ["somayajulu", "jv somayajulu"] },
-      { "name": "Manju Bhargavi", "role": "Lead (Tulasi)", "aliases": ["manju bhargavi"] },
-      { "name": "Chandra Mohan", "role": "Kameswara Rao", "aliases": ["chandra mohan"] },
-      { "name": "Rajalakshmi", "role": "Sarada", "aliases": ["rajalakshmi"] },
-      { "name": "Allu Ramalingaiah", "role": "Lawyer", "aliases": ["allu ramalingaiah", "ramalingaiah"] },
-      { "name": "Master Tulasi Ram", "role": "Young Shankaram", "aliases": ["tulasi ram"] },
-      { "name": "Nirmalamma", "role": "Supporting Elder", "aliases": ["nirmalamma"] }
+      {
+        "name": "J.V. Somayajulu",
+        "role": "Lead (Sankara Sastry)",
+        "aliases": [
+          "somayajulu",
+          "jv somayajulu"
+        ]
+      },
+      {
+        "name": "Manju Bhargavi",
+        "role": "Lead (Tulasi)",
+        "aliases": [
+          "manju bhargavi"
+        ]
+      },
+      {
+        "name": "Chandra Mohan",
+        "role": "Kameswara Rao",
+        "aliases": [
+          "chandra mohan"
+        ]
+      },
+      {
+        "name": "Rajalakshmi",
+        "role": "Sarada",
+        "aliases": [
+          "rajalakshmi"
+        ]
+      },
+      {
+        "name": "Allu Ramalingaiah",
+        "role": "Lawyer",
+        "aliases": [
+          "allu ramalingaiah",
+          "ramalingaiah"
+        ]
+      },
+      {
+        "name": "Master Tulasi Ram",
+        "role": "Young Shankaram",
+        "aliases": [
+          "tulasi ram"
+        ]
+      },
+      {
+        "name": "Nirmalamma",
+        "role": "Supporting Elder",
+        "aliases": [
+          "nirmalamma"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "K. Viswanath", "department": "Director & Story Writer", "aliases": ["k viswanath", "viswanath", "kalatapasvi"] },
-      { "name": "K.V. Mahadevan", "department": "Music Director", "aliases": ["kv mahadevan", "mahadevan"] },
-      { "name": "Edida Nageswara Rao", "department": "Producer (Poornodaya Movie Creations)", "aliases": ["edida nageswara rao", "poornodaya"] },
-      { "name": "S.P. Balasubrahmanyam", "department": "Lead Playback Singer", "aliases": ["spb", "sp balasubrahmanyam", "balu"] },
-      { "name": "Vani Jairam", "department": "Playback Singer", "aliases": ["vani jairam"] },
-      { "name": "Veturi Sundararama Murthy", "department": "Lyricist", "aliases": ["veturi"] },
-      { "name": "Balu Mahendra", "department": "Cinematographer (DOP)", "aliases": ["balu mahendra"] }
+      {
+        "name": "K. Viswanath",
+        "department": "Director & Story Writer",
+        "aliases": [
+          "k viswanath",
+          "viswanath",
+          "kalatapasvi"
+        ]
+      },
+      {
+        "name": "K.V. Mahadevan",
+        "department": "Music Director",
+        "aliases": [
+          "kv mahadevan",
+          "mahadevan"
+        ]
+      },
+      {
+        "name": "Edida Nageswara Rao",
+        "department": "Producer (Poornodaya Movie Creations)",
+        "aliases": [
+          "edida nageswara rao",
+          "poornodaya"
+        ]
+      },
+      {
+        "name": "S.P. Balasubrahmanyam",
+        "department": "Lead Playback Singer",
+        "aliases": [
+          "spb",
+          "sp balasubrahmanyam",
+          "balu"
+        ]
+      },
+      {
+        "name": "Vani Jairam",
+        "department": "Playback Singer",
+        "aliases": [
+          "vani jairam"
+        ]
+      },
+      {
+        "name": "Veturi Sundararama Murthy",
+        "department": "Lyricist",
+        "aliases": [
+          "veturi"
+        ]
+      },
+      {
+        "name": "Balu Mahendra",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "balu mahendra"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released in February 1980 to empty theatres initially before word-of-mouth turned it into a historic silver-jubilee phenomenon across South India",
@@ -99,7 +196,13 @@
     "id": "athadu",
     "featuredDate": "2026-11-02",
     "title": "Athadu",
-    "alternateSpellings": ["Athadu", "Atadu", "Athaadu", "Nandu", "Pardhu"],
+    "alternateSpellings": [
+      "Athadu",
+      "Atadu",
+      "Athaadu",
+      "Nandu",
+      "Pardhu"
+    ],
     "year": 2005,
     "releaseMonth": "August 2005",
     "hero": "Mahesh Babu",
@@ -118,30 +221,176 @@
     "iconicProp": "High-powered sniper rifle & Pardhu's silver wristwatch",
     "hint": "A hitman jumps off a train and accidentally becomes the favorite grandson of a lively village family.",
     "fullCast": [
-      { "name": "Mahesh Babu", "role": "Lead Hero (Nandu / Pardhu)", "aliases": ["mahesh", "mahesh babu", "superstar"] },
-      { "name": "Trisha Krishnan", "role": "Lead Heroine (Poori)", "aliases": ["trisha", "trisha krishnan"] },
-      { "name": "Prakash Raj", "role": "CBI Officer Anjaneya Prasad", "aliases": ["prakash raj"] },
-      { "name": "Sonu Sood", "role": "Malli", "aliases": ["sonu sood", "sonu"] },
-      { "name": "Sayaji Shinde", "role": "Siva Reddy", "aliases": ["sayaji shinde", "sayaji"] },
-      { "name": "Kota Srinivasa Rao", "role": "Baaji Reddy", "aliases": ["kota", "kota srinivasa rao"] },
-      { "name": "Nassar", "role": "Satyanarayana Murthy", "aliases": ["nassar"] },
-      { "name": "Brahmanandam", "role": "Kittu", "aliases": ["brahmanandam", "brahmi"] },
-      { "name": "Sunil", "role": "Ramana", "aliases": ["sunil"] },
-      { "name": "Tanikella Bharani", "role": "Naidu", "aliases": ["tanikella bharani", "tanikella"] },
-      { "name": "K. Viswanath", "role": "CBI Chief", "aliases": ["k viswanath", "viswanath"] },
-      { "name": "Rajiv Kanakala", "role": "Real Pardhu", "aliases": ["rajiv kanakala"] },
-      { "name": "Rahul Dev", "role": "Sadhu", "aliases": ["rahul dev"] },
-      { "name": "Brahmaji", "role": "Police Inspector", "aliases": ["brahmaji"] }
+      {
+        "name": "Mahesh Babu",
+        "role": "Lead Hero (Nandu / Pardhu)",
+        "aliases": [
+          "mahesh",
+          "mahesh babu",
+          "superstar"
+        ]
+      },
+      {
+        "name": "Trisha Krishnan",
+        "role": "Lead Heroine (Poori)",
+        "aliases": [
+          "trisha",
+          "trisha krishnan"
+        ]
+      },
+      {
+        "name": "Prakash Raj",
+        "role": "CBI Officer Anjaneya Prasad",
+        "aliases": [
+          "prakash raj"
+        ]
+      },
+      {
+        "name": "Sonu Sood",
+        "role": "Malli",
+        "aliases": [
+          "sonu sood",
+          "sonu"
+        ]
+      },
+      {
+        "name": "Sayaji Shinde",
+        "role": "Siva Reddy",
+        "aliases": [
+          "sayaji shinde",
+          "sayaji"
+        ]
+      },
+      {
+        "name": "Kota Srinivasa Rao",
+        "role": "Baaji Reddy",
+        "aliases": [
+          "kota",
+          "kota srinivasa rao"
+        ]
+      },
+      {
+        "name": "Nassar",
+        "role": "Satyanarayana Murthy",
+        "aliases": [
+          "nassar"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Kittu",
+        "aliases": [
+          "brahmanandam",
+          "brahmi"
+        ]
+      },
+      {
+        "name": "Sunil",
+        "role": "Ramana",
+        "aliases": [
+          "sunil"
+        ]
+      },
+      {
+        "name": "Tanikella Bharani",
+        "role": "Naidu",
+        "aliases": [
+          "tanikella bharani",
+          "tanikella"
+        ]
+      },
+      {
+        "name": "K. Viswanath",
+        "role": "CBI Chief",
+        "aliases": [
+          "k viswanath",
+          "viswanath"
+        ]
+      },
+      {
+        "name": "Rajiv Kanakala",
+        "role": "Real Pardhu",
+        "aliases": [
+          "rajiv kanakala"
+        ]
+      },
+      {
+        "name": "Rahul Dev",
+        "role": "Sadhu",
+        "aliases": [
+          "rahul dev"
+        ]
+      },
+      {
+        "name": "Brahmaji",
+        "role": "Police Inspector",
+        "aliases": [
+          "brahmaji"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Trivikram Srinivas", "department": "Director & Writer", "aliases": ["trivikram", "trivikram srinivas", "guruji"] },
-      { "name": "Mani Sharma", "department": "Music Director", "aliases": ["mani sharma", "manisharma"] },
-      { "name": "Murali Mohan", "department": "Presenter (Jayabheri Arts)", "aliases": ["murali mohan", "jayabheri"] },
-      { "name": "K.V. Guhan", "department": "Cinematographer (DOP)", "aliases": ["kv guhan", "guhan"] },
-      { "name": "A. Sreekar Prasad", "department": "Film Editor", "aliases": ["sreekar prasad"] },
-      { "name": "Peter Hein", "department": "Stunt Choreographer", "aliases": ["peter hein"] },
-      { "name": "Sirivennela Seetharama Sastry", "department": "Lyricist", "aliases": ["sirivennela"] },
-      { "name": "Thota Tharani", "department": "Art Director", "aliases": ["thota tharani"] }
+      {
+        "name": "Trivikram Srinivas",
+        "department": "Director & Writer",
+        "aliases": [
+          "trivikram",
+          "trivikram srinivas",
+          "guruji"
+        ]
+      },
+      {
+        "name": "Mani Sharma",
+        "department": "Music Director",
+        "aliases": [
+          "mani sharma",
+          "manisharma"
+        ]
+      },
+      {
+        "name": "Murali Mohan",
+        "department": "Presenter (Jayabheri Arts)",
+        "aliases": [
+          "murali mohan",
+          "jayabheri"
+        ]
+      },
+      {
+        "name": "K.V. Guhan",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "kv guhan",
+          "guhan"
+        ]
+      },
+      {
+        "name": "A. Sreekar Prasad",
+        "department": "Film Editor",
+        "aliases": [
+          "sreekar prasad"
+        ]
+      },
+      {
+        "name": "Peter Hein",
+        "department": "Stunt Choreographer",
+        "aliases": [
+          "peter hein"
+        ]
+      },
+      {
+        "name": "Sirivennela Seetharama Sastry",
+        "department": "Lyricist",
+        "aliases": [
+          "sirivennela"
+        ]
+      },
+      {
+        "name": "Thota Tharani",
+        "department": "Art Director",
+        "aliases": [
+          "thota tharani"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released August 10, 2005 after nearly three years in production, including a rare song shoot in Poland",
@@ -202,7 +451,12 @@
     "id": "pokiri",
     "featuredDate": "2026-11-03",
     "title": "Pokiri",
-    "alternateSpellings": ["Pokiri", "Pokri", "Pokkiri", "Pandu"],
+    "alternateSpellings": [
+      "Pokiri",
+      "Pokri",
+      "Pokkiri",
+      "Pandu"
+    ],
     "year": 2006,
     "releaseMonth": "April 2006",
     "hero": "Mahesh Babu",
@@ -221,26 +475,140 @@
     "iconicProp": "IPS Officer ID badge & Pandu's yellow checkered shirt",
     "hint": "Once he commits, he doesn't even listen to himself—and his biggest secret drops in the climax.",
     "fullCast": [
-      { "name": "Mahesh Babu", "role": "Lead Hero (Pandu / Krishna Manohar IPS)", "aliases": ["mahesh", "mahesh babu", "superstar"] },
-      { "name": "Ileana D'Cruz", "role": "Lead Heroine (Shruti)", "aliases": ["ileana", "ileana dcruz"] },
-      { "name": "Prakash Raj", "role": "Main Villain (Ali Bhai)", "aliases": ["prakash raj"] },
-      { "name": "Nassar", "role": "Suryanarayana (Father)", "aliases": ["nassar"] },
-      { "name": "Ashish Vidyarthi", "role": "Inspector Pasupathy", "aliases": ["ashish vidyarthi"] },
-      { "name": "Sayaji Shinde", "role": "Police Commissioner", "aliases": ["sayaji shinde"] },
-      { "name": "Brahmanandam", "role": "Brahmi (Software Engineer)", "aliases": ["brahmanandam", "brahmi"] },
-      { "name": "Ali", "role": "President of Beggars Association", "aliases": ["ali"] },
-      { "name": "Venu Madhav", "role": "President of Beggars", "aliases": ["venu madhav"] },
-      { "name": "Subbaraju", "role": "Nayar", "aliases": ["subbaraju"] },
-      { "name": "Ajay", "role": "Ajay", "aliases": ["ajay"] },
-      { "name": "Mumaith Khan", "role": "Special Song ('Ippatikinka')", "aliases": ["mumaith khan"] }
+      {
+        "name": "Mahesh Babu",
+        "role": "Lead Hero (Pandu / Krishna Manohar IPS)",
+        "aliases": [
+          "mahesh",
+          "mahesh babu",
+          "superstar"
+        ]
+      },
+      {
+        "name": "Ileana D'Cruz",
+        "role": "Lead Heroine (Shruti)",
+        "aliases": [
+          "ileana",
+          "ileana dcruz"
+        ]
+      },
+      {
+        "name": "Prakash Raj",
+        "role": "Main Villain (Ali Bhai)",
+        "aliases": [
+          "prakash raj"
+        ]
+      },
+      {
+        "name": "Nassar",
+        "role": "Suryanarayana (Father)",
+        "aliases": [
+          "nassar"
+        ]
+      },
+      {
+        "name": "Ashish Vidyarthi",
+        "role": "Inspector Pasupathy",
+        "aliases": [
+          "ashish vidyarthi"
+        ]
+      },
+      {
+        "name": "Sayaji Shinde",
+        "role": "Police Commissioner",
+        "aliases": [
+          "sayaji shinde"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Brahmi (Software Engineer)",
+        "aliases": [
+          "brahmanandam",
+          "brahmi"
+        ]
+      },
+      {
+        "name": "Ali",
+        "role": "President of Beggars Association",
+        "aliases": [
+          "ali"
+        ]
+      },
+      {
+        "name": "Venu Madhav",
+        "role": "President of Beggars",
+        "aliases": [
+          "venu madhav"
+        ]
+      },
+      {
+        "name": "Subbaraju",
+        "role": "Nayar",
+        "aliases": [
+          "subbaraju"
+        ]
+      },
+      {
+        "name": "Ajay",
+        "role": "Ajay",
+        "aliases": [
+          "ajay"
+        ]
+      },
+      {
+        "name": "Mumaith Khan",
+        "role": "Special Song ('Ippatikinka')",
+        "aliases": [
+          "mumaith khan"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Puri Jagannadh", "department": "Director, Writer & Co-Producer", "aliases": ["puri jagannadh", "puri"] },
-      { "name": "Mani Sharma", "department": "Music Director", "aliases": ["mani sharma", "manisharma"] },
-      { "name": "Shyam K. Naidu", "department": "Cinematographer (DOP)", "aliases": ["shyam k naidu"] },
-      { "name": "Marthand K. Venkatesh", "department": "Film Editor", "aliases": ["marthand k venkatesh"] },
-      { "name": "Vijayan", "department": "Stunt Master", "aliases": ["vijayan"] },
-      { "name": "Bhaskarabhatla", "department": "Lyricist", "aliases": ["bhaskarabhatla"] }
+      {
+        "name": "Puri Jagannadh",
+        "department": "Director, Writer & Co-Producer",
+        "aliases": [
+          "puri jagannadh",
+          "puri"
+        ]
+      },
+      {
+        "name": "Mani Sharma",
+        "department": "Music Director",
+        "aliases": [
+          "mani sharma",
+          "manisharma"
+        ]
+      },
+      {
+        "name": "Shyam K. Naidu",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "shyam k naidu"
+        ]
+      },
+      {
+        "name": "Marthand K. Venkatesh",
+        "department": "Film Editor",
+        "aliases": [
+          "marthand k venkatesh"
+        ]
+      },
+      {
+        "name": "Vijayan",
+        "department": "Stunt Master",
+        "aliases": [
+          "vijayan"
+        ]
+      },
+      {
+        "name": "Bhaskarabhatla",
+        "department": "Lyricist",
+        "aliases": [
+          "bhaskarabhatla"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released April 28, 2006 and became an all-time Telugu industry hit—holding the top box-office record for over 3 years",
@@ -301,7 +669,11 @@
     "id": "bommarillu",
     "featuredDate": "2026-11-04",
     "title": "Bommarillu",
-    "alternateSpellings": ["Bommarillu", "Bommarilu", "Bomarillu"],
+    "alternateSpellings": [
+      "Bommarillu",
+      "Bommarilu",
+      "Bomarillu"
+    ],
     "year": 2006,
     "releaseMonth": "August 2006",
     "hero": "Siddharth",
@@ -320,23 +692,121 @@
     "iconicProp": "Two-scoop ice cream cone & an orange shirt chosen by dad",
     "hint": "Every shirt, career, and fiancée was picked by his father—until 'Ha-Ha-Hasini' walked in.",
     "fullCast": [
-      { "name": "Siddharth", "role": "Lead Hero (Siddhu)", "aliases": ["siddharth", "siddhu"] },
-      { "name": "Genelia D'Souza", "role": "Lead Heroine (Hasini)", "aliases": ["genelia", "genelia dsouza", "hasini"] },
-      { "name": "Prakash Raj", "role": "Father (Aravind)", "aliases": ["prakash raj"] },
-      { "name": "Jayasudha", "role": "Mother (Lakshmi)", "aliases": ["jayasudha"] },
-      { "name": "Kota Srinivasa Rao", "role": "Kanaka Rao (Hasini's Father)", "aliases": ["kota", "kota srinivasa rao"] },
-      { "name": "Sunil", "role": "Sathi (Household Cook/Helper)", "aliases": ["sunil"] },
-      { "name": "Brahmanandam", "role": "Loan Recovery Officer (Cameo)", "aliases": ["brahmanandam", "brahmi"] },
-      { "name": "Tanikella Bharani", "role": "Subbalakshmi's Father", "aliases": ["tanikella bharani"] },
-      { "name": "Dharmavarapu Subramanyam", "role": "Professor", "aliases": ["dharmavarapu"] }
+      {
+        "name": "Siddharth",
+        "role": "Lead Hero (Siddhu)",
+        "aliases": [
+          "siddharth",
+          "siddhu"
+        ]
+      },
+      {
+        "name": "Genelia D'Souza",
+        "role": "Lead Heroine (Hasini)",
+        "aliases": [
+          "genelia",
+          "genelia dsouza",
+          "hasini"
+        ]
+      },
+      {
+        "name": "Prakash Raj",
+        "role": "Father (Aravind)",
+        "aliases": [
+          "prakash raj"
+        ]
+      },
+      {
+        "name": "Jayasudha",
+        "role": "Mother (Lakshmi)",
+        "aliases": [
+          "jayasudha"
+        ]
+      },
+      {
+        "name": "Kota Srinivasa Rao",
+        "role": "Kanaka Rao (Hasini's Father)",
+        "aliases": [
+          "kota",
+          "kota srinivasa rao"
+        ]
+      },
+      {
+        "name": "Sunil",
+        "role": "Sathi (Household Cook/Helper)",
+        "aliases": [
+          "sunil"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Loan Recovery Officer (Cameo)",
+        "aliases": [
+          "brahmanandam",
+          "brahmi"
+        ]
+      },
+      {
+        "name": "Tanikella Bharani",
+        "role": "Subbalakshmi's Father",
+        "aliases": [
+          "tanikella bharani"
+        ]
+      },
+      {
+        "name": "Dharmavarapu Subramanyam",
+        "role": "Professor",
+        "aliases": [
+          "dharmavarapu"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Bhaskar", "department": "Debut Director & Writer", "aliases": ["bhaskar", "bommarillu bhaskar"] },
-      { "name": "Dil Raju", "department": "Producer (Sri Venkateswara Creations)", "aliases": ["dil raju", "svc"] },
-      { "name": "Devi Sri Prasad", "department": "Music Director", "aliases": ["devi sri prasad", "dsp"] },
-      { "name": "Vijay C. Kumar", "department": "Cinematographer (DOP)", "aliases": ["vijay c kumar"] },
-      { "name": "Marthand K. Venkatesh", "department": "Film Editor", "aliases": ["marthand k venkatesh"] },
-      { "name": "Abburi Ravi", "department": "Dialogue Writer", "aliases": ["abburi ravi"] }
+      {
+        "name": "Bhaskar",
+        "department": "Debut Director & Writer",
+        "aliases": [
+          "bhaskar",
+          "bommarillu bhaskar"
+        ]
+      },
+      {
+        "name": "Dil Raju",
+        "department": "Producer (Sri Venkateswara Creations)",
+        "aliases": [
+          "dil raju",
+          "svc"
+        ]
+      },
+      {
+        "name": "Devi Sri Prasad",
+        "department": "Music Director",
+        "aliases": [
+          "devi sri prasad",
+          "dsp"
+        ]
+      },
+      {
+        "name": "Vijay C. Kumar",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "vijay c kumar"
+        ]
+      },
+      {
+        "name": "Marthand K. Venkatesh",
+        "department": "Film Editor",
+        "aliases": [
+          "marthand k venkatesh"
+        ]
+      },
+      {
+        "name": "Abburi Ravi",
+        "department": "Dialogue Writer",
+        "aliases": [
+          "abburi ravi"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released August 9, 2006 as Bhaskar's directorial debut and became a youth-and-family blockbuster under Dil Raju's banner",
@@ -397,7 +867,11 @@
     "id": "jalsa",
     "featuredDate": "2026-11-05",
     "title": "Jalsa",
-    "alternateSpellings": ["Jalsa", "Jalsha", "Jalsaa"],
+    "alternateSpellings": [
+      "Jalsa",
+      "Jalsha",
+      "Jalsaa"
+    ],
     "year": 2008,
     "releaseMonth": "April 2008",
     "hero": "Pawan Kalyan",
@@ -416,25 +890,138 @@
     "iconicProp": "Red Naxalite bandana & college hostel guitar",
     "hint": "Narrated by Mahesh Babu, this carefree college hero hides a fiery past—and tortures Pranav.",
     "fullCast": [
-      { "name": "Pawan Kalyan", "role": "Lead Hero (Sanjay Sahu)", "aliases": ["pawan kalyan", "pavan kalyan", "pk", "power star"] },
-      { "name": "Ileana D'Cruz", "role": "Lead Heroine (Bhagyamati)", "aliases": ["ileana", "ileana dcruz"] },
-      { "name": "Parvati Melton", "role": "Second Heroine (Jyotsna)", "aliases": ["parvati melton"] },
-      { "name": "Kamalinee Mukherjee", "role": "Indu (Flashback Love)", "aliases": ["kamalinee mukherjee"] },
-      { "name": "Prakash Raj", "role": "Bhoopathi", "aliases": ["prakash raj"] },
-      { "name": "Mukesh Rishi", "role": "Main Villain (Damodar Reddy)", "aliases": ["mukesh rishi"] },
-      { "name": "Brahmanandam", "role": "Pranav (Iconic Comedy Track)", "aliases": ["brahmanandam", "brahmi", "pranav"] },
-      { "name": "Sunil", "role": "Bunk Seenu", "aliases": ["sunil"] },
-      { "name": "Ali", "role": "College Friend", "aliases": ["ali"] },
-      { "name": "Tanikella Bharani", "role": "Bulli Reddy", "aliases": ["tanikella bharani"] },
-      { "name": "Mahesh Babu", "role": "Voiceover Narrator (Special Credit)", "aliases": ["mahesh babu", "mahesh"] }
+      {
+        "name": "Pawan Kalyan",
+        "role": "Lead Hero (Sanjay Sahu)",
+        "aliases": [
+          "pawan kalyan",
+          "pavan kalyan",
+          "pk",
+          "power star"
+        ]
+      },
+      {
+        "name": "Ileana D'Cruz",
+        "role": "Lead Heroine (Bhagyamati)",
+        "aliases": [
+          "ileana",
+          "ileana dcruz"
+        ]
+      },
+      {
+        "name": "Parvati Melton",
+        "role": "Second Heroine (Jyotsna)",
+        "aliases": [
+          "parvati melton"
+        ]
+      },
+      {
+        "name": "Kamalinee Mukherjee",
+        "role": "Indu (Flashback Love)",
+        "aliases": [
+          "kamalinee mukherjee"
+        ]
+      },
+      {
+        "name": "Prakash Raj",
+        "role": "Bhoopathi",
+        "aliases": [
+          "prakash raj"
+        ]
+      },
+      {
+        "name": "Mukesh Rishi",
+        "role": "Main Villain (Damodar Reddy)",
+        "aliases": [
+          "mukesh rishi"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Pranav (Iconic Comedy Track)",
+        "aliases": [
+          "brahmanandam",
+          "brahmi",
+          "pranav"
+        ]
+      },
+      {
+        "name": "Sunil",
+        "role": "Bunk Seenu",
+        "aliases": [
+          "sunil"
+        ]
+      },
+      {
+        "name": "Ali",
+        "role": "College Friend",
+        "aliases": [
+          "ali"
+        ]
+      },
+      {
+        "name": "Tanikella Bharani",
+        "role": "Bulli Reddy",
+        "aliases": [
+          "tanikella bharani"
+        ]
+      },
+      {
+        "name": "Mahesh Babu",
+        "role": "Voiceover Narrator (Special Credit)",
+        "aliases": [
+          "mahesh babu",
+          "mahesh"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Trivikram Srinivas", "department": "Director & Writer", "aliases": ["trivikram", "trivikram srinivas", "guruji"] },
-      { "name": "Allu Aravind", "department": "Producer (Geetha Arts)", "aliases": ["allu aravind", "geetha arts"] },
-      { "name": "Devi Sri Prasad", "department": "Music Director", "aliases": ["devi sri prasad", "dsp"] },
-      { "name": "Rasool Ellore", "department": "Cinematographer (DOP)", "aliases": ["rasool ellore"] },
-      { "name": "A. Sreekar Prasad", "department": "Film Editor", "aliases": ["sreekar prasad"] },
-      { "name": "Sirivennela Seetharama Sastry", "department": "Lyricist", "aliases": ["sirivennela"] }
+      {
+        "name": "Trivikram Srinivas",
+        "department": "Director & Writer",
+        "aliases": [
+          "trivikram",
+          "trivikram srinivas",
+          "guruji"
+        ]
+      },
+      {
+        "name": "Allu Aravind",
+        "department": "Producer (Geetha Arts)",
+        "aliases": [
+          "allu aravind",
+          "geetha arts"
+        ]
+      },
+      {
+        "name": "Devi Sri Prasad",
+        "department": "Music Director",
+        "aliases": [
+          "devi sri prasad",
+          "dsp"
+        ]
+      },
+      {
+        "name": "Rasool Ellore",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "rasool ellore"
+        ]
+      },
+      {
+        "name": "A. Sreekar Prasad",
+        "department": "Film Editor",
+        "aliases": [
+          "sreekar prasad"
+        ]
+      },
+      {
+        "name": "Sirivennela Seetharama Sastry",
+        "department": "Lyricist",
+        "aliases": [
+          "sirivennela"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released April 2, 2008 as the first collaboration between Pawan Kalyan and Trivikram Srinivas, scoring the highest Telugu opening of 2008",
@@ -495,7 +1082,12 @@
     "id": "magadheera",
     "featuredDate": "2026-11-06",
     "title": "Magadheera",
-    "alternateSpellings": ["Magadheera", "Magadira", "Magadeera", "Maga Dheera"],
+    "alternateSpellings": [
+      "Magadheera",
+      "Magadira",
+      "Magadeera",
+      "Maga Dheera"
+    ],
     "year": 2009,
     "releaseMonth": "July 2009",
     "hero": "Ram Charan",
@@ -514,28 +1106,159 @@
     "iconicProp": "400-year-old Udaigarh broadsword & golden anklet",
     "hint": "One touch sparks 400 years of memories—and one warrior takes on 100 soldiers.",
     "fullCast": [
-      { "name": "Ram Charan", "role": "Lead Hero (Harsha / Kala Bhairava)", "aliases": ["ram charan", "charan", "rc"] },
-      { "name": "Kajal Aggarwal", "role": "Lead Heroine (Indu / Mitravinda)", "aliases": ["kajal", "kajal aggarwal"] },
-      { "name": "Dev Gill", "role": "Main Villain (Raghuveer / Ranadev Billa)", "aliases": ["dev gill"] },
-      { "name": "Srihari", "role": "Sher Khan / Solomon", "aliases": ["srihari"] },
-      { "name": "Sarath Babu", "role": "King Vikram Singh", "aliases": ["sarath babu"] },
-      { "name": "Sunil", "role": "Harsha's Friend", "aliases": ["sunil"] },
-      { "name": "Brahmanandam", "role": "Indu's Neighbor (Cameo)", "aliases": ["brahmanandam", "brahmi"] },
-      { "name": "Rao Ramesh", "role": "Ghora", "aliases": ["rao ramesh"] },
-      { "name": "Chiranjeevi", "role": "Special Guest Cameo ('Bangaru Kodipetta')", "aliases": ["chiranjeevi", "megastar", "chiru"] },
-      { "name": "Mumaith Khan", "role": "Special Song Appearance", "aliases": ["mumaith khan"] },
-      { "name": "Kim Sharma", "role": "Special Song Appearance", "aliases": ["kim sharma"] }
+      {
+        "name": "Ram Charan",
+        "role": "Lead Hero (Harsha / Kala Bhairava)",
+        "aliases": [
+          "ram charan",
+          "charan",
+          "rc"
+        ]
+      },
+      {
+        "name": "Kajal Aggarwal",
+        "role": "Lead Heroine (Indu / Mitravinda)",
+        "aliases": [
+          "kajal",
+          "kajal aggarwal"
+        ]
+      },
+      {
+        "name": "Dev Gill",
+        "role": "Main Villain (Raghuveer / Ranadev Billa)",
+        "aliases": [
+          "dev gill"
+        ]
+      },
+      {
+        "name": "Srihari",
+        "role": "Sher Khan / Solomon",
+        "aliases": [
+          "srihari"
+        ]
+      },
+      {
+        "name": "Sarath Babu",
+        "role": "King Vikram Singh",
+        "aliases": [
+          "sarath babu"
+        ]
+      },
+      {
+        "name": "Sunil",
+        "role": "Harsha's Friend",
+        "aliases": [
+          "sunil"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Indu's Neighbor (Cameo)",
+        "aliases": [
+          "brahmanandam",
+          "brahmi"
+        ]
+      },
+      {
+        "name": "Rao Ramesh",
+        "role": "Ghora",
+        "aliases": [
+          "rao ramesh"
+        ]
+      },
+      {
+        "name": "Chiranjeevi",
+        "role": "Special Guest Cameo ('Bangaru Kodipetta')",
+        "aliases": [
+          "chiranjeevi",
+          "megastar",
+          "chiru"
+        ]
+      },
+      {
+        "name": "Mumaith Khan",
+        "role": "Special Song Appearance",
+        "aliases": [
+          "mumaith khan"
+        ]
+      },
+      {
+        "name": "Kim Sharma",
+        "role": "Special Song Appearance",
+        "aliases": [
+          "kim sharma"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "S.S. Rajamouli", "department": "Director & Screenplay", "aliases": ["rajamouli", "ss rajamouli", "ssr"] },
-      { "name": "M.M. Keeravani", "department": "Music Director", "aliases": ["keeravani", "mm keeravani"] },
-      { "name": "Allu Aravind", "department": "Producer (Geetha Arts)", "aliases": ["allu aravind", "geetha arts"] },
-      { "name": "V. Vijayendra Prasad", "department": "Story Writer", "aliases": ["vijayendra prasad"] },
-      { "name": "K.K. Senthil Kumar", "department": "Cinematographer (DOP)", "aliases": ["senthil kumar", "senthil"] },
-      { "name": "Kotagiri Venkateswara Rao", "department": "Film Editor", "aliases": ["kotagiri"] },
-      { "name": "Peter Hein", "department": "Stunt Choreographer", "aliases": ["peter hein"] },
-      { "name": "R.C. Kamalakannan", "department": "VFX Supervisor", "aliases": ["kamalakannan"] },
-      { "name": "Chandrabose", "department": "Lyricist", "aliases": ["chandrabose"] }
+      {
+        "name": "S.S. Rajamouli",
+        "department": "Director & Screenplay",
+        "aliases": [
+          "rajamouli",
+          "ss rajamouli",
+          "ssr"
+        ]
+      },
+      {
+        "name": "M.M. Keeravani",
+        "department": "Music Director",
+        "aliases": [
+          "keeravani",
+          "mm keeravani"
+        ]
+      },
+      {
+        "name": "Allu Aravind",
+        "department": "Producer (Geetha Arts)",
+        "aliases": [
+          "allu aravind",
+          "geetha arts"
+        ]
+      },
+      {
+        "name": "V. Vijayendra Prasad",
+        "department": "Story Writer",
+        "aliases": [
+          "vijayendra prasad"
+        ]
+      },
+      {
+        "name": "K.K. Senthil Kumar",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "senthil kumar",
+          "senthil"
+        ]
+      },
+      {
+        "name": "Kotagiri Venkateswara Rao",
+        "department": "Film Editor",
+        "aliases": [
+          "kotagiri"
+        ]
+      },
+      {
+        "name": "Peter Hein",
+        "department": "Stunt Choreographer",
+        "aliases": [
+          "peter hein"
+        ]
+      },
+      {
+        "name": "R.C. Kamalakannan",
+        "department": "VFX Supervisor",
+        "aliases": [
+          "kamalakannan"
+        ]
+      },
+      {
+        "name": "Chandrabose",
+        "department": "Lyricist",
+        "aliases": [
+          "chandrabose"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released July 31, 2009 and shattered Telugu box-office records, famously running 1,000 consecutive days in Kurnool",
@@ -596,7 +1319,11 @@
     "id": "maryada-ramanna",
     "featuredDate": "2026-11-07",
     "title": "Maryada Ramanna",
-    "alternateSpellings": ["Maryada Ramanna", "Maryadha Ramanna", "Maryada Ramana"],
+    "alternateSpellings": [
+      "Maryada Ramanna",
+      "Maryadha Ramanna",
+      "Maryada Ramana"
+    ],
     "year": 2010,
     "releaseMonth": "July 2010",
     "hero": "Sunil",
@@ -615,22 +1342,114 @@
     "iconicProp": "A talking bicycle voiced by Ravi Teja",
     "hint": "As long as he doesn't step outside the factionist's front gate, he's completely safe.",
     "fullCast": [
-      { "name": "Sunil", "role": "Lead Hero (Ramu)", "aliases": ["sunil"] },
-      { "name": "Saloni Aswani", "role": "Lead Heroine (Aparna)", "aliases": ["saloni", "saloni aswani"] },
-      { "name": "Nagineedu", "role": "Ramineedu (Faction Patriarch)", "aliases": ["nagineedu"] },
-      { "name": "Rao Ramesh", "role": "Ghost / Narrator Role", "aliases": ["rao ramesh"] },
-      { "name": "Brahmaji", "role": "Srikanth", "aliases": ["brahmaji"] },
-      { "name": "Subbaraju", "role": "Baireddy", "aliases": ["subbaraju"] },
-      { "name": "Supreeth", "role": "Malla Suri", "aliases": ["supreeth"] },
-      { "name": "Prabhakar", "role": "Baireddy's Brother", "aliases": ["prabhakar"] },
-      { "name": "Ravi Teja", "role": "Voice of the Talking Bicycle", "aliases": ["ravi teja", "raviteja", "mass maharaja"] }
+      {
+        "name": "Sunil",
+        "role": "Lead Hero (Ramu)",
+        "aliases": [
+          "sunil"
+        ]
+      },
+      {
+        "name": "Saloni Aswani",
+        "role": "Lead Heroine (Aparna)",
+        "aliases": [
+          "saloni",
+          "saloni aswani"
+        ]
+      },
+      {
+        "name": "Nagineedu",
+        "role": "Ramineedu (Faction Patriarch)",
+        "aliases": [
+          "nagineedu"
+        ]
+      },
+      {
+        "name": "Rao Ramesh",
+        "role": "Ghost / Narrator Role",
+        "aliases": [
+          "rao ramesh"
+        ]
+      },
+      {
+        "name": "Brahmaji",
+        "role": "Srikanth",
+        "aliases": [
+          "brahmaji"
+        ]
+      },
+      {
+        "name": "Subbaraju",
+        "role": "Baireddy",
+        "aliases": [
+          "subbaraju"
+        ]
+      },
+      {
+        "name": "Supreeth",
+        "role": "Malla Suri",
+        "aliases": [
+          "supreeth"
+        ]
+      },
+      {
+        "name": "Prabhakar",
+        "role": "Baireddy's Brother",
+        "aliases": [
+          "prabhakar"
+        ]
+      },
+      {
+        "name": "Ravi Teja",
+        "role": "Voice of the Talking Bicycle",
+        "aliases": [
+          "ravi teja",
+          "raviteja",
+          "mass maharaja"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "S.S. Rajamouli", "department": "Director & Screenplay", "aliases": ["rajamouli", "ss rajamouli", "ssr"] },
-      { "name": "M.M. Keeravani", "department": "Music Director", "aliases": ["keeravani", "mm keeravani"] },
-      { "name": "Shobu Yarlagadda & Prasad Devineni", "department": "Producers (Arka Media Works)", "aliases": ["shobu yarlagadda", "arka media"] },
-      { "name": "C. Ram Prasad", "department": "Cinematographer (DOP)", "aliases": ["ram prasad"] },
-      { "name": "S.S. Kanchi", "department": "Story & Screenplay Co-Writer", "aliases": ["kanchi", "ss kanchi"] }
+      {
+        "name": "S.S. Rajamouli",
+        "department": "Director & Screenplay",
+        "aliases": [
+          "rajamouli",
+          "ss rajamouli",
+          "ssr"
+        ]
+      },
+      {
+        "name": "M.M. Keeravani",
+        "department": "Music Director",
+        "aliases": [
+          "keeravani",
+          "mm keeravani"
+        ]
+      },
+      {
+        "name": "Shobu Yarlagadda & Prasad Devineni",
+        "department": "Producers (Arka Media Works)",
+        "aliases": [
+          "shobu yarlagadda",
+          "arka media"
+        ]
+      },
+      {
+        "name": "C. Ram Prasad",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "ram prasad"
+        ]
+      },
+      {
+        "name": "S.S. Kanchi",
+        "department": "Story & Screenplay Co-Writer",
+        "aliases": [
+          "kanchi",
+          "ss kanchi"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released July 23, 2010 right after Rajamouli's giant industry hit—surprising everyone by casting a top comedian as the solo hero!",
@@ -691,7 +1510,11 @@
     "id": "khaleja",
     "featuredDate": "2026-11-08",
     "title": "Khaleja",
-    "alternateSpellings": ["Khaleja", "Kaleja", "Mahesh Khaleja"],
+    "alternateSpellings": [
+      "Khaleja",
+      "Kaleja",
+      "Mahesh Khaleja"
+    ],
     "year": 2010,
     "releaseMonth": "October 2010",
     "hero": "Mahesh Babu",
@@ -710,23 +1533,122 @@
     "iconicProp": "Yellow-and-black Hyderabad taxi cab & ancient village prophecy scroll",
     "hint": "A sarcastic cab driver insists he's just a human while an entire poisoned village insists he's God.",
     "fullCast": [
-      { "name": "Mahesh Babu", "role": "Lead Hero (Alluri Seetharama Raju)", "aliases": ["mahesh", "mahesh babu", "superstar"] },
-      { "name": "Anushka Shetty", "role": "Lead Heroine (Subhashini)", "aliases": ["anushka", "anushka shetty", "sweety"] },
-      { "name": "Prakash Raj", "role": "Main Villain (GK)", "aliases": ["prakash raj"] },
-      { "name": "Sunil", "role": "Babji", "aliases": ["sunil"] },
-      { "name": "Brahmanandam", "role": "Miriyam", "aliases": ["brahmanandam", "brahmi"] },
-      { "name": "Ali", "role": "Tom Cruise", "aliases": ["ali"] },
-      { "name": "Rao Ramesh", "role": "Tantrik", "aliases": ["rao ramesh"] },
-      { "name": "Tanikella Bharani", "role": "Durga Prasad", "aliases": ["tanikella bharani"] },
-      { "name": "Subbaraju", "role": "Govardhan", "aliases": ["subbaraju"] },
-      { "name": "Shafi", "role": "Siddhappa", "aliases": ["shafi"] }
+      {
+        "name": "Mahesh Babu",
+        "role": "Lead Hero (Alluri Seetharama Raju)",
+        "aliases": [
+          "mahesh",
+          "mahesh babu",
+          "superstar"
+        ]
+      },
+      {
+        "name": "Anushka Shetty",
+        "role": "Lead Heroine (Subhashini)",
+        "aliases": [
+          "anushka",
+          "anushka shetty",
+          "sweety"
+        ]
+      },
+      {
+        "name": "Prakash Raj",
+        "role": "Main Villain (GK)",
+        "aliases": [
+          "prakash raj"
+        ]
+      },
+      {
+        "name": "Sunil",
+        "role": "Babji",
+        "aliases": [
+          "sunil"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Miriyam",
+        "aliases": [
+          "brahmanandam",
+          "brahmi"
+        ]
+      },
+      {
+        "name": "Ali",
+        "role": "Tom Cruise",
+        "aliases": [
+          "ali"
+        ]
+      },
+      {
+        "name": "Rao Ramesh",
+        "role": "Tantrik",
+        "aliases": [
+          "rao ramesh"
+        ]
+      },
+      {
+        "name": "Tanikella Bharani",
+        "role": "Durga Prasad",
+        "aliases": [
+          "tanikella bharani"
+        ]
+      },
+      {
+        "name": "Subbaraju",
+        "role": "Govardhan",
+        "aliases": [
+          "subbaraju"
+        ]
+      },
+      {
+        "name": "Shafi",
+        "role": "Siddhappa",
+        "aliases": [
+          "shafi"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Trivikram Srinivas", "department": "Director & Writer", "aliases": ["trivikram", "trivikram srinivas", "guruji"] },
-      { "name": "Mani Sharma", "department": "Music Director", "aliases": ["mani sharma", "manisharma"] },
-      { "name": "Yash Bhatt & Sunil Babu", "department": "Cinematography / Production Design", "aliases": ["yash bhatt", "sunil babu"] },
-      { "name": "A. Sreekar Prasad", "department": "Film Editor", "aliases": ["sreekar prasad"] },
-      { "name": "Ramajogayya Sastry", "department": "Lyricist ('Sada Siva Sanyasi')", "aliases": ["ramajogayya sastry"] }
+      {
+        "name": "Trivikram Srinivas",
+        "department": "Director & Writer",
+        "aliases": [
+          "trivikram",
+          "trivikram srinivas",
+          "guruji"
+        ]
+      },
+      {
+        "name": "Mani Sharma",
+        "department": "Music Director",
+        "aliases": [
+          "mani sharma",
+          "manisharma"
+        ]
+      },
+      {
+        "name": "Yash Bhatt & Sunil Babu",
+        "department": "Cinematography / Production Design",
+        "aliases": [
+          "yash bhatt",
+          "sunil babu"
+        ]
+      },
+      {
+        "name": "A. Sreekar Prasad",
+        "department": "Film Editor",
+        "aliases": [
+          "sreekar prasad"
+        ]
+      },
+      {
+        "name": "Ramajogayya Sastry",
+        "department": "Lyricist ('Sada Siva Sanyasi')",
+        "aliases": [
+          "ramajogayya sastry"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released October 7, 2010 marking Mahesh Babu's return to the big screen after a 3-year hiatus—initially underperformed in theatres before becoming one of Tollywood's most fiercely loved cult classics!",
@@ -787,7 +1709,13 @@
     "id": "eega",
     "featuredDate": "2026-11-09",
     "title": "Eega",
-    "alternateSpellings": ["Eega", "Ega", "Iga", "Makkhi", "Naan Ee"],
+    "alternateSpellings": [
+      "Eega",
+      "Ega",
+      "Iga",
+      "Makkhi",
+      "Naan Ee"
+    ],
     "year": 2012,
     "releaseMonth": "July 2012",
     "hero": "Nani",
@@ -806,27 +1734,154 @@
     "iconicProp": "Miniature fly-sized safety goggles & tiny needle sword",
     "hint": "The smallest action hero in Indian cinema history refuses to let a billionaire sleep.",
     "fullCast": [
-      { "name": "Nani", "role": "Lead Hero (Nani)", "aliases": ["nani", "natural star"] },
-      { "name": "Samantha Ruth Prabhu", "role": "Lead Heroine (Bindu)", "aliases": ["samantha", "samantha ruth prabhu", "sam"] },
-      { "name": "Kiccha Sudeep", "role": "Main Antagonist (Sudeep)", "aliases": ["sudeep", "kiccha sudeep", "sudeepa"] },
-      { "name": "Adithya Menon", "role": "Business Rival", "aliases": ["adithya menon"] },
-      { "name": "Srinivasa Reddy", "role": "Sudeep's Assistant", "aliases": ["srinivasa reddy"] },
-      { "name": "Sivannarayana", "role": "Temple Priest", "aliases": ["sivannarayana"] },
-      { "name": "Devadarshini", "role": "Bindu's Sister-in-law", "aliases": ["devadarshini"] },
-      { "name": "Noel Sean", "role": "Nani's Friend", "aliases": ["noel", "noel sean"] },
-      { "name": "Thagubothu Ramesh", "role": "Thief", "aliases": ["thagubothu ramesh"] },
-      { "name": "Dhanraj", "role": "Thief", "aliases": ["dhanraj"] },
-      { "name": "Hamsa Nandini", "role": "Kala", "aliases": ["hamsa nandini"] }
+      {
+        "name": "Nani",
+        "role": "Lead Hero (Nani)",
+        "aliases": [
+          "nani",
+          "natural star"
+        ]
+      },
+      {
+        "name": "Samantha Ruth Prabhu",
+        "role": "Lead Heroine (Bindu)",
+        "aliases": [
+          "samantha",
+          "samantha ruth prabhu",
+          "sam"
+        ]
+      },
+      {
+        "name": "Kiccha Sudeep",
+        "role": "Main Antagonist (Sudeep)",
+        "aliases": [
+          "sudeep",
+          "kiccha sudeep",
+          "sudeepa"
+        ]
+      },
+      {
+        "name": "Adithya Menon",
+        "role": "Business Rival",
+        "aliases": [
+          "adithya menon"
+        ]
+      },
+      {
+        "name": "Srinivasa Reddy",
+        "role": "Sudeep's Assistant",
+        "aliases": [
+          "srinivasa reddy"
+        ]
+      },
+      {
+        "name": "Sivannarayana",
+        "role": "Temple Priest",
+        "aliases": [
+          "sivannarayana"
+        ]
+      },
+      {
+        "name": "Devadarshini",
+        "role": "Bindu's Sister-in-law",
+        "aliases": [
+          "devadarshini"
+        ]
+      },
+      {
+        "name": "Noel Sean",
+        "role": "Nani's Friend",
+        "aliases": [
+          "noel",
+          "noel sean"
+        ]
+      },
+      {
+        "name": "Thagubothu Ramesh",
+        "role": "Thief",
+        "aliases": [
+          "thagubothu ramesh"
+        ]
+      },
+      {
+        "name": "Dhanraj",
+        "role": "Thief",
+        "aliases": [
+          "dhanraj"
+        ]
+      },
+      {
+        "name": "Hamsa Nandini",
+        "role": "Kala",
+        "aliases": [
+          "hamsa nandini"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "S.S. Rajamouli", "department": "Director & Screenplay", "aliases": ["rajamouli", "ss rajamouli", "ssr"] },
-      { "name": "V. Vijayendra Prasad", "department": "Story Writer", "aliases": ["vijayendra prasad"] },
-      { "name": "M.M. Keeravani", "department": "Music Director", "aliases": ["keeravani", "mm keeravani"] },
-      { "name": "Sai Korrapati", "department": "Producer (Vaaraahi Chalana Chitram)", "aliases": ["sai korrapati", "vaaraahi"] },
-      { "name": "K.K. Senthil Kumar", "department": "Cinematographer (DOP)", "aliases": ["senthil kumar", "senthil"] },
-      { "name": "Kotagiri Venkateswara Rao", "department": "Film Editor", "aliases": ["kotagiri"] },
-      { "name": "Makuta VFX (Pete Draper & R.C. Kamalakannan)", "department": "Visual Effects", "aliases": ["makuta", "makuta vfx", "kamalakannan"] },
-      { "name": "Ramajogayya Sastry", "department": "Lyricist", "aliases": ["ramajogayya sastry"] }
+      {
+        "name": "S.S. Rajamouli",
+        "department": "Director & Screenplay",
+        "aliases": [
+          "rajamouli",
+          "ss rajamouli",
+          "ssr"
+        ]
+      },
+      {
+        "name": "V. Vijayendra Prasad",
+        "department": "Story Writer",
+        "aliases": [
+          "vijayendra prasad"
+        ]
+      },
+      {
+        "name": "M.M. Keeravani",
+        "department": "Music Director",
+        "aliases": [
+          "keeravani",
+          "mm keeravani"
+        ]
+      },
+      {
+        "name": "Sai Korrapati",
+        "department": "Producer (Vaaraahi Chalana Chitram)",
+        "aliases": [
+          "sai korrapati",
+          "vaaraahi"
+        ]
+      },
+      {
+        "name": "K.K. Senthil Kumar",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "senthil kumar",
+          "senthil"
+        ]
+      },
+      {
+        "name": "Kotagiri Venkateswara Rao",
+        "department": "Film Editor",
+        "aliases": [
+          "kotagiri"
+        ]
+      },
+      {
+        "name": "Makuta VFX (Pete Draper & R.C. Kamalakannan)",
+        "department": "Visual Effects",
+        "aliases": [
+          "makuta",
+          "makuta vfx",
+          "kamalakannan"
+        ]
+      },
+      {
+        "name": "Ramajogayya Sastry",
+        "department": "Lyricist",
+        "aliases": [
+          "ramajogayya sastry"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released July 6, 2012 in Telugu & Tamil ('Naan Ee') and dubbed in Hindi as 'Makkhi'",
@@ -886,7 +1941,14 @@
     "id": "baahubali",
     "featuredDate": "2026-11-10",
     "title": "Baahubali: The Beginning",
-    "alternateSpellings": ["Baahubali: The Beginning", "Baahubali", "Bahubali", "Baahubali 1", "Bahubali 1", "Bahubali The Beginning"],
+    "alternateSpellings": [
+      "Baahubali: The Beginning",
+      "Baahubali",
+      "Bahubali",
+      "Baahubali 1",
+      "Bahubali 1",
+      "Bahubali The Beginning"
+    ],
     "year": 2015,
     "releaseMonth": "July 2015",
     "hero": "Prabhas",
@@ -905,28 +1967,164 @@
     "iconicProp": "Wooden warrior mask & giant Shiva Lingam",
     "hint": "He climbed an impossible waterfall and left all of India asking one question for two years.",
     "fullCast": [
-      { "name": "Prabhas", "role": "Lead Hero (Shivudu / Amarendra Baahubali)", "aliases": ["prabhas", "rebel star", "darling"] },
-      { "name": "Rana Daggubati", "role": "Main Antagonist (Bhallaladeva)", "aliases": ["rana", "rana daggubati"] },
-      { "name": "Tamannaah Bhatia", "role": "Lead Heroine (Avanthika)", "aliases": ["tamannaah", "tamanna"] },
-      { "name": "Anushka Shetty", "role": "Queen Devasena", "aliases": ["anushka", "anushka shetty"] },
-      { "name": "Ramya Krishna", "role": "Rajamatha Sivagami", "aliases": ["ramya krishna", "ramya krishnan", "sivagami"] },
-      { "name": "Sathyaraj", "role": "Kattappa", "aliases": ["sathyaraj", "satyaraj", "kattappa"] },
-      { "name": "Nassar", "role": "Bijjaladeva", "aliases": ["nassar"] },
-      { "name": "Prabhakar", "role": "Kalakeya Warlord", "aliases": ["prabhakar"] },
-      { "name": "Adivi Sesh", "role": "Bhadra", "aliases": ["adivi sesh"] },
-      { "name": "Tanikella Bharani", "role": "Swamiji", "aliases": ["tanikella bharani"] },
-      { "name": "Rohini", "role": "Sanga", "aliases": ["rohini"] },
-      { "name": "Kiccha Sudeep", "role": "Aslam Khan (Special Cameo)", "aliases": ["sudeep", "kiccha sudeep"] }
+      {
+        "name": "Prabhas",
+        "role": "Lead Hero (Shivudu / Amarendra Baahubali)",
+        "aliases": [
+          "prabhas",
+          "rebel star",
+          "darling"
+        ]
+      },
+      {
+        "name": "Rana Daggubati",
+        "role": "Main Antagonist (Bhallaladeva)",
+        "aliases": [
+          "rana",
+          "rana daggubati"
+        ]
+      },
+      {
+        "name": "Tamannaah Bhatia",
+        "role": "Lead Heroine (Avanthika)",
+        "aliases": [
+          "tamannaah",
+          "tamanna"
+        ]
+      },
+      {
+        "name": "Anushka Shetty",
+        "role": "Queen Devasena",
+        "aliases": [
+          "anushka",
+          "anushka shetty"
+        ]
+      },
+      {
+        "name": "Ramya Krishna",
+        "role": "Rajamatha Sivagami",
+        "aliases": [
+          "ramya krishna",
+          "ramya krishnan",
+          "sivagami"
+        ]
+      },
+      {
+        "name": "Sathyaraj",
+        "role": "Kattappa",
+        "aliases": [
+          "sathyaraj",
+          "satyaraj",
+          "kattappa"
+        ]
+      },
+      {
+        "name": "Nassar",
+        "role": "Bijjaladeva",
+        "aliases": [
+          "nassar"
+        ]
+      },
+      {
+        "name": "Prabhakar",
+        "role": "Kalakeya Warlord",
+        "aliases": [
+          "prabhakar"
+        ]
+      },
+      {
+        "name": "Adivi Sesh",
+        "role": "Bhadra",
+        "aliases": [
+          "adivi sesh"
+        ]
+      },
+      {
+        "name": "Tanikella Bharani",
+        "role": "Swamiji",
+        "aliases": [
+          "tanikella bharani"
+        ]
+      },
+      {
+        "name": "Rohini",
+        "role": "Sanga",
+        "aliases": [
+          "rohini"
+        ]
+      },
+      {
+        "name": "Kiccha Sudeep",
+        "role": "Aslam Khan (Special Cameo)",
+        "aliases": [
+          "sudeep",
+          "kiccha sudeep"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "S.S. Rajamouli", "department": "Director & Screenplay", "aliases": ["rajamouli", "ss rajamouli", "ssr"] },
-      { "name": "V. Vijayendra Prasad", "department": "Story Writer", "aliases": ["vijayendra prasad"] },
-      { "name": "M.M. Keeravani", "department": "Music Director", "aliases": ["keeravani", "mm keeravani"] },
-      { "name": "Shobu Yarlagadda & Prasad Devineni", "department": "Producers (Arka Media Works)", "aliases": ["shobu yarlagadda", "arka media"] },
-      { "name": "K.K. Senthil Kumar", "department": "Cinematographer (DOP)", "aliases": ["senthil kumar", "senthil"] },
-      { "name": "Sabu Cyril", "department": "Production Designer", "aliases": ["sabu cyril"] },
-      { "name": "Peter Hein", "department": "Action Choreographer", "aliases": ["peter hein"] },
-      { "name": "Madhan Karky", "department": "Creator of Kiliki Language", "aliases": ["madhan karky", "kiliki"] }
+      {
+        "name": "S.S. Rajamouli",
+        "department": "Director & Screenplay",
+        "aliases": [
+          "rajamouli",
+          "ss rajamouli",
+          "ssr"
+        ]
+      },
+      {
+        "name": "V. Vijayendra Prasad",
+        "department": "Story Writer",
+        "aliases": [
+          "vijayendra prasad"
+        ]
+      },
+      {
+        "name": "M.M. Keeravani",
+        "department": "Music Director",
+        "aliases": [
+          "keeravani",
+          "mm keeravani"
+        ]
+      },
+      {
+        "name": "Shobu Yarlagadda & Prasad Devineni",
+        "department": "Producers (Arka Media Works)",
+        "aliases": [
+          "shobu yarlagadda",
+          "arka media"
+        ]
+      },
+      {
+        "name": "K.K. Senthil Kumar",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "senthil kumar",
+          "senthil"
+        ]
+      },
+      {
+        "name": "Sabu Cyril",
+        "department": "Production Designer",
+        "aliases": [
+          "sabu cyril"
+        ]
+      },
+      {
+        "name": "Peter Hein",
+        "department": "Action Choreographer",
+        "aliases": [
+          "peter hein"
+        ]
+      },
+      {
+        "name": "Madhan Karky",
+        "department": "Creator of Kiliki Language",
+        "aliases": [
+          "madhan karky",
+          "kiliki"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released July 10, 2015 and became the first Telugu film to win the National Film Award for Best Feature Film (Golden Lotus)",
@@ -987,7 +2185,11 @@
     "id": "pelli-choopulu",
     "featuredDate": "2026-11-11",
     "title": "Pelli Choopulu",
-    "alternateSpellings": ["Pelli Choopulu", "Pellichoopulu", "Pelli Chupulu"],
+    "alternateSpellings": [
+      "Pelli Choopulu",
+      "Pellichoopulu",
+      "Pelli Chupulu"
+    ],
     "year": 2016,
     "releaseMonth": "July 2016",
     "hero": "Vijay Deverakonda",
@@ -1006,20 +2208,99 @@
     "iconicProp": "Yellow 'Spitfire' food truck & Bluetooth earpiece",
     "hint": "A matchmaking mix-up locks two strangers in a room—and sparks Hyderabad's cutest food truck startup.",
     "fullCast": [
-      { "name": "Vijay Deverakonda", "role": "Lead Hero (Prashanth)", "aliases": ["vijay deverakonda", "deverakonda", "vd"] },
-      { "name": "Ritu Varma", "role": "Lead Heroine (Chitra)", "aliases": ["ritu varma", "ritu"] },
-      { "name": "Priyadarshi", "role": "Kaushik (Breakout Comedy Friend)", "aliases": ["priyadarshi", "darshi"] },
-      { "name": "Abhay Bethiganti", "role": "Vishnu (Friend)", "aliases": ["abhay bethiganti"] },
-      { "name": "Kedar Shankar", "role": "Prashanth's Father", "aliases": ["kedar shankar"] },
-      { "name": "Nandu", "role": "Vikram", "aliases": ["nandu"] },
-      { "name": "Anish Kuruvilla", "role": "Businessman", "aliases": ["anish kuruvilla"] }
+      {
+        "name": "Vijay Deverakonda",
+        "role": "Lead Hero (Prashanth)",
+        "aliases": [
+          "vijay deverakonda",
+          "deverakonda",
+          "vd"
+        ]
+      },
+      {
+        "name": "Ritu Varma",
+        "role": "Lead Heroine (Chitra)",
+        "aliases": [
+          "ritu varma",
+          "ritu"
+        ]
+      },
+      {
+        "name": "Priyadarshi",
+        "role": "Kaushik (Breakout Comedy Friend)",
+        "aliases": [
+          "priyadarshi",
+          "darshi"
+        ]
+      },
+      {
+        "name": "Abhay Bethiganti",
+        "role": "Vishnu (Friend)",
+        "aliases": [
+          "abhay bethiganti"
+        ]
+      },
+      {
+        "name": "Kedar Shankar",
+        "role": "Prashanth's Father",
+        "aliases": [
+          "kedar shankar"
+        ]
+      },
+      {
+        "name": "Nandu",
+        "role": "Vikram",
+        "aliases": [
+          "nandu"
+        ]
+      },
+      {
+        "name": "Anish Kuruvilla",
+        "role": "Businessman",
+        "aliases": [
+          "anish kuruvilla"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Tharun Bhascker", "department": "Debut Director & Writer", "aliases": ["tharun bhascker", "tharun bhaskar", "tharun"] },
-      { "name": "Vivek Sagar", "department": "Music Director", "aliases": ["vivek sagar"] },
-      { "name": "Raj Kandukuri & Yash Rangineni", "department": "Producers", "aliases": ["raj kandukuri", "yash rangineni"] },
-      { "name": "Nagesh Banell", "department": "Cinematographer (DOP)", "aliases": ["nagesh banell"] },
-      { "name": "Raviteja Girijala", "department": "Film Editor", "aliases": ["raviteja girijala"] }
+      {
+        "name": "Tharun Bhascker",
+        "department": "Debut Director & Writer",
+        "aliases": [
+          "tharun bhascker",
+          "tharun bhaskar",
+          "tharun"
+        ]
+      },
+      {
+        "name": "Vivek Sagar",
+        "department": "Music Director",
+        "aliases": [
+          "vivek sagar"
+        ]
+      },
+      {
+        "name": "Raj Kandukuri & Yash Rangineni",
+        "department": "Producers",
+        "aliases": [
+          "raj kandukuri",
+          "yash rangineni"
+        ]
+      },
+      {
+        "name": "Nagesh Banell",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "nagesh banell"
+        ]
+      },
+      {
+        "name": "Raviteja Girijala",
+        "department": "Film Editor",
+        "aliases": [
+          "raviteja girijala"
+        ]
+      }
     ],
     "eraTrivia": [
       "Made on a tiny indie budget of around 1.25 crore in July 2016 and grossed over 30+ crore—becoming a watershed hit for new-wave Telugu cinema",
@@ -1080,7 +2361,11 @@
     "id": "arjun-reddy",
     "featuredDate": "2026-11-12",
     "title": "Arjun Reddy",
-    "alternateSpellings": ["Arjun Reddy", "Arjun Redy", "ArjunReddy"],
+    "alternateSpellings": [
+      "Arjun Reddy",
+      "Arjun Redy",
+      "ArjunReddy"
+    ],
     "year": 2017,
     "releaseMonth": "August 2017",
     "hero": "Vijay Deverakonda",
@@ -1099,22 +2384,112 @@
     "iconicProp": "Royal Enfield Bullet & a surgeon's stethoscope",
     "hint": "A short-tempered medical topper spirals into chaos after losing his college sweetheart.",
     "fullCast": [
-      { "name": "Vijay Deverakonda", "role": "Lead Hero (Dr. Arjun Reddy Deshmukh)", "aliases": ["vijay deverakonda", "deverakonda", "vd"] },
-      { "name": "Shalini Pandey", "role": "Lead Heroine (Preeti Shetty)", "aliases": ["shalini pandey", "shalini"] },
-      { "name": "Rahul Ramakrishna", "role": "Shiva (Best Friend)", "aliases": ["rahul ramakrishna"] },
-      { "name": "Jia Sharma", "role": "Jia", "aliases": ["jia sharma"] },
-      { "name": "Kanchana", "role": "Grandmother", "aliases": ["kanchana"] },
-      { "name": "Sanjay Swaroop", "role": "Arjun's Father", "aliases": ["sanjay swaroop"] },
-      { "name": "Kamal Kamaraju", "role": "Gautham (Elder Brother)", "aliases": ["kamal kamaraju"] },
-      { "name": "Priyadarshi", "role": "Lawyer Friend (Cameo)", "aliases": ["priyadarshi"] }
+      {
+        "name": "Vijay Deverakonda",
+        "role": "Lead Hero (Dr. Arjun Reddy Deshmukh)",
+        "aliases": [
+          "vijay deverakonda",
+          "deverakonda",
+          "vd"
+        ]
+      },
+      {
+        "name": "Shalini Pandey",
+        "role": "Lead Heroine (Preeti Shetty)",
+        "aliases": [
+          "shalini pandey",
+          "shalini"
+        ]
+      },
+      {
+        "name": "Rahul Ramakrishna",
+        "role": "Shiva (Best Friend)",
+        "aliases": [
+          "rahul ramakrishna"
+        ]
+      },
+      {
+        "name": "Jia Sharma",
+        "role": "Jia",
+        "aliases": [
+          "jia sharma"
+        ]
+      },
+      {
+        "name": "Kanchana",
+        "role": "Grandmother",
+        "aliases": [
+          "kanchana"
+        ]
+      },
+      {
+        "name": "Sanjay Swaroop",
+        "role": "Arjun's Father",
+        "aliases": [
+          "sanjay swaroop"
+        ]
+      },
+      {
+        "name": "Kamal Kamaraju",
+        "role": "Gautham (Elder Brother)",
+        "aliases": [
+          "kamal kamaraju"
+        ]
+      },
+      {
+        "name": "Priyadarshi",
+        "role": "Lawyer Friend (Cameo)",
+        "aliases": [
+          "priyadarshi"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Sandeep Reddy Vanga", "department": "Debut Director & Writer", "aliases": ["sandeep reddy vanga", "vanga", "sandeep vanga"] },
-      { "name": "Radhan", "department": "Music Director (Songs)", "aliases": ["radhan"] },
-      { "name": "Harshavardhan Rameshwar", "department": "Background Score Composer", "aliases": ["harshavardhan rameshwar"] },
-      { "name": "Pranay Reddy Vanga", "department": "Producer (Bhadrakali Pictures)", "aliases": ["pranay reddy vanga", "bhadrakali"] },
-      { "name": "Raj Thota", "department": "Cinematographer (DOP)", "aliases": ["raj thota"] },
-      { "name": "Shashank Mali", "department": "Film Editor", "aliases": ["shashank mali"] }
+      {
+        "name": "Sandeep Reddy Vanga",
+        "department": "Debut Director & Writer",
+        "aliases": [
+          "sandeep reddy vanga",
+          "vanga",
+          "sandeep vanga"
+        ]
+      },
+      {
+        "name": "Radhan",
+        "department": "Music Director (Songs)",
+        "aliases": [
+          "radhan"
+        ]
+      },
+      {
+        "name": "Harshavardhan Rameshwar",
+        "department": "Background Score Composer",
+        "aliases": [
+          "harshavardhan rameshwar"
+        ]
+      },
+      {
+        "name": "Pranay Reddy Vanga",
+        "department": "Producer (Bhadrakali Pictures)",
+        "aliases": [
+          "pranay reddy vanga",
+          "bhadrakali"
+        ]
+      },
+      {
+        "name": "Raj Thota",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "raj thota"
+        ]
+      },
+      {
+        "name": "Shashank Mali",
+        "department": "Film Editor",
+        "aliases": [
+          "shashank mali"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released August 25, 2017 after a fiery Censor Board 'A' certification battle and poster controversy in Hyderabad",
@@ -1175,7 +2550,12 @@
     "id": "rangasthalam",
     "featuredDate": "2026-11-13",
     "title": "Rangasthalam",
-    "alternateSpellings": ["Rangasthalam", "Rangasthlam", "Rangastalam", "Rangasthalam 1985"],
+    "alternateSpellings": [
+      "Rangasthalam",
+      "Rangasthlam",
+      "Rangastalam",
+      "Rangasthalam 1985"
+    ],
     "year": 2018,
     "releaseMonth": "March 2018",
     "hero": "Ram Charan",
@@ -1194,26 +2574,145 @@
     "iconicProp": "Diesel farm water pump motor & a checkered lungi",
     "hint": "A hearing-impaired 1980s village sound engineer takes on a tyrannical village president.",
     "fullCast": [
-      { "name": "Ram Charan", "role": "Lead Hero (Chitti Babu)", "aliases": ["ram charan", "charan", "rc"] },
-      { "name": "Samantha Ruth Prabhu", "role": "Lead Heroine (Rama Lakshmi)", "aliases": ["samantha", "samantha ruth prabhu", "sam"] },
-      { "name": "Aadhi Pinisetty", "role": "Kumar Babu", "aliases": ["aadhi", "aadhi pinisetty"] },
-      { "name": "Jagapathi Babu", "role": "President Phanindra Bhupathi", "aliases": ["jagapathi babu"] },
-      { "name": "Prakash Raj", "role": "MLA Dakshina Murthy", "aliases": ["prakash raj"] },
-      { "name": "Anasuya Bharadwaj", "role": "Rangammatta", "aliases": ["anasuya", "anasuya bharadwaj"] },
-      { "name": "Naresh", "role": "Koteswara Rao", "aliases": ["naresh"] },
-      { "name": "Rohini", "role": "Kantham", "aliases": ["rohini"] },
-      { "name": "Brahmaji", "role": "Tehsildar", "aliases": ["brahmaji"] },
-      { "name": "Ajay Ghosh", "role": "Seshu Naidu", "aliases": ["ajay ghosh"] },
-      { "name": "Pooja Hegde", "role": "Special Song ('Jigelu Rani')", "aliases": ["pooja hegde", "pooja"] }
+      {
+        "name": "Ram Charan",
+        "role": "Lead Hero (Chitti Babu)",
+        "aliases": [
+          "ram charan",
+          "charan",
+          "rc"
+        ]
+      },
+      {
+        "name": "Samantha Ruth Prabhu",
+        "role": "Lead Heroine (Rama Lakshmi)",
+        "aliases": [
+          "samantha",
+          "samantha ruth prabhu",
+          "sam"
+        ]
+      },
+      {
+        "name": "Aadhi Pinisetty",
+        "role": "Kumar Babu",
+        "aliases": [
+          "aadhi",
+          "aadhi pinisetty"
+        ]
+      },
+      {
+        "name": "Jagapathi Babu",
+        "role": "President Phanindra Bhupathi",
+        "aliases": [
+          "jagapathi babu"
+        ]
+      },
+      {
+        "name": "Prakash Raj",
+        "role": "MLA Dakshina Murthy",
+        "aliases": [
+          "prakash raj"
+        ]
+      },
+      {
+        "name": "Anasuya Bharadwaj",
+        "role": "Rangammatta",
+        "aliases": [
+          "anasuya",
+          "anasuya bharadwaj"
+        ]
+      },
+      {
+        "name": "Naresh",
+        "role": "Koteswara Rao",
+        "aliases": [
+          "naresh"
+        ]
+      },
+      {
+        "name": "Rohini",
+        "role": "Kantham",
+        "aliases": [
+          "rohini"
+        ]
+      },
+      {
+        "name": "Brahmaji",
+        "role": "Tehsildar",
+        "aliases": [
+          "brahmaji"
+        ]
+      },
+      {
+        "name": "Ajay Ghosh",
+        "role": "Seshu Naidu",
+        "aliases": [
+          "ajay ghosh"
+        ]
+      },
+      {
+        "name": "Pooja Hegde",
+        "role": "Special Song ('Jigelu Rani')",
+        "aliases": [
+          "pooja hegde",
+          "pooja"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Sukumar", "department": "Director & Writer", "aliases": ["sukumar", "suku"] },
-      { "name": "Devi Sri Prasad", "department": "Music Director", "aliases": ["devi sri prasad", "dsp"] },
-      { "name": "Mythri Movie Makers", "department": "Producers", "aliases": ["mythri", "mythri movie makers"] },
-      { "name": "R. Rathnavelu", "department": "Cinematographer (DOP)", "aliases": ["rathnavelu", "r rathnavelu"] },
-      { "name": "Naveen Nooli", "department": "Film Editor", "aliases": ["naveen nooli"] },
-      { "name": "Chandrabose", "department": "Lyricist (Full Album)", "aliases": ["chandrabose"] },
-      { "name": "Ram-Lakshman", "department": "Stunt Choreographers", "aliases": ["ram lakshman"] }
+      {
+        "name": "Sukumar",
+        "department": "Director & Writer",
+        "aliases": [
+          "sukumar",
+          "suku"
+        ]
+      },
+      {
+        "name": "Devi Sri Prasad",
+        "department": "Music Director",
+        "aliases": [
+          "devi sri prasad",
+          "dsp"
+        ]
+      },
+      {
+        "name": "Mythri Movie Makers",
+        "department": "Producers",
+        "aliases": [
+          "mythri",
+          "mythri movie makers"
+        ]
+      },
+      {
+        "name": "R. Rathnavelu",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "rathnavelu",
+          "r rathnavelu"
+        ]
+      },
+      {
+        "name": "Naveen Nooli",
+        "department": "Film Editor",
+        "aliases": [
+          "naveen nooli"
+        ]
+      },
+      {
+        "name": "Chandrabose",
+        "department": "Lyricist (Full Album)",
+        "aliases": [
+          "chandrabose"
+        ]
+      },
+      {
+        "name": "Ram-Lakshman",
+        "department": "Stunt Choreographers",
+        "aliases": [
+          "ram lakshman"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released March 30, 2018 and crossed 200+ crore worldwide as the highest-grossing non-Baahubali Telugu film of its time",
@@ -1273,7 +2772,11 @@
     "id": "jersey",
     "featuredDate": "2026-11-14",
     "title": "Jersey",
-    "alternateSpellings": ["Jersey", "Jersy", "Nani Jersey"],
+    "alternateSpellings": [
+      "Jersey",
+      "Jersy",
+      "Nani Jersey"
+    ],
     "year": 2019,
     "releaseMonth": "April 2019",
     "hero": "Nani",
@@ -1292,23 +2795,120 @@
     "iconicProp": "₹500 Indian cricket jersey & a battered wooden cricket bat",
     "hint": "A 36-year-old father steps back onto the pitch to prove it's never too late to be his son's hero.",
     "fullCast": [
-      { "name": "Nani", "role": "Lead Hero (Arjun)", "aliases": ["nani", "natural star"] },
-      { "name": "Shraddha Srinath", "role": "Lead Heroine (Sarah)", "aliases": ["shraddha srinath", "shraddha"] },
-      { "name": "Sathyaraj", "role": "Coach Murthy", "aliases": ["sathyaraj", "satyaraj"] },
-      { "name": "Ronit Kamra", "role": "Nani (Young Son)", "aliases": ["ronit kamra"] },
-      { "name": "Harish Kalyan", "role": "Adult Nani (Cameo)", "aliases": ["harish kalyan"] },
-      { "name": "Sampath Raj", "role": "Coach Ramappa Gowda", "aliases": ["sampath raj"] },
-      { "name": "Rao Ramesh", "role": "Lawyer", "aliases": ["rao ramesh"] },
-      { "name": "Brahmaji", "role": "Raju", "aliases": ["brahmaji"] },
-      { "name": "Subbaraju", "role": "Subba Reddy", "aliases": ["subbaraju"] },
-      { "name": "Praveen", "role": "Rajesh", "aliases": ["praveen"] }
+      {
+        "name": "Nani",
+        "role": "Lead Hero (Arjun)",
+        "aliases": [
+          "nani",
+          "natural star"
+        ]
+      },
+      {
+        "name": "Shraddha Srinath",
+        "role": "Lead Heroine (Sarah)",
+        "aliases": [
+          "shraddha srinath",
+          "shraddha"
+        ]
+      },
+      {
+        "name": "Sathyaraj",
+        "role": "Coach Murthy",
+        "aliases": [
+          "sathyaraj",
+          "satyaraj"
+        ]
+      },
+      {
+        "name": "Ronit Kamra",
+        "role": "Nani (Young Son)",
+        "aliases": [
+          "ronit kamra"
+        ]
+      },
+      {
+        "name": "Harish Kalyan",
+        "role": "Adult Nani (Cameo)",
+        "aliases": [
+          "harish kalyan"
+        ]
+      },
+      {
+        "name": "Sampath Raj",
+        "role": "Coach Ramappa Gowda",
+        "aliases": [
+          "sampath raj"
+        ]
+      },
+      {
+        "name": "Rao Ramesh",
+        "role": "Lawyer",
+        "aliases": [
+          "rao ramesh"
+        ]
+      },
+      {
+        "name": "Brahmaji",
+        "role": "Raju",
+        "aliases": [
+          "brahmaji"
+        ]
+      },
+      {
+        "name": "Subbaraju",
+        "role": "Subba Reddy",
+        "aliases": [
+          "subbaraju"
+        ]
+      },
+      {
+        "name": "Praveen",
+        "role": "Rajesh",
+        "aliases": [
+          "praveen"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Gowtam Tinnanuri", "department": "Director & Writer", "aliases": ["gowtam tinnanuri", "gowtam"] },
-      { "name": "Anirudh Ravichander", "department": "Music Director & BGM", "aliases": ["anirudh", "anirudh ravichander"] },
-      { "name": "Suryadevara Naga Vamsi", "department": "Producer (Sithara Entertainments)", "aliases": ["naga vamsi", "sithara entertainments"] },
-      { "name": "Sanu John Varghese", "department": "Cinematographer (DOP)", "aliases": ["sanu john varghese", "sanu varghese"] },
-      { "name": "Naveen Nooli", "department": "Film Editor (National Award Winner)", "aliases": ["naveen nooli"] }
+      {
+        "name": "Gowtam Tinnanuri",
+        "department": "Director & Writer",
+        "aliases": [
+          "gowtam tinnanuri",
+          "gowtam"
+        ]
+      },
+      {
+        "name": "Anirudh Ravichander",
+        "department": "Music Director & BGM",
+        "aliases": [
+          "anirudh",
+          "anirudh ravichander"
+        ]
+      },
+      {
+        "name": "Suryadevara Naga Vamsi",
+        "department": "Producer (Sithara Entertainments)",
+        "aliases": [
+          "naga vamsi",
+          "sithara entertainments"
+        ]
+      },
+      {
+        "name": "Sanu John Varghese",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "sanu john varghese",
+          "sanu varghese"
+        ]
+      },
+      {
+        "name": "Naveen Nooli",
+        "department": "Film Editor (National Award Winner)",
+        "aliases": [
+          "naveen nooli"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released April 19, 2019 under Sithara Entertainments and won 2 National Film Awards: Best Telugu Feature Film and Best Editing (Naveen Nooli)",
@@ -1369,7 +2969,13 @@
     "id": "ala-vaikunthapurramuloo",
     "featuredDate": "2026-11-15",
     "title": "Ala Vaikunthapurramuloo",
-    "alternateSpellings": ["Ala Vaikunthapurramuloo", "Ala Vaikuntapuramlo", "Ala Vaikunthapuramlo", "AVPL", "Ala Vaikunthapurramlo"],
+    "alternateSpellings": [
+      "Ala Vaikunthapurramuloo",
+      "Ala Vaikuntapuramlo",
+      "Ala Vaikunthapuramlo",
+      "AVPL",
+      "Ala Vaikunthapurramlo"
+    ],
     "year": 2020,
     "releaseMonth": "January 2020",
     "hero": "Allu Arjun",
@@ -1388,27 +2994,152 @@
     "iconicProp": "Swapped hospital crib tag & a sharp designer boardroom suit",
     "hint": "Swapped at birth by a jealous clerk, he dances his way straight into his real billionaire home.",
     "fullCast": [
-      { "name": "Allu Arjun", "role": "Lead Hero (Bantu)", "aliases": ["allu arjun", "alluarjun", "bunny", "icon star"] },
-      { "name": "Pooja Hegde", "role": "Lead Heroine (Amulya)", "aliases": ["pooja hegde", "pooja"] },
-      { "name": "Tabu", "role": "Yasoda (Biological Mother)", "aliases": ["tabu"] },
-      { "name": "Jayaram", "role": "Ramachandra (Biological Father)", "aliases": ["jayaram"] },
-      { "name": "Murali Sharma", "role": "Valmiki (Foster Father)", "aliases": ["murali sharma"] },
-      { "name": "Sushanth", "role": "Raj Manohar", "aliases": ["sushanth"] },
-      { "name": "Nivetha Pethuraj", "role": "Nandini", "aliases": ["nivetha pethuraj"] },
-      { "name": "Samuthirakani", "role": "Appala Naidu (Villain)", "aliases": ["samuthirakani"] },
-      { "name": "Sunil", "role": "Sitaram", "aliases": ["sunil"] },
-      { "name": "Vennela Kishore", "role": "Shrinivas", "aliases": ["vennela kishore"] },
-      { "name": "Navdeep", "role": "Shekhar", "aliases": ["navdeep"] },
-      { "name": "Rajendra Prasad", "role": "Prajapathi", "aliases": ["rajendra prasad"] },
-      { "name": "Brahmaji", "role": "Sudharshan", "aliases": ["brahmaji"] }
+      {
+        "name": "Allu Arjun",
+        "role": "Lead Hero (Bantu)",
+        "aliases": [
+          "allu arjun",
+          "alluarjun",
+          "bunny",
+          "icon star"
+        ]
+      },
+      {
+        "name": "Pooja Hegde",
+        "role": "Lead Heroine (Amulya)",
+        "aliases": [
+          "pooja hegde",
+          "pooja"
+        ]
+      },
+      {
+        "name": "Tabu",
+        "role": "Yasoda (Biological Mother)",
+        "aliases": [
+          "tabu"
+        ]
+      },
+      {
+        "name": "Jayaram",
+        "role": "Ramachandra (Biological Father)",
+        "aliases": [
+          "jayaram"
+        ]
+      },
+      {
+        "name": "Murali Sharma",
+        "role": "Valmiki (Foster Father)",
+        "aliases": [
+          "murali sharma"
+        ]
+      },
+      {
+        "name": "Sushanth",
+        "role": "Raj Manohar",
+        "aliases": [
+          "sushanth"
+        ]
+      },
+      {
+        "name": "Nivetha Pethuraj",
+        "role": "Nandini",
+        "aliases": [
+          "nivetha pethuraj"
+        ]
+      },
+      {
+        "name": "Samuthirakani",
+        "role": "Appala Naidu (Villain)",
+        "aliases": [
+          "samuthirakani"
+        ]
+      },
+      {
+        "name": "Sunil",
+        "role": "Sitaram",
+        "aliases": [
+          "sunil"
+        ]
+      },
+      {
+        "name": "Vennela Kishore",
+        "role": "Shrinivas",
+        "aliases": [
+          "vennela kishore"
+        ]
+      },
+      {
+        "name": "Navdeep",
+        "role": "Shekhar",
+        "aliases": [
+          "navdeep"
+        ]
+      },
+      {
+        "name": "Rajendra Prasad",
+        "role": "Prajapathi",
+        "aliases": [
+          "rajendra prasad"
+        ]
+      },
+      {
+        "name": "Brahmaji",
+        "role": "Sudharshan",
+        "aliases": [
+          "brahmaji"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Trivikram Srinivas", "department": "Director & Writer", "aliases": ["trivikram", "trivikram srinivas", "guruji"] },
-      { "name": "Thaman S", "department": "Music Director (National Award Winner)", "aliases": ["thaman", "thaman s", "ss thaman"] },
-      { "name": "Allu Aravind & S. Radha Krishna", "department": "Producers (Geetha Arts & Haarika Hassine)", "aliases": ["allu aravind", "geetha arts", "haarika hassine"] },
-      { "name": "P.S. Vinod", "department": "Cinematographer (DOP)", "aliases": ["ps vinod", "vinod"] },
-      { "name": "Naveen Nooli", "department": "Film Editor", "aliases": ["naveen nooli"] },
-      { "name": "Ram-Lakshman", "department": "Stunt Choreographers", "aliases": ["ram lakshman"] }
+      {
+        "name": "Trivikram Srinivas",
+        "department": "Director & Writer",
+        "aliases": [
+          "trivikram",
+          "trivikram srinivas",
+          "guruji"
+        ]
+      },
+      {
+        "name": "Thaman S",
+        "department": "Music Director (National Award Winner)",
+        "aliases": [
+          "thaman",
+          "thaman s",
+          "ss thaman"
+        ]
+      },
+      {
+        "name": "Allu Aravind & S. Radha Krishna",
+        "department": "Producers (Geetha Arts & Haarika Hassine)",
+        "aliases": [
+          "allu aravind",
+          "geetha arts",
+          "haarika hassine"
+        ]
+      },
+      {
+        "name": "P.S. Vinod",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "ps vinod",
+          "vinod"
+        ]
+      },
+      {
+        "name": "Naveen Nooli",
+        "department": "Film Editor",
+        "aliases": [
+          "naveen nooli"
+        ]
+      },
+      {
+        "name": "Ram-Lakshman",
+        "department": "Stunt Choreographers",
+        "aliases": [
+          "ram lakshman"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released January 12, 2020 for Sankranthi and became one of the highest-grossing Telugu films ever (260+ crore worldwide)",
@@ -1469,7 +3200,13 @@
     "id": "pushpa",
     "featuredDate": "2026-11-16",
     "title": "Pushpa: The Rise",
-    "alternateSpellings": ["Pushpa: The Rise", "Pushpa", "Pushpa 1", "Pushpa The Rise", "Pushpa Raj"],
+    "alternateSpellings": [
+      "Pushpa: The Rise",
+      "Pushpa",
+      "Pushpa 1",
+      "Pushpa The Rise",
+      "Pushpa Raj"
+    ],
     "year": 2021,
     "releaseMonth": "December 2021",
     "hero": "Allu Arjun",
@@ -1488,24 +3225,136 @@
     "iconicProp": "Smuggled red sandalwood log & a forest axe",
     "hint": "Flower anukunnava? Fire! A red sandalwood coolie refuses to bow down to anyone.",
     "fullCast": [
-      { "name": "Allu Arjun", "role": "Lead Hero (Pushpa Raj)", "aliases": ["allu arjun", "alluarjun", "bunny", "icon star"] },
-      { "name": "Rashmika Mandanna", "role": "Lead Heroine (Srivalli)", "aliases": ["rashmika", "rashmika mandanna"] },
-      { "name": "Fahadh Faasil", "role": "SP Bhanwar Singh Shekhawat IPS", "aliases": ["fahadh faasil", "fahadh", "fafa"] },
-      { "name": "Sunil", "role": "Mangalam Srinu (Villain)", "aliases": ["sunil"] },
-      { "name": "Anasuya Bharadwaj", "role": "Dakshayani", "aliases": ["anasuya", "anasuya bharadwaj"] },
-      { "name": "Rao Ramesh", "role": "MP Bhumireddy Siddappa Naidu", "aliases": ["rao ramesh"] },
-      { "name": "Dhananjaya", "role": "Jali Reddy", "aliases": ["dhananjaya", "daali dhananjaya"] },
-      { "name": "Jagadeesh Prathap Bandari", "role": "Keshava (Sidekick)", "aliases": ["jagadeesh", "keshava"] },
-      { "name": "Ajay Ghosh", "role": "Konda Reddy", "aliases": ["ajay ghosh"] },
-      { "name": "Samantha Ruth Prabhu", "role": "Special Dance Song ('Oo Antava')", "aliases": ["samantha", "samantha ruth prabhu", "sam"] }
+      {
+        "name": "Allu Arjun",
+        "role": "Lead Hero (Pushpa Raj)",
+        "aliases": [
+          "allu arjun",
+          "alluarjun",
+          "bunny",
+          "icon star"
+        ]
+      },
+      {
+        "name": "Rashmika Mandanna",
+        "role": "Lead Heroine (Srivalli)",
+        "aliases": [
+          "rashmika",
+          "rashmika mandanna"
+        ]
+      },
+      {
+        "name": "Fahadh Faasil",
+        "role": "SP Bhanwar Singh Shekhawat IPS",
+        "aliases": [
+          "fahadh faasil",
+          "fahadh",
+          "fafa"
+        ]
+      },
+      {
+        "name": "Sunil",
+        "role": "Mangalam Srinu (Villain)",
+        "aliases": [
+          "sunil"
+        ]
+      },
+      {
+        "name": "Anasuya Bharadwaj",
+        "role": "Dakshayani",
+        "aliases": [
+          "anasuya",
+          "anasuya bharadwaj"
+        ]
+      },
+      {
+        "name": "Rao Ramesh",
+        "role": "MP Bhumireddy Siddappa Naidu",
+        "aliases": [
+          "rao ramesh"
+        ]
+      },
+      {
+        "name": "Dhananjaya",
+        "role": "Jali Reddy",
+        "aliases": [
+          "dhananjaya",
+          "daali dhananjaya"
+        ]
+      },
+      {
+        "name": "Jagadeesh Prathap Bandari",
+        "role": "Keshava (Sidekick)",
+        "aliases": [
+          "jagadeesh",
+          "keshava"
+        ]
+      },
+      {
+        "name": "Ajay Ghosh",
+        "role": "Konda Reddy",
+        "aliases": [
+          "ajay ghosh"
+        ]
+      },
+      {
+        "name": "Samantha Ruth Prabhu",
+        "role": "Special Dance Song ('Oo Antava')",
+        "aliases": [
+          "samantha",
+          "samantha ruth prabhu",
+          "sam"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Sukumar", "department": "Director & Writer", "aliases": ["sukumar", "suku"] },
-      { "name": "Devi Sri Prasad", "department": "Music Director (National Award Winner)", "aliases": ["devi sri prasad", "dsp"] },
-      { "name": "Mythri Movie Makers", "department": "Producers", "aliases": ["mythri", "mythri movie makers"] },
-      { "name": "Miroslaw Kuba Brozek", "department": "Cinematographer (DOP)", "aliases": ["miroslaw kuba brozek", "brozek"] },
-      { "name": "Karthika Srinivas & Ruben", "department": "Film Editors", "aliases": ["karthika srinivas", "ruben"] },
-      { "name": "Chandrabose", "department": "Lyricist", "aliases": ["chandrabose"] }
+      {
+        "name": "Sukumar",
+        "department": "Director & Writer",
+        "aliases": [
+          "sukumar",
+          "suku"
+        ]
+      },
+      {
+        "name": "Devi Sri Prasad",
+        "department": "Music Director (National Award Winner)",
+        "aliases": [
+          "devi sri prasad",
+          "dsp"
+        ]
+      },
+      {
+        "name": "Mythri Movie Makers",
+        "department": "Producers",
+        "aliases": [
+          "mythri",
+          "mythri movie makers"
+        ]
+      },
+      {
+        "name": "Miroslaw Kuba Brozek",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "miroslaw kuba brozek",
+          "brozek"
+        ]
+      },
+      {
+        "name": "Karthika Srinivas & Ruben",
+        "department": "Film Editors",
+        "aliases": [
+          "karthika srinivas",
+          "ruben"
+        ]
+      },
+      {
+        "name": "Chandrabose",
+        "department": "Lyricist",
+        "aliases": [
+          "chandrabose"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released December 17, 2021 and became India's highest-grossing film of 2021 (~365+ crore), exploding unexpectedly in Hindi single-screen theatres",
@@ -1566,7 +3415,12 @@
     "id": "rrr",
     "featuredDate": "2026-11-17",
     "title": "RRR",
-    "alternateSpellings": ["RRR", "Rise Roar Revolt", "Roudram Ranam Rudhiram", "Triple R"],
+    "alternateSpellings": [
+      "RRR",
+      "Rise Roar Revolt",
+      "Roudram Ranam Rudhiram",
+      "Triple R"
+    ],
     "year": 2022,
     "releaseMonth": "March 2022",
     "hero": "N.T. Rama Rao Jr. & Ram Charan",
@@ -1585,29 +3439,168 @@
     "iconicProp": "Flaming bow & arrows and British suspenders from Naatu Naatu",
     "hint": "Fire meets water in 1920s India, culminating in an Oscar-winning dance showdown.",
     "fullCast": [
-      { "name": "N.T. Rama Rao Jr.", "role": "Co-Lead Hero (Komaram Bheem)", "aliases": ["ntr", "jr ntr", "tarak", "rama rao"] },
-      { "name": "Ram Charan", "role": "Co-Lead Hero (Alluri Sitarama Raju)", "aliases": ["ram charan", "charan", "rc"] },
-      { "name": "Alia Bhatt", "role": "Sita", "aliases": ["alia bhatt", "alia"] },
-      { "name": "Ajay Devgn", "role": "Venkata Rama Raju (Special Role)", "aliases": ["ajay devgn"] },
-      { "name": "Olivia Morris", "role": "Jennifer", "aliases": ["olivia morris"] },
-      { "name": "Ray Stevenson", "role": "Governor Scott Buxton", "aliases": ["ray stevenson"] },
-      { "name": "Alison Doody", "role": "Catherine Buxton", "aliases": ["alison doody"] },
-      { "name": "Shriya Saran", "role": "Sarojini", "aliases": ["shriya saran", "shriya"] },
-      { "name": "Samuthirakani", "role": "Venkateswarulu", "aliases": ["samuthirakani"] },
-      { "name": "Rahul Ramakrishna", "role": "Lacchu", "aliases": ["rahul ramakrishna"] },
-      { "name": "Rajeev Kanakala", "role": "Venkat Avadhani", "aliases": ["rajeev kanakala", "rajiv kanakala"] }
+      {
+        "name": "N.T. Rama Rao Jr.",
+        "role": "Co-Lead Hero (Komaram Bheem)",
+        "aliases": [
+          "ntr",
+          "jr ntr",
+          "tarak",
+          "rama rao"
+        ]
+      },
+      {
+        "name": "Ram Charan",
+        "role": "Co-Lead Hero (Alluri Sitarama Raju)",
+        "aliases": [
+          "ram charan",
+          "charan",
+          "rc"
+        ]
+      },
+      {
+        "name": "Alia Bhatt",
+        "role": "Sita",
+        "aliases": [
+          "alia bhatt",
+          "alia"
+        ]
+      },
+      {
+        "name": "Ajay Devgn",
+        "role": "Venkata Rama Raju (Special Role)",
+        "aliases": [
+          "ajay devgn"
+        ]
+      },
+      {
+        "name": "Olivia Morris",
+        "role": "Jennifer",
+        "aliases": [
+          "olivia morris"
+        ]
+      },
+      {
+        "name": "Ray Stevenson",
+        "role": "Governor Scott Buxton",
+        "aliases": [
+          "ray stevenson"
+        ]
+      },
+      {
+        "name": "Alison Doody",
+        "role": "Catherine Buxton",
+        "aliases": [
+          "alison doody"
+        ]
+      },
+      {
+        "name": "Shriya Saran",
+        "role": "Sarojini",
+        "aliases": [
+          "shriya saran",
+          "shriya"
+        ]
+      },
+      {
+        "name": "Samuthirakani",
+        "role": "Venkateswarulu",
+        "aliases": [
+          "samuthirakani"
+        ]
+      },
+      {
+        "name": "Rahul Ramakrishna",
+        "role": "Lacchu",
+        "aliases": [
+          "rahul ramakrishna"
+        ]
+      },
+      {
+        "name": "Rajeev Kanakala",
+        "role": "Venkat Avadhani",
+        "aliases": [
+          "rajeev kanakala",
+          "rajiv kanakala"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "S.S. Rajamouli", "department": "Director & Screenplay", "aliases": ["rajamouli", "ss rajamouli", "ssr"] },
-      { "name": "V. Vijayendra Prasad", "department": "Story Writer", "aliases": ["vijayendra prasad"] },
-      { "name": "M.M. Keeravani", "department": "Music Director (Oscar Winner)", "aliases": ["keeravani", "mm keeravani"] },
-      { "name": "Chandrabose", "department": "Lyricist (Oscar Winner)", "aliases": ["chandrabose"] },
-      { "name": "D.V.V. Danayya", "department": "Producer (DVV Entertainment)", "aliases": ["danayya", "dvv danayya"] },
-      { "name": "K.K. Senthil Kumar", "department": "Cinematographer (DOP)", "aliases": ["senthil kumar", "senthil"] },
-      { "name": "A. Sreekar Prasad", "department": "Film Editor", "aliases": ["sreekar prasad"] },
-      { "name": "Prem Rakshith", "department": "Choreographer ('Naatu Naatu')", "aliases": ["prem rakshith"] },
-      { "name": "Sabu Cyril", "department": "Production Designer", "aliases": ["sabu cyril"] },
-      { "name": "V. Srinivas Mohan", "department": "VFX Supervisor", "aliases": ["srinivas mohan"] }
+      {
+        "name": "S.S. Rajamouli",
+        "department": "Director & Screenplay",
+        "aliases": [
+          "rajamouli",
+          "ss rajamouli",
+          "ssr"
+        ]
+      },
+      {
+        "name": "V. Vijayendra Prasad",
+        "department": "Story Writer",
+        "aliases": [
+          "vijayendra prasad"
+        ]
+      },
+      {
+        "name": "M.M. Keeravani",
+        "department": "Music Director (Oscar Winner)",
+        "aliases": [
+          "keeravani",
+          "mm keeravani"
+        ]
+      },
+      {
+        "name": "Chandrabose",
+        "department": "Lyricist (Oscar Winner)",
+        "aliases": [
+          "chandrabose"
+        ]
+      },
+      {
+        "name": "D.V.V. Danayya",
+        "department": "Producer (DVV Entertainment)",
+        "aliases": [
+          "danayya",
+          "dvv danayya"
+        ]
+      },
+      {
+        "name": "K.K. Senthil Kumar",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "senthil kumar",
+          "senthil"
+        ]
+      },
+      {
+        "name": "A. Sreekar Prasad",
+        "department": "Film Editor",
+        "aliases": [
+          "sreekar prasad"
+        ]
+      },
+      {
+        "name": "Prem Rakshith",
+        "department": "Choreographer ('Naatu Naatu')",
+        "aliases": [
+          "prem rakshith"
+        ]
+      },
+      {
+        "name": "Sabu Cyril",
+        "department": "Production Designer",
+        "aliases": [
+          "sabu cyril"
+        ]
+      },
+      {
+        "name": "V. Srinivas Mohan",
+        "department": "VFX Supervisor",
+        "aliases": [
+          "srinivas mohan"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released March 25, 2022 and grossed over 1,200+ crore worldwide—also breaking Japanese box-office records for Indian cinema!",
@@ -1668,7 +3661,12 @@
     "id": "kalki-2898-ad",
     "featuredDate": "2026-11-18",
     "title": "Kalki 2898 AD",
-    "alternateSpellings": ["Kalki 2898 AD", "Kalki", "Kalki 2898", "Project K"],
+    "alternateSpellings": [
+      "Kalki 2898 AD",
+      "Kalki",
+      "Kalki 2898",
+      "Project K"
+    ],
     "year": 2024,
     "releaseMonth": "June 2024",
     "hero": "Prabhas",
@@ -1687,29 +3685,178 @@
     "iconicProp": "Talking futuristic AI vehicle 'Bujji' & Ashwatthama's glowing forehead gem",
     "hint": "In dystopian Kasi 2898 AD, a bounty hunter with a sassy AI car clashes with an immortal Mahabharata warrior.",
     "fullCast": [
-      { "name": "Prabhas", "role": "Lead Hero (Bhairava / Karna)", "aliases": ["prabhas", "rebel star", "bhairava"] },
-      { "name": "Amitabh Bachchan", "role": "Ashwatthama", "aliases": ["amitabh bachchan", "amitabh", "big b", "ashwatthama"] },
-      { "name": "Deepika Padukone", "role": "Lead Heroine (SUM-80 / Sumathi)", "aliases": ["deepika padukone", "deepika"] },
-      { "name": "Kamal Haasan", "role": "Main Antagonist (Supreme Yaskin)", "aliases": ["kamal haasan", "kamal", "ulaganayagan"] },
-      { "name": "Disha Patani", "role": "Roxie", "aliases": ["disha patani", "disha"] },
-      { "name": "Brahmanandam", "role": "Rajan (Bhairava's Landlord)", "aliases": ["brahmanandam", "brahmi"] },
-      { "name": "Rajendra Prasad", "role": "Rumi", "aliases": ["rajendra prasad"] },
-      { "name": "Shobana", "role": "Mariam", "aliases": ["shobana"] },
-      { "name": "Saswata Chatterjee", "role": "Commander Manas", "aliases": ["saswata chatterjee"] },
-      { "name": "Keerthy Suresh", "role": "Voice of AI Car Bujji", "aliases": ["keerthy suresh", "bujji"] },
-      { "name": "Vijay Deverakonda", "role": "Arjuna (Special Cameo)", "aliases": ["vijay deverakonda", "deverakonda"] },
-      { "name": "Dulquer Salmaan", "role": "Captain (Special Cameo)", "aliases": ["dulquer salmaan", "dulquer"] },
-      { "name": "Mrunal Thakur", "role": "Divya (Special Cameo)", "aliases": ["mrunal thakur", "mrunal"] },
-      { "name": "S.S. Rajamouli", "role": "Bounty Hunter Cameo", "aliases": ["rajamouli", "ss rajamouli"] },
-      { "name": "Ram Gopal Varma", "role": "Chintu (Special Cameo)", "aliases": ["ram gopal varma", "rgv"] }
+      {
+        "name": "Prabhas",
+        "role": "Lead Hero (Bhairava / Karna)",
+        "aliases": [
+          "prabhas",
+          "rebel star",
+          "bhairava"
+        ]
+      },
+      {
+        "name": "Amitabh Bachchan",
+        "role": "Ashwatthama",
+        "aliases": [
+          "amitabh bachchan",
+          "amitabh",
+          "big b",
+          "ashwatthama"
+        ]
+      },
+      {
+        "name": "Deepika Padukone",
+        "role": "Lead Heroine (SUM-80 / Sumathi)",
+        "aliases": [
+          "deepika padukone",
+          "deepika"
+        ]
+      },
+      {
+        "name": "Kamal Haasan",
+        "role": "Main Antagonist (Supreme Yaskin)",
+        "aliases": [
+          "kamal haasan",
+          "kamal",
+          "ulaganayagan"
+        ]
+      },
+      {
+        "name": "Disha Patani",
+        "role": "Roxie",
+        "aliases": [
+          "disha patani",
+          "disha"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Rajan (Bhairava's Landlord)",
+        "aliases": [
+          "brahmanandam",
+          "brahmi"
+        ]
+      },
+      {
+        "name": "Rajendra Prasad",
+        "role": "Rumi",
+        "aliases": [
+          "rajendra prasad"
+        ]
+      },
+      {
+        "name": "Shobana",
+        "role": "Mariam",
+        "aliases": [
+          "shobana"
+        ]
+      },
+      {
+        "name": "Saswata Chatterjee",
+        "role": "Commander Manas",
+        "aliases": [
+          "saswata chatterjee"
+        ]
+      },
+      {
+        "name": "Keerthy Suresh",
+        "role": "Voice of AI Car Bujji",
+        "aliases": [
+          "keerthy suresh",
+          "bujji"
+        ]
+      },
+      {
+        "name": "Vijay Deverakonda",
+        "role": "Arjuna (Special Cameo)",
+        "aliases": [
+          "vijay deverakonda",
+          "deverakonda"
+        ]
+      },
+      {
+        "name": "Dulquer Salmaan",
+        "role": "Captain (Special Cameo)",
+        "aliases": [
+          "dulquer salmaan",
+          "dulquer"
+        ]
+      },
+      {
+        "name": "Mrunal Thakur",
+        "role": "Divya (Special Cameo)",
+        "aliases": [
+          "mrunal thakur",
+          "mrunal"
+        ]
+      },
+      {
+        "name": "S.S. Rajamouli",
+        "role": "Bounty Hunter Cameo",
+        "aliases": [
+          "rajamouli",
+          "ss rajamouli"
+        ]
+      },
+      {
+        "name": "Ram Gopal Varma",
+        "role": "Chintu (Special Cameo)",
+        "aliases": [
+          "ram gopal varma",
+          "rgv"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Nag Ashwin", "department": "Director & Writer", "aliases": ["nag ashwin", "nagi"] },
-      { "name": "Santhosh Narayanan", "department": "Music Director & BGM", "aliases": ["santhosh narayanan", "sana"] },
-      { "name": "C. Aswani Dutt", "department": "Producer (Vyjayanthi Movies)", "aliases": ["aswani dutt", "vyjayanthi", "vyjayanthi movies", "swapna dutt", "priyanka dutt"] },
-      { "name": "Djordje Stojiljkovic", "department": "Cinematographer (DOP)", "aliases": ["djordje stojiljkovic", "djordje"] },
-      { "name": "Kotagiri Venkateswara Rao", "department": "Film Editor", "aliases": ["kotagiri"] },
-      { "name": "Nitin Zihani Choudhary", "department": "Production Designer", "aliases": ["nitin zihani choudhary"] }
+      {
+        "name": "Nag Ashwin",
+        "department": "Director & Writer",
+        "aliases": [
+          "nag ashwin",
+          "nagi"
+        ]
+      },
+      {
+        "name": "Santhosh Narayanan",
+        "department": "Music Director & BGM",
+        "aliases": [
+          "santhosh narayanan",
+          "sana"
+        ]
+      },
+      {
+        "name": "C. Aswani Dutt",
+        "department": "Producer (Vyjayanthi Movies)",
+        "aliases": [
+          "aswani dutt",
+          "vyjayanthi",
+          "vyjayanthi movies",
+          "swapna dutt",
+          "priyanka dutt"
+        ]
+      },
+      {
+        "name": "Djordje Stojiljkovic",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "djordje stojiljkovic",
+          "djordje"
+        ]
+      },
+      {
+        "name": "Kotagiri Venkateswara Rao",
+        "department": "Film Editor",
+        "aliases": [
+          "kotagiri"
+        ]
+      },
+      {
+        "name": "Nitin Zihani Choudhary",
+        "department": "Production Designer",
+        "aliases": [
+          "nitin zihani choudhary"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released June 27, 2024 as Indian cinema's most expensive sci-fi epic (~600 crore) under Vyjayanthi Movies, grossing over 1,040+ crore worldwide",
@@ -1770,7 +3917,11 @@
     "id": "pandaga-chesko",
     "featuredDate": "2026-11-19",
     "title": "Pandaga Chesko",
-    "alternateSpellings": ["Pandaga Chesko", "Pandaga Chesuko", "Pandagachesko"],
+    "alternateSpellings": [
+      "Pandaga Chesko",
+      "Pandaga Chesuko",
+      "Pandagachesko"
+    ],
     "year": 2015,
     "releaseMonth": "May 2015",
     "hero": "Ram Pothineni",
@@ -1788,25 +3939,138 @@
     "iconicProp": "Portugal vintage car & festive wedding banner",
     "hint": "A fiery NRI millionaire returns home to unite feuding families—with Weekend Venkat Rao causing chaos.",
     "fullCast": [
-      { "name": "Ram Pothineni", "role": "Lead Hero (Karthik)", "aliases": ["ram pothineni", "ram", "energetic star"] },
-      { "name": "Rakul Preet Singh", "role": "Lead Heroine (Divya)", "aliases": ["rakul", "rakul preet", "rakul preet singh"] },
-      { "name": "Sonal Chauhan", "role": "Second Heroine (Anushka)", "aliases": ["sonal chauhan", "sonal"] },
-      { "name": "Brahmanandam", "role": "Weekend Venkat Rao", "aliases": ["brahmanandam", "brahmi", "weekend venkat rao"] },
-      { "name": "Jagapathi Babu", "role": "Family Elder / Mentor", "aliases": ["jagapathi babu"] },
-      { "name": "Sai Kumar", "role": "Bhoopathi", "aliases": ["sai kumar", "saikumar"] },
-      { "name": "Sampath Raj", "role": "Main Villain (Bhupathi)", "aliases": ["sampath raj"] },
-      { "name": "Rao Ramesh", "role": "Karthik's Father", "aliases": ["rao ramesh"] },
-      { "name": "Vennela Kishore", "role": "Konda (Comedy Role)", "aliases": ["vennela kishore"] },
-      { "name": "Abhimanyu Singh", "role": "Shankar", "aliases": ["abhimanyu singh"] },
-      { "name": "Brahmaji", "role": "Supporting Role", "aliases": ["brahmaji"] }
+      {
+        "name": "Ram Pothineni",
+        "role": "Lead Hero (Karthik)",
+        "aliases": [
+          "ram pothineni",
+          "ram",
+          "energetic star"
+        ]
+      },
+      {
+        "name": "Rakul Preet Singh",
+        "role": "Lead Heroine (Divya)",
+        "aliases": [
+          "rakul",
+          "rakul preet",
+          "rakul preet singh"
+        ]
+      },
+      {
+        "name": "Sonal Chauhan",
+        "role": "Second Heroine (Anushka)",
+        "aliases": [
+          "sonal chauhan",
+          "sonal"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Weekend Venkat Rao",
+        "aliases": [
+          "brahmanandam",
+          "brahmi",
+          "weekend venkat rao"
+        ]
+      },
+      {
+        "name": "Jagapathi Babu",
+        "role": "Family Elder / Mentor",
+        "aliases": [
+          "jagapathi babu"
+        ]
+      },
+      {
+        "name": "Sai Kumar",
+        "role": "Bhoopathi",
+        "aliases": [
+          "sai kumar",
+          "saikumar"
+        ]
+      },
+      {
+        "name": "Sampath Raj",
+        "role": "Main Villain (Bhupathi)",
+        "aliases": [
+          "sampath raj"
+        ]
+      },
+      {
+        "name": "Rao Ramesh",
+        "role": "Karthik's Father",
+        "aliases": [
+          "rao ramesh"
+        ]
+      },
+      {
+        "name": "Vennela Kishore",
+        "role": "Konda (Comedy Role)",
+        "aliases": [
+          "vennela kishore"
+        ]
+      },
+      {
+        "name": "Abhimanyu Singh",
+        "role": "Shankar",
+        "aliases": [
+          "abhimanyu singh"
+        ]
+      },
+      {
+        "name": "Brahmaji",
+        "role": "Supporting Role",
+        "aliases": [
+          "brahmaji"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Gopichand Malineni", "department": "Director", "aliases": ["gopichand malineni"] },
-      { "name": "Thaman S", "department": "Music Director", "aliases": ["thaman", "thaman s", "ss thaman"] },
-      { "name": "Paruchuri Kireeti", "department": "Producer (United Movies)", "aliases": ["paruchuri kireeti", "united movies"] },
-      { "name": "Kona Venkat", "department": "Screenplay & Dialogues", "aliases": ["kona venkat"] },
-      { "name": "Arthur A. Wilson", "department": "Cinematographer (DOP)", "aliases": ["arthur a wilson"] },
-      { "name": "Gautham Raju", "department": "Film Editor", "aliases": ["gautham raju"] }
+      {
+        "name": "Gopichand Malineni",
+        "department": "Director",
+        "aliases": [
+          "gopichand malineni"
+        ]
+      },
+      {
+        "name": "Thaman S",
+        "department": "Music Director",
+        "aliases": [
+          "thaman",
+          "thaman s",
+          "ss thaman"
+        ]
+      },
+      {
+        "name": "Paruchuri Kireeti",
+        "department": "Producer (United Movies)",
+        "aliases": [
+          "paruchuri kireeti",
+          "united movies"
+        ]
+      },
+      {
+        "name": "Kona Venkat",
+        "department": "Screenplay & Dialogues",
+        "aliases": [
+          "kona venkat"
+        ]
+      },
+      {
+        "name": "Arthur A. Wilson",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "arthur a wilson"
+        ]
+      },
+      {
+        "name": "Gautham Raju",
+        "department": "Film Editor",
+        "aliases": [
+          "gautham raju"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released May 29, 2015 under United Movies and became a summer commercial hit for Ram Pothineni",
@@ -1866,7 +4130,11 @@
     "id": "dhee",
     "featuredDate": "2026-11-20",
     "title": "Dhee",
-    "alternateSpellings": ["Dhee", "Dhee 2007", "Dee"],
+    "alternateSpellings": [
+      "Dhee",
+      "Dhee 2007",
+      "Dee"
+    ],
     "year": 2007,
     "releaseMonth": "April 2007",
     "hero": "Vishnu Manchu",
@@ -1884,24 +4152,127 @@
     "iconicProp": "Chari's terrified expression & Shankar Goud's gold chain",
     "hint": "He sneaks right into a dreaded don's house to woo his sister—while poor 'Chari' takes all the slaps.",
     "fullCast": [
-      { "name": "Vishnu Manchu", "role": "Lead Hero (Babloo)", "aliases": ["vishnu manchu", "manchu vishnu", "vishnu"] },
-      { "name": "Genelia D'Souza", "role": "Lead Heroine (Pooja)", "aliases": ["genelia", "genelia dsouza"] },
-      { "name": "Srihari", "role": "Shankar Goud (Don Brother)", "aliases": ["srihari"] },
-      { "name": "Brahmanandam", "role": "Chari (All-Time Iconic Comedy Role)", "aliases": ["brahmanandam", "brahmi", "chari"] },
-      { "name": "Sunil", "role": "Kaththi (Friend)", "aliases": ["sunil"] },
-      { "name": "Supreeth", "role": "Ballu (Rival Goon)", "aliases": ["supreeth"] },
-      { "name": "Jai Akash", "role": "Ajay", "aliases": ["jai akash"] },
-      { "name": "Chandra Mohan", "role": "Narayana Rao (Father)", "aliases": ["chandra mohan"] },
-      { "name": "Tanikella Bharani", "role": "Corporate Boss", "aliases": ["tanikella bharani"] },
-      { "name": "Master Bharath", "role": "Young Boy", "aliases": ["master bharath"] }
+      {
+        "name": "Vishnu Manchu",
+        "role": "Lead Hero (Babloo)",
+        "aliases": [
+          "vishnu manchu",
+          "manchu vishnu",
+          "vishnu"
+        ]
+      },
+      {
+        "name": "Genelia D'Souza",
+        "role": "Lead Heroine (Pooja)",
+        "aliases": [
+          "genelia",
+          "genelia dsouza"
+        ]
+      },
+      {
+        "name": "Srihari",
+        "role": "Shankar Goud (Don Brother)",
+        "aliases": [
+          "srihari"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Chari (All-Time Iconic Comedy Role)",
+        "aliases": [
+          "brahmanandam",
+          "brahmi",
+          "chari"
+        ]
+      },
+      {
+        "name": "Sunil",
+        "role": "Kaththi (Friend)",
+        "aliases": [
+          "sunil"
+        ]
+      },
+      {
+        "name": "Supreeth",
+        "role": "Ballu (Rival Goon)",
+        "aliases": [
+          "supreeth"
+        ]
+      },
+      {
+        "name": "Jai Akash",
+        "role": "Ajay",
+        "aliases": [
+          "jai akash"
+        ]
+      },
+      {
+        "name": "Chandra Mohan",
+        "role": "Narayana Rao (Father)",
+        "aliases": [
+          "chandra mohan"
+        ]
+      },
+      {
+        "name": "Tanikella Bharani",
+        "role": "Corporate Boss",
+        "aliases": [
+          "tanikella bharani"
+        ]
+      },
+      {
+        "name": "Master Bharath",
+        "role": "Young Boy",
+        "aliases": [
+          "master bharath"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Srinu Vaitla", "department": "Director & Screenplay", "aliases": ["srinu vaitla", "vaitla"] },
-      { "name": "Chakri", "department": "Music Director", "aliases": ["chakri"] },
-      { "name": "Mallidi Satyanarayana Reddy", "department": "Producer (Siri Venkateswara Films)", "aliases": ["mallidi satyanarayana reddy"] },
-      { "name": "Kona Venkat & Gopi Mohan", "department": "Story & Dialogue Writers", "aliases": ["kona venkat", "gopi mohan"] },
-      { "name": "Prasad Murella", "department": "Cinematographer (DOP)", "aliases": ["prasad murella"] },
-      { "name": "M.R. Varma", "department": "Film Editor", "aliases": ["mr varma"] }
+      {
+        "name": "Srinu Vaitla",
+        "department": "Director & Screenplay",
+        "aliases": [
+          "srinu vaitla",
+          "vaitla"
+        ]
+      },
+      {
+        "name": "Chakri",
+        "department": "Music Director",
+        "aliases": [
+          "chakri"
+        ]
+      },
+      {
+        "name": "Mallidi Satyanarayana Reddy",
+        "department": "Producer (Siri Venkateswara Films)",
+        "aliases": [
+          "mallidi satyanarayana reddy"
+        ]
+      },
+      {
+        "name": "Kona Venkat & Gopi Mohan",
+        "department": "Story & Dialogue Writers",
+        "aliases": [
+          "kona venkat",
+          "gopi mohan"
+        ]
+      },
+      {
+        "name": "Prasad Murella",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "prasad murella"
+        ]
+      },
+      {
+        "name": "M.R. Varma",
+        "department": "Film Editor",
+        "aliases": [
+          "mr varma"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released April 13, 2007 and became a sensational blockbuster that birthed Srinu Vaitla's famous 'Brahmanandam bakra comedy' template for the next decade!",
@@ -1961,7 +4332,11 @@
     "id": "bindaas",
     "featuredDate": "2026-11-21",
     "title": "Bindaas",
-    "alternateSpellings": ["Bindaas", "Bindas", "Bindaas 2010"],
+    "alternateSpellings": [
+      "Bindaas",
+      "Bindas",
+      "Bindaas 2010"
+    ],
     "year": 2010,
     "releaseMonth": "February 2010",
     "hero": "Manchu Manoj",
@@ -1979,23 +4354,121 @@
     "iconicProp": "Faction mansion jeep & Ajay's carefree grin",
     "hint": "An unstoppable prankster crashes a Rayalaseema faction family—backed by an army of Tollywood's top comedians.",
     "fullCast": [
-      { "name": "Manchu Manoj", "role": "Lead Hero (Ajay)", "aliases": ["manchu manoj", "manoj manchu", "manoj"] },
-      { "name": "Sheena Shahabadi", "role": "Lead Heroine (Girija)", "aliases": ["sheena shahabadi", "sheena"] },
-      { "name": "Brahmanandam", "role": "Parabrahmam", "aliases": ["brahmanandam", "brahmi"] },
-      { "name": "Sunil", "role": "Saravana", "aliases": ["sunil"] },
-      { "name": "Vennela Kishore", "role": "Muddu Krishna", "aliases": ["vennela kishore"] },
-      { "name": "M.S. Narayana", "role": "Comedy Supporting Role", "aliases": ["ms narayana", "m s narayana"] },
-      { "name": "Jayaprakash Reddy", "role": "Seshadri Naidu", "aliases": ["jayaprakash reddy", "jp"] },
-      { "name": "Ahuti Prasad", "role": "Mahendra Naidu", "aliases": ["ahuti prasad", "aahuthi prasad"] },
-      { "name": "Subbaraju", "role": "Rival Villain", "aliases": ["subbaraju"] },
-      { "name": "Telangana Sakuntala", "role": "Family Elder", "aliases": ["telangana sakuntala"] },
-      { "name": "Master Bharath", "role": "Kid Comedy Role", "aliases": ["master bharath"] }
+      {
+        "name": "Manchu Manoj",
+        "role": "Lead Hero (Ajay)",
+        "aliases": [
+          "manchu manoj",
+          "manoj manchu",
+          "manoj"
+        ]
+      },
+      {
+        "name": "Sheena Shahabadi",
+        "role": "Lead Heroine (Girija)",
+        "aliases": [
+          "sheena shahabadi",
+          "sheena"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Parabrahmam",
+        "aliases": [
+          "brahmanandam",
+          "brahmi"
+        ]
+      },
+      {
+        "name": "Sunil",
+        "role": "Saravana",
+        "aliases": [
+          "sunil"
+        ]
+      },
+      {
+        "name": "Vennela Kishore",
+        "role": "Muddu Krishna",
+        "aliases": [
+          "vennela kishore"
+        ]
+      },
+      {
+        "name": "M.S. Narayana",
+        "role": "Comedy Supporting Role",
+        "aliases": [
+          "ms narayana",
+          "m s narayana"
+        ]
+      },
+      {
+        "name": "Jayaprakash Reddy",
+        "role": "Seshadri Naidu",
+        "aliases": [
+          "jayaprakash reddy",
+          "jp"
+        ]
+      },
+      {
+        "name": "Ahuti Prasad",
+        "role": "Mahendra Naidu",
+        "aliases": [
+          "ahuti prasad",
+          "aahuthi prasad"
+        ]
+      },
+      {
+        "name": "Subbaraju",
+        "role": "Rival Villain",
+        "aliases": [
+          "subbaraju"
+        ]
+      },
+      {
+        "name": "Telangana Sakuntala",
+        "role": "Family Elder",
+        "aliases": [
+          "telangana sakuntala"
+        ]
+      },
+      {
+        "name": "Master Bharath",
+        "role": "Kid Comedy Role",
+        "aliases": [
+          "master bharath"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Veeru Potla", "department": "Debut Director & Writer", "aliases": ["veeru potla"] },
-      { "name": "Bobo Shashi", "department": "Music Director", "aliases": ["bobo shashi"] },
-      { "name": "Anil Sunkara", "department": "Producer (A.K. Entertainments)", "aliases": ["anil sunkara", "ak entertainments"] },
-      { "name": "Vetri", "department": "Cinematographer (DOP)", "aliases": ["vetri"] }
+      {
+        "name": "Veeru Potla",
+        "department": "Debut Director & Writer",
+        "aliases": [
+          "veeru potla"
+        ]
+      },
+      {
+        "name": "Bobo Shashi",
+        "department": "Music Director",
+        "aliases": [
+          "bobo shashi"
+        ]
+      },
+      {
+        "name": "Anil Sunkara",
+        "department": "Producer (A.K. Entertainments)",
+        "aliases": [
+          "anil sunkara",
+          "ak entertainments"
+        ]
+      },
+      {
+        "name": "Vetri",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "vetri"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released February 5, 2010 marking writer Veeru Potla's directorial debut and Anil Sunkara's maiden production under A.K. Entertainments!",
@@ -2055,7 +4528,10 @@
     "id": "bangaram",
     "featuredDate": "2026-11-22",
     "title": "Bangaram",
-    "alternateSpellings": ["Bangaram", "Bangaram 2006"],
+    "alternateSpellings": [
+      "Bangaram",
+      "Bangaram 2006"
+    ],
     "year": 2006,
     "releaseMonth": "May 2006",
     "hero": "Pawan Kalyan",
@@ -2073,26 +4549,142 @@
     "iconicProp": "TV news microphone & a vibrant bandanna",
     "hint": "A loud, kind-hearted TV reporter dreaming of BBC London takes on Rayalaseema factionists.",
     "fullCast": [
-      { "name": "Pawan Kalyan", "role": "Lead Hero (Bangaram / Balram)", "aliases": ["pawan kalyan", "pavan kalyan", "pk", "power star"] },
-      { "name": "Meera Chopra", "role": "Lead Heroine (Sandhya)", "aliases": ["meera chopra", "meera"] },
-      { "name": "Reema Sen", "role": "Reporter Seema", "aliases": ["reema sen"] },
-      { "name": "Trisha Krishnan", "role": "Special Cameo Appearance", "aliases": ["trisha", "trisha krishnan"] },
-      { "name": "Sanusha", "role": "Vindhya", "aliases": ["sanusha", "baby sanusha"] },
-      { "name": "Ashutosh Rana", "role": "Main Villain (Bhooma Reddy)", "aliases": ["ashutosh rana"] },
-      { "name": "Mukesh Rishi", "role": "Peddi Reddy", "aliases": ["mukesh rishi"] },
-      { "name": "Raja Abel", "role": "Vinay", "aliases": ["raja", "raja abel"] },
-      { "name": "Ali", "role": "Cameraman / Friend", "aliases": ["ali"] },
-      { "name": "Venu Madhav", "role": "Comedy Role", "aliases": ["venu madhav"] },
-      { "name": "Raghu Babu", "role": "Henchman Comedy", "aliases": ["raghu babu"] },
-      { "name": "Tanikella Bharani", "role": "Supporting Role", "aliases": ["tanikella bharani"] },
-      { "name": "M.S. Narayana", "role": "Comedy Role", "aliases": ["ms narayana"] }
+      {
+        "name": "Pawan Kalyan",
+        "role": "Lead Hero (Bangaram / Balram)",
+        "aliases": [
+          "pawan kalyan",
+          "pavan kalyan",
+          "pk",
+          "power star"
+        ]
+      },
+      {
+        "name": "Meera Chopra",
+        "role": "Lead Heroine (Sandhya)",
+        "aliases": [
+          "meera chopra",
+          "meera"
+        ]
+      },
+      {
+        "name": "Reema Sen",
+        "role": "Reporter Seema",
+        "aliases": [
+          "reema sen"
+        ]
+      },
+      {
+        "name": "Trisha Krishnan",
+        "role": "Special Cameo Appearance",
+        "aliases": [
+          "trisha",
+          "trisha krishnan"
+        ]
+      },
+      {
+        "name": "Sanusha",
+        "role": "Vindhya",
+        "aliases": [
+          "sanusha",
+          "baby sanusha"
+        ]
+      },
+      {
+        "name": "Ashutosh Rana",
+        "role": "Main Villain (Bhooma Reddy)",
+        "aliases": [
+          "ashutosh rana"
+        ]
+      },
+      {
+        "name": "Mukesh Rishi",
+        "role": "Peddi Reddy",
+        "aliases": [
+          "mukesh rishi"
+        ]
+      },
+      {
+        "name": "Raja Abel",
+        "role": "Vinay",
+        "aliases": [
+          "raja",
+          "raja abel"
+        ]
+      },
+      {
+        "name": "Ali",
+        "role": "Cameraman / Friend",
+        "aliases": [
+          "ali"
+        ]
+      },
+      {
+        "name": "Venu Madhav",
+        "role": "Comedy Role",
+        "aliases": [
+          "venu madhav"
+        ]
+      },
+      {
+        "name": "Raghu Babu",
+        "role": "Henchman Comedy",
+        "aliases": [
+          "raghu babu"
+        ]
+      },
+      {
+        "name": "Tanikella Bharani",
+        "role": "Supporting Role",
+        "aliases": [
+          "tanikella bharani"
+        ]
+      },
+      {
+        "name": "M.S. Narayana",
+        "role": "Comedy Role",
+        "aliases": [
+          "ms narayana"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Dharani", "department": "Director & Screenwriter", "aliases": ["dharani"] },
-      { "name": "Vidyasagar", "department": "Music Director", "aliases": ["vidyasagar"] },
-      { "name": "A.M. Ratnam", "department": "Producer (Sri Surya Movies)", "aliases": ["am ratnam", "a m ratnam"] },
-      { "name": "Gopinath", "department": "Cinematographer (DOP)", "aliases": ["gopinath"] },
-      { "name": "V.T. Vijayan", "department": "Film Editor", "aliases": ["vt vijayan"] }
+      {
+        "name": "Dharani",
+        "department": "Director & Screenwriter",
+        "aliases": [
+          "dharani"
+        ]
+      },
+      {
+        "name": "Vidyasagar",
+        "department": "Music Director",
+        "aliases": [
+          "vidyasagar"
+        ]
+      },
+      {
+        "name": "A.M. Ratnam",
+        "department": "Producer (Sri Surya Movies)",
+        "aliases": [
+          "am ratnam",
+          "a m ratnam"
+        ]
+      },
+      {
+        "name": "Gopinath",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "gopinath"
+        ]
+      },
+      {
+        "name": "V.T. Vijayan",
+        "department": "Film Editor",
+        "aliases": [
+          "vt vijayan"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released May 3, 2006 marking Tamil blockbuster director Dharani's (of 'Ghilli' fame) Telugu directorial debut!",
@@ -2152,7 +4744,11 @@
     "id": "bavagaru-bagunnara",
     "featuredDate": "2026-11-23",
     "title": "Bavagaru Bagunnara?",
-    "alternateSpellings": ["Bavagaru Bagunnara?", "Bavagaru Bagunnara", "Baavagaru Bagunnara"],
+    "alternateSpellings": [
+      "Bavagaru Bagunnara?",
+      "Bavagaru Bagunnara",
+      "Baavagaru Bagunnara"
+    ],
     "year": 1998,
     "releaseMonth": "April 1998",
     "hero": "Chiranjeevi",
@@ -2170,22 +4766,116 @@
     "iconicProp": "New Zealand bungee cord & a vintage wedding garland",
     "hint": "He jumps off a New Zealand bridge for love—then pretends to be the son-in-law of a strict household.",
     "fullCast": [
-      { "name": "Chiranjeevi", "role": "Lead Hero (Raju)", "aliases": ["chiranjeevi", "megastar", "chiru"] },
-      { "name": "Rambha", "role": "Lead Heroine (Swapna)", "aliases": ["rambha"] },
-      { "name": "Rachana Banerjee", "role": "Sandhya (Elder Sister)", "aliases": ["rachana", "rachana banerjee"] },
-      { "name": "Paresh Rawal", "role": "Rao Bahadur Rajendra Prasad", "aliases": ["paresh rawal"] },
-      { "name": "Kota Srinivasa Rao", "role": "Pedda Basavaraju", "aliases": ["kota", "kota srinivasa rao"] },
-      { "name": "Srihari", "role": "Chinna Kankaraju", "aliases": ["srihari"] },
-      { "name": "Kaikala Satyanarayana", "role": "Grandfather", "aliases": ["kaikala satyanarayana", "satyanarayana"] },
-      { "name": "Brahmanandam", "role": "Gopi (Comedy Role)", "aliases": ["brahmanandam", "brahmi"] },
-      { "name": "Achyuth", "role": "Supporting Role", "aliases": ["achyuth"] }
+      {
+        "name": "Chiranjeevi",
+        "role": "Lead Hero (Raju)",
+        "aliases": [
+          "chiranjeevi",
+          "megastar",
+          "chiru"
+        ]
+      },
+      {
+        "name": "Rambha",
+        "role": "Lead Heroine (Swapna)",
+        "aliases": [
+          "rambha"
+        ]
+      },
+      {
+        "name": "Rachana Banerjee",
+        "role": "Sandhya (Elder Sister)",
+        "aliases": [
+          "rachana",
+          "rachana banerjee"
+        ]
+      },
+      {
+        "name": "Paresh Rawal",
+        "role": "Rao Bahadur Rajendra Prasad",
+        "aliases": [
+          "paresh rawal"
+        ]
+      },
+      {
+        "name": "Kota Srinivasa Rao",
+        "role": "Pedda Basavaraju",
+        "aliases": [
+          "kota",
+          "kota srinivasa rao"
+        ]
+      },
+      {
+        "name": "Srihari",
+        "role": "Chinna Kankaraju",
+        "aliases": [
+          "srihari"
+        ]
+      },
+      {
+        "name": "Kaikala Satyanarayana",
+        "role": "Grandfather",
+        "aliases": [
+          "kaikala satyanarayana",
+          "satyanarayana"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Gopi (Comedy Role)",
+        "aliases": [
+          "brahmanandam",
+          "brahmi"
+        ]
+      },
+      {
+        "name": "Achyuth",
+        "role": "Supporting Role",
+        "aliases": [
+          "achyuth"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Jayanth C. Paranjee", "department": "Director", "aliases": ["jayanth c paranjee", "jayanth"] },
-      { "name": "Mani Sharma", "department": "Music Director (Breakthrough Hit)", "aliases": ["mani sharma", "manisharma"] },
-      { "name": "Nagendra Babu", "department": "Producer (Anjana Productions)", "aliases": ["nagendra babu", "nagababu", "anjana productions"] },
-      { "name": "Jayanan Vincent", "department": "Cinematographer (DOP)", "aliases": ["jayanan vincent"] },
-      { "name": "Marthand K. Venkatesh", "department": "Film Editor", "aliases": ["marthand k venkatesh"] }
+      {
+        "name": "Jayanth C. Paranjee",
+        "department": "Director",
+        "aliases": [
+          "jayanth c paranjee",
+          "jayanth"
+        ]
+      },
+      {
+        "name": "Mani Sharma",
+        "department": "Music Director (Breakthrough Hit)",
+        "aliases": [
+          "mani sharma",
+          "manisharma"
+        ]
+      },
+      {
+        "name": "Nagendra Babu",
+        "department": "Producer (Anjana Productions)",
+        "aliases": [
+          "nagendra babu",
+          "nagababu",
+          "anjana productions"
+        ]
+      },
+      {
+        "name": "Jayanan Vincent",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "jayanan vincent"
+        ]
+      },
+      {
+        "name": "Marthand K. Venkatesh",
+        "department": "Film Editor",
+        "aliases": [
+          "marthand k venkatesh"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released April 9, 1998 and became a massive family blockbuster—also marking composer Mani Sharma's breakthrough mega-album!",
@@ -2246,7 +4936,11 @@
     "id": "chennakesava-reddy",
     "featuredDate": "2026-11-24",
     "title": "Chennakesava Reddy",
-    "alternateSpellings": ["Chennakesava Reddy", "Chenna Kesava Reddy", "CKR"],
+    "alternateSpellings": [
+      "Chennakesava Reddy",
+      "Chenna Kesava Reddy",
+      "CKR"
+    ],
     "year": 2002,
     "releaseMonth": "September 2002",
     "hero": "Nandamuri Balakrishna",
@@ -2264,26 +4958,143 @@
     "iconicProp": "Rayalaseema hunting sickle (Kathi) & crisp IPS uniform",
     "hint": "A thunderous dual-role Rayalaseema faction epic—father in a white pancha, son in a khaki DCP uniform.",
     "fullCast": [
-      { "name": "Nandamuri Balakrishna", "role": "Dual Role (Chennakesava Reddy & DCP Bharath Reddy)", "aliases": ["balakrishna", "balayya", "nbk", "nandamuri balakrishna"] },
-      { "name": "Tabu", "role": "Lead Heroine (Seeta)", "aliases": ["tabu"] },
-      { "name": "Shriya Saran", "role": "Lead Heroine (Preethi)", "aliases": ["shriya", "shriya saran"] },
-      { "name": "Devayani", "role": "Janaki", "aliases": ["devayani"] },
-      { "name": "Jayaprakash Reddy", "role": "Venkat Reddy (Villain)", "aliases": ["jayaprakash reddy", "jp"] },
-      { "name": "Anandraj", "role": "Dhanunjaya Reddy", "aliases": ["anandraj"] },
-      { "name": "Ahuti Prasad", "role": "Sivaji Reddy", "aliases": ["ahuti prasad"] },
-      { "name": "Brahmanandam", "role": "Purohit / Comedy Role", "aliases": ["brahmanandam", "brahmi"] },
-      { "name": "Ali", "role": "Comedy Role", "aliases": ["ali"] },
-      { "name": "Venu Madhav", "role": "Comedy Role", "aliases": ["venu madhav"] },
-      { "name": "M.S. Narayana", "role": "Comedy Role", "aliases": ["ms narayana"] },
-      { "name": "L.B. Sriram", "role": "Supporting Role", "aliases": ["lb sriram"] }
+      {
+        "name": "Nandamuri Balakrishna",
+        "role": "Dual Role (Chennakesava Reddy & DCP Bharath Reddy)",
+        "aliases": [
+          "balakrishna",
+          "balayya",
+          "nbk",
+          "nandamuri balakrishna"
+        ]
+      },
+      {
+        "name": "Tabu",
+        "role": "Lead Heroine (Seeta)",
+        "aliases": [
+          "tabu"
+        ]
+      },
+      {
+        "name": "Shriya Saran",
+        "role": "Lead Heroine (Preethi)",
+        "aliases": [
+          "shriya",
+          "shriya saran"
+        ]
+      },
+      {
+        "name": "Devayani",
+        "role": "Janaki",
+        "aliases": [
+          "devayani"
+        ]
+      },
+      {
+        "name": "Jayaprakash Reddy",
+        "role": "Venkat Reddy (Villain)",
+        "aliases": [
+          "jayaprakash reddy",
+          "jp"
+        ]
+      },
+      {
+        "name": "Anandraj",
+        "role": "Dhanunjaya Reddy",
+        "aliases": [
+          "anandraj"
+        ]
+      },
+      {
+        "name": "Ahuti Prasad",
+        "role": "Sivaji Reddy",
+        "aliases": [
+          "ahuti prasad"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Purohit / Comedy Role",
+        "aliases": [
+          "brahmanandam",
+          "brahmi"
+        ]
+      },
+      {
+        "name": "Ali",
+        "role": "Comedy Role",
+        "aliases": [
+          "ali"
+        ]
+      },
+      {
+        "name": "Venu Madhav",
+        "role": "Comedy Role",
+        "aliases": [
+          "venu madhav"
+        ]
+      },
+      {
+        "name": "M.S. Narayana",
+        "role": "Comedy Role",
+        "aliases": [
+          "ms narayana"
+        ]
+      },
+      {
+        "name": "L.B. Sriram",
+        "role": "Supporting Role",
+        "aliases": [
+          "lb sriram"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "V.V. Vinayak", "department": "Director & Screenplay", "aliases": ["vv vinayak", "vinayak"] },
-      { "name": "Mani Sharma", "department": "Music Director & Thunderous BGM", "aliases": ["mani sharma", "manisharma"] },
-      { "name": "Bellamkonda Suresh", "department": "Producer (Sri Sai Ganesh Productions)", "aliases": ["bellamkonda suresh"] },
-      { "name": "Paruchuri Brothers", "department": "Dialogue Writers", "aliases": ["paruchuri brothers", "paruchuri"] },
-      { "name": "Ajayan Vincent", "department": "Cinematographer (DOP)", "aliases": ["ajayan vincent"] },
-      { "name": "Gautham Raju", "department": "Film Editor", "aliases": ["gautham raju"] }
+      {
+        "name": "V.V. Vinayak",
+        "department": "Director & Screenplay",
+        "aliases": [
+          "vv vinayak",
+          "vinayak"
+        ]
+      },
+      {
+        "name": "Mani Sharma",
+        "department": "Music Director & Thunderous BGM",
+        "aliases": [
+          "mani sharma",
+          "manisharma"
+        ]
+      },
+      {
+        "name": "Bellamkonda Suresh",
+        "department": "Producer (Sri Sai Ganesh Productions)",
+        "aliases": [
+          "bellamkonda suresh"
+        ]
+      },
+      {
+        "name": "Paruchuri Brothers",
+        "department": "Dialogue Writers",
+        "aliases": [
+          "paruchuri brothers",
+          "paruchuri"
+        ]
+      },
+      {
+        "name": "Ajayan Vincent",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "ajayan vincent"
+        ]
+      },
+      {
+        "name": "Gautham Raju",
+        "department": "Film Editor",
+        "aliases": [
+          "gautham raju"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released September 25, 2002 as young director V.V. Vinayak's second feature film right after his sensational debut 'Aadi'",
@@ -2343,7 +5154,11 @@
     "id": "bhageeratha",
     "featuredDate": "2026-11-25",
     "title": "Bhageeratha",
-    "alternateSpellings": ["Bhageeratha", "Bhagiratha", "Bhageeratha 2005"],
+    "alternateSpellings": [
+      "Bhageeratha",
+      "Bhagiratha",
+      "Bhageeratha 2005"
+    ],
     "year": 2005,
     "releaseMonth": "October 2005",
     "hero": "Ravi Teja",
@@ -2361,21 +5176,104 @@
     "iconicProp": "Godavari village bridge blueprint & Chandu's fiery determination",
     "hint": "Named after the mythic figure who brought the Ganga—this village youth moves mountains to build a bridge for his people.",
     "fullCast": [
-      { "name": "Ravi Teja", "role": "Lead Hero (Chandu)", "aliases": ["ravi teja", "raviteja", "mass maharaja"] },
-      { "name": "Shriya Saran", "role": "Lead Heroine (Shweta)", "aliases": ["shriya", "shriya saran"] },
-      { "name": "Prakash Raj", "role": "Venkata Ratnam", "aliases": ["prakash raj"] },
-      { "name": "Brahmanandam", "role": "Hotel Manager / Comedy Role", "aliases": ["brahmanandam", "brahmi"] },
-      { "name": "Sunil", "role": "Nanda (Comedy Friend)", "aliases": ["sunil"] },
-      { "name": "Venu Madhav", "role": "Comedy Role", "aliases": ["venu madhav"] },
-      { "name": "Nassar", "role": "Durga Prasad", "aliases": ["nassar"] },
-      { "name": "Vijayakumar", "role": "Chandu's Father", "aliases": ["vijayakumar"] },
-      { "name": "Jeeva", "role": "Supporting Role", "aliases": ["jeeva"] }
+      {
+        "name": "Ravi Teja",
+        "role": "Lead Hero (Chandu)",
+        "aliases": [
+          "ravi teja",
+          "raviteja",
+          "mass maharaja"
+        ]
+      },
+      {
+        "name": "Shriya Saran",
+        "role": "Lead Heroine (Shweta)",
+        "aliases": [
+          "shriya",
+          "shriya saran"
+        ]
+      },
+      {
+        "name": "Prakash Raj",
+        "role": "Venkata Ratnam",
+        "aliases": [
+          "prakash raj"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Hotel Manager / Comedy Role",
+        "aliases": [
+          "brahmanandam",
+          "brahmi"
+        ]
+      },
+      {
+        "name": "Sunil",
+        "role": "Nanda (Comedy Friend)",
+        "aliases": [
+          "sunil"
+        ]
+      },
+      {
+        "name": "Venu Madhav",
+        "role": "Comedy Role",
+        "aliases": [
+          "venu madhav"
+        ]
+      },
+      {
+        "name": "Nassar",
+        "role": "Durga Prasad",
+        "aliases": [
+          "nassar"
+        ]
+      },
+      {
+        "name": "Vijayakumar",
+        "role": "Chandu's Father",
+        "aliases": [
+          "vijayakumar"
+        ]
+      },
+      {
+        "name": "Jeeva",
+        "role": "Supporting Role",
+        "aliases": [
+          "jeeva"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Rasool Ellore", "department": "Director & Cinematographer", "aliases": ["rasool ellore", "rasool"] },
-      { "name": "Chakri", "department": "Music Director", "aliases": ["chakri"] },
-      { "name": "Ramesh Puppala", "department": "Producer (Yellow Flowers)", "aliases": ["ramesh puppala"] },
-      { "name": "Gautham Raju", "department": "Film Editor", "aliases": ["gautham raju"] }
+      {
+        "name": "Rasool Ellore",
+        "department": "Director & Cinematographer",
+        "aliases": [
+          "rasool ellore",
+          "rasool"
+        ]
+      },
+      {
+        "name": "Chakri",
+        "department": "Music Director",
+        "aliases": [
+          "chakri"
+        ]
+      },
+      {
+        "name": "Ramesh Puppala",
+        "department": "Producer (Yellow Flowers)",
+        "aliases": [
+          "ramesh puppala"
+        ]
+      },
+      {
+        "name": "Gautham Raju",
+        "department": "Film Editor",
+        "aliases": [
+          "gautham raju"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released October 13, 2005 for Dussehra under director Rasool Ellore—famous primarily as the ace cinematographer of 'Jalsa' and 'Oye!'",
@@ -2435,7 +5333,11 @@
     "id": "raja",
     "featuredDate": "2026-11-26",
     "title": "Raja",
-    "alternateSpellings": ["Raja", "Raja 1999", "Venkatesh Raja"],
+    "alternateSpellings": [
+      "Raja",
+      "Raja 1999",
+      "Venkatesh Raja"
+    ],
     "year": 1999,
     "releaseMonth": "March 1999",
     "hero": "Venkatesh",
@@ -2453,22 +5355,113 @@
     "iconicProp": "A secret diary & a soulful 1999 cassette tape",
     "hint": "A reformed petty thief silently transforms a grieving woman's life—backed by S.A. Rajkumar's immortal melodies.",
     "fullCast": [
-      { "name": "Venkatesh", "role": "Lead Hero (Raja)", "aliases": ["venkatesh", "venky", "victory venkatesh"] },
-      { "name": "Soundarya", "role": "Lead Heroine (Anjali)", "aliases": ["soundarya"] },
-      { "name": "Abbas", "role": "Sanjay", "aliases": ["abbas"] },
-      { "name": "Sudhakar", "role": "Balu (Best Friend Comedy)", "aliases": ["sudhakar"] },
-      { "name": "Brahmanandam", "role": "Delhi Dada", "aliases": ["brahmanandam", "brahmi"] },
-      { "name": "Chandra Mohan", "role": "Supporting Role", "aliases": ["chandra mohan"] },
-      { "name": "Tanikella Bharani", "role": "Supporting Role", "aliases": ["tanikella bharani"] },
-      { "name": "Annapoorna", "role": "Supporting Elder", "aliases": ["annapoorna"] },
-      { "name": "A.V.S.", "role": "Comedy Role", "aliases": ["avs", "a v s"] },
-      { "name": "Y. Vijaya", "role": "Supporting Role", "aliases": ["y vijaya"] }
+      {
+        "name": "Venkatesh",
+        "role": "Lead Hero (Raja)",
+        "aliases": [
+          "venkatesh",
+          "venky",
+          "victory venkatesh"
+        ]
+      },
+      {
+        "name": "Soundarya",
+        "role": "Lead Heroine (Anjali)",
+        "aliases": [
+          "soundarya"
+        ]
+      },
+      {
+        "name": "Abbas",
+        "role": "Sanjay",
+        "aliases": [
+          "abbas"
+        ]
+      },
+      {
+        "name": "Sudhakar",
+        "role": "Balu (Best Friend Comedy)",
+        "aliases": [
+          "sudhakar"
+        ]
+      },
+      {
+        "name": "Brahmanandam",
+        "role": "Delhi Dada",
+        "aliases": [
+          "brahmanandam",
+          "brahmi"
+        ]
+      },
+      {
+        "name": "Chandra Mohan",
+        "role": "Supporting Role",
+        "aliases": [
+          "chandra mohan"
+        ]
+      },
+      {
+        "name": "Tanikella Bharani",
+        "role": "Supporting Role",
+        "aliases": [
+          "tanikella bharani"
+        ]
+      },
+      {
+        "name": "Annapoorna",
+        "role": "Supporting Elder",
+        "aliases": [
+          "annapoorna"
+        ]
+      },
+      {
+        "name": "A.V.S.",
+        "role": "Comedy Role",
+        "aliases": [
+          "avs",
+          "a v s"
+        ]
+      },
+      {
+        "name": "Y. Vijaya",
+        "role": "Supporting Role",
+        "aliases": [
+          "y vijaya"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Muppalaneni Shiva", "department": "Director", "aliases": ["muppalaneni shiva"] },
-      { "name": "S.A. Rajkumar", "department": "Music Director (Filmfare Winner)", "aliases": ["sa rajkumar", "s a rajkumar", "rajkumar"] },
-      { "name": "R.B. Choudary", "department": "Producer (Super Good Films)", "aliases": ["rb choudary", "super good films"] },
-      { "name": "Sirivennela Seetharama Sastry", "department": "Lyricist", "aliases": ["sirivennela"] }
+      {
+        "name": "Muppalaneni Shiva",
+        "department": "Director",
+        "aliases": [
+          "muppalaneni shiva"
+        ]
+      },
+      {
+        "name": "S.A. Rajkumar",
+        "department": "Music Director (Filmfare Winner)",
+        "aliases": [
+          "sa rajkumar",
+          "s a rajkumar",
+          "rajkumar"
+        ]
+      },
+      {
+        "name": "R.B. Choudary",
+        "department": "Producer (Super Good Films)",
+        "aliases": [
+          "rb choudary",
+          "super good films"
+        ]
+      },
+      {
+        "name": "Sirivennela Seetharama Sastry",
+        "department": "Lyricist",
+        "aliases": [
+          "sirivennela"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released March 18, 1999 under R.B. Choudary's Super Good Films and ran for 100+ days across Andhra Pradesh as a massive family blockbuster",
@@ -2528,7 +5521,12 @@
     "id": "vishwanath-and-sons",
     "featuredDate": "2026-11-27",
     "title": "Vishwanath & Sons",
-    "alternateSpellings": ["Vishwanath & Sons", "Vishwanath and Sons", "Viswanath & Sons", "Viswanath and Sons"],
+    "alternateSpellings": [
+      "Vishwanath & Sons",
+      "Vishwanath and Sons",
+      "Viswanath & Sons",
+      "Viswanath and Sons"
+    ],
     "year": 2026,
     "releaseMonth": "August 2026",
     "hero": "Suriya",
@@ -2546,16 +5544,74 @@
     "iconicProp": "Family business signboard 'Vishwanath & Sons'",
     "hint": "Venky Atluri's August 2026 bilingual family drama uniting Suriya, Mamitha Baiju, and Raveena Tandon.",
     "fullCast": [
-      { "name": "Suriya", "role": "Lead Hero (Sanjay Vishwanath)", "aliases": ["suriya", "surya"] },
-      { "name": "Mamitha Baiju", "role": "Lead Heroine (Maddy)", "aliases": ["mamitha baiju", "mamitha"] },
-      { "name": "Raveena Tandon", "role": "Pivotal Supporting Role", "aliases": ["raveena tandon", "raveena"] },
-      { "name": "Radhika Sarathkumar", "role": "Family Matriarch", "aliases": ["radhika", "radhika sarathkumar"] },
-      { "name": "Harsha Chemudu", "role": "Comedy Supporting Role (Viva Harsha)", "aliases": ["viva harsha", "harsha chemudu", "harsha"] }
+      {
+        "name": "Suriya",
+        "role": "Lead Hero (Sanjay Vishwanath)",
+        "aliases": [
+          "suriya",
+          "surya"
+        ]
+      },
+      {
+        "name": "Mamitha Baiju",
+        "role": "Lead Heroine (Maddy)",
+        "aliases": [
+          "mamitha baiju",
+          "mamitha"
+        ]
+      },
+      {
+        "name": "Raveena Tandon",
+        "role": "Pivotal Supporting Role",
+        "aliases": [
+          "raveena tandon",
+          "raveena"
+        ]
+      },
+      {
+        "name": "Radhika Sarathkumar",
+        "role": "Family Matriarch",
+        "aliases": [
+          "radhika",
+          "radhika sarathkumar"
+        ]
+      },
+      {
+        "name": "Harsha Chemudu",
+        "role": "Comedy Supporting Role (Viva Harsha)",
+        "aliases": [
+          "viva harsha",
+          "harsha chemudu",
+          "harsha"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Venky Atluri", "department": "Director & Writer", "aliases": ["venky atluri", "atluri"] },
-      { "name": "G.V. Prakash Kumar", "department": "Music Director", "aliases": ["gv prakash", "g v prakash", "gv prakash kumar"] },
-      { "name": "Suryadevara Naga Vamsi", "department": "Producer (Sithara Entertainments)", "aliases": ["naga vamsi", "sithara entertainments"] }
+      {
+        "name": "Venky Atluri",
+        "department": "Director & Writer",
+        "aliases": [
+          "venky atluri",
+          "atluri"
+        ]
+      },
+      {
+        "name": "G.V. Prakash Kumar",
+        "department": "Music Director",
+        "aliases": [
+          "gv prakash",
+          "g v prakash",
+          "gv prakash kumar"
+        ]
+      },
+      {
+        "name": "Suryadevara Naga Vamsi",
+        "department": "Producer (Sithara Entertainments)",
+        "aliases": [
+          "naga vamsi",
+          "sithara entertainments"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released on August 14, 2026 for the Independence Day weekend as a Telugu-Tamil bilingual family drama",
@@ -2615,7 +5671,11 @@
     "id": "chi-la-sow",
     "featuredDate": "2026-11-28",
     "title": "Chi La Sow",
-    "alternateSpellings": ["Chi La Sow", "Chilasow", "Chi. La. Sow."],
+    "alternateSpellings": [
+      "Chi La Sow",
+      "Chilasow",
+      "Chi. La. Sow."
+    ],
     "year": 2018,
     "releaseMonth": "August 2018",
     "hero": "Sushanth",
@@ -2633,21 +5693,105 @@
     "iconicProp": "Traditional Telugu wedding invitation prefix 'Chi. La. Sow.' & a late-night coffee cup",
     "hint": "One reluctant blind date in Hyderabad stretches into a magical 24-hour conversation—and won a National Award for Best Screenplay.",
     "fullCast": [
-      { "name": "Sushanth", "role": "Lead Hero (Arjun)", "aliases": ["sushanth", "sushant"] },
-      { "name": "Ruhani Sharma", "role": "Lead Heroine (Anjali)", "aliases": ["ruhani sharma", "ruhani"] },
-      { "name": "Vennela Kishore", "role": "Sujith (Friend)", "aliases": ["vennela kishore"] },
-      { "name": "Rahul Ramakrishna", "role": "Police Constable / Friend", "aliases": ["rahul ramakrishna"] },
-      { "name": "Anu Haasan", "role": "Anjali's Mother", "aliases": ["anu haasan", "anu hasan"] },
-      { "name": "Rohini", "role": "Arjun's Mother", "aliases": ["rohini"] },
-      { "name": "Sanjay Swaroop", "role": "Arjun's Father", "aliases": ["sanjay swaroop"] },
-      { "name": "Vidyullekha Raman", "role": "Anjali's Friend", "aliases": ["vidyullekha raman"] }
+      {
+        "name": "Sushanth",
+        "role": "Lead Hero (Arjun)",
+        "aliases": [
+          "sushanth",
+          "sushant"
+        ]
+      },
+      {
+        "name": "Ruhani Sharma",
+        "role": "Lead Heroine (Anjali)",
+        "aliases": [
+          "ruhani sharma",
+          "ruhani"
+        ]
+      },
+      {
+        "name": "Vennela Kishore",
+        "role": "Sujith (Friend)",
+        "aliases": [
+          "vennela kishore"
+        ]
+      },
+      {
+        "name": "Rahul Ramakrishna",
+        "role": "Police Constable / Friend",
+        "aliases": [
+          "rahul ramakrishna"
+        ]
+      },
+      {
+        "name": "Anu Haasan",
+        "role": "Anjali's Mother",
+        "aliases": [
+          "anu haasan",
+          "anu hasan"
+        ]
+      },
+      {
+        "name": "Rohini",
+        "role": "Arjun's Mother",
+        "aliases": [
+          "rohini"
+        ]
+      },
+      {
+        "name": "Sanjay Swaroop",
+        "role": "Arjun's Father",
+        "aliases": [
+          "sanjay swaroop"
+        ]
+      },
+      {
+        "name": "Vidyullekha Raman",
+        "role": "Anjali's Friend",
+        "aliases": [
+          "vidyullekha raman"
+        ]
+      }
     ],
     "fullCrew": [
-      { "name": "Rahul Ravindran", "department": "Debut Director & Writer (National Award Winner)", "aliases": ["rahul ravindran"] },
-      { "name": "Prashanth R Vihari", "department": "Music Director", "aliases": ["prashanth r vihari", "prashanth vihari"] },
-      { "name": "Jaswanth Nadipalli", "department": "Producer (Presented by Annapurna Studios)", "aliases": ["jaswanth nadipalli", "annapurna studios", "nagarjuna"] },
-      { "name": "M. Sukumar", "department": "Cinematographer (DOP)", "aliases": ["m sukumar"] },
-      { "name": "Chota K. Prasad", "department": "Film Editor", "aliases": ["chota k prasad"] }
+      {
+        "name": "Rahul Ravindran",
+        "department": "Debut Director & Writer (National Award Winner)",
+        "aliases": [
+          "rahul ravindran"
+        ]
+      },
+      {
+        "name": "Prashanth R Vihari",
+        "department": "Music Director",
+        "aliases": [
+          "prashanth r vihari",
+          "prashanth vihari"
+        ]
+      },
+      {
+        "name": "Jaswanth Nadipalli",
+        "department": "Producer (Presented by Annapurna Studios)",
+        "aliases": [
+          "jaswanth nadipalli",
+          "annapurna studios",
+          "nagarjuna"
+        ]
+      },
+      {
+        "name": "M. Sukumar",
+        "department": "Cinematographer (DOP)",
+        "aliases": [
+          "m sukumar"
+        ]
+      },
+      {
+        "name": "Chota K. Prasad",
+        "department": "Film Editor",
+        "aliases": [
+          "chota k prasad"
+        ]
+      }
     ],
     "eraTrivia": [
       "Released August 3, 2018 and won the 66th National Film Award for Best Original Screenplay (Rahul Ravindran)!",
@@ -2700,6 +5844,196 @@
         "headline": "Named After the 3-Word Telugu Blessing Printed Before Every Bride's Name!",
         "body": "Every Telugu wedding invitation card prints these exact three short syllables right before the bride's name ('Chiranjeevi Lakshmi Sowbhagyavathi')!",
         "unlockAfterReel": 4
+      }
+    ]
+  },
+  {
+    "id": "maharshi",
+    "title": "Maharshi",
+    "alternateSpellings": [
+      "Maharshi",
+      "Maharshi (Telugu)",
+      "Maharshi 2019",
+      "Maharshi Film",
+      "Maharshi (Maharsi)"
+    ],
+    "year": 2019,
+    "releaseMonth": "May 2019",
+    "hero": "Mahesh Babu",
+    "heroine": "Pooja Hegde",
+    "director": "Vamshi Paidipally",
+    "music": "Devi Sri Prasad",
+    "genre": "Action Drama / Social Drama",
+    "tropes": [
+      "Rags to Riches",
+      "Village‑to‑City Contrast",
+      "Corporate Social Responsibility",
+      "Friendship Reunion",
+      "Agricultural Advocacy",
+      "Emotional Father Figure"
+    ],
+    "iconicProp": "Leather‑bound notebook carried by the protagonist",
+    "hint": "When a high‑flyer returns to his roots, the fields become his battlefield.",
+    "featuredDate": "2026-11-29",
+    "fullCast": [
+      {
+        "name": "Mahesh Babu",
+        "role": "Rishi Kumar (Maharshi)",
+        "aliases": [
+          "Prince of Tollywood"
+        ]
+      },
+      {
+        "name": "Pooja Hegde",
+        "role": "Vijayalakshmi",
+        "aliases": [
+          "Pooja"
+        ]
+      },
+      {
+        "name": "Allari Naresh",
+        "role": "Balu (comic sidekick)",
+        "aliases": [
+          "Allari"
+        ]
+      },
+      {
+        "name": "Prakash Raj",
+        "role": "Siddharth (antagonist)",
+        "aliases": [
+          "PR"
+        ]
+      },
+      {
+        "name": "Jagapathi Babu",
+        "role": "Rishi's mentor",
+        "aliases": [
+          "Jaggu"
+        ]
+      },
+      {
+        "name": "Rajendra Prasad",
+        "role": "Rishi's father",
+        "aliases": [
+          "RP"
+        ]
+      },
+      {
+        "name": "Samuthirakani",
+        "role": "Village elder",
+        "aliases": [
+          "Sam"
+        ]
+      },
+      {
+        "name": "Vennela Kishore",
+        "role": "Comic cameo",
+        "aliases": []
+      }
+    ],
+    "fullCrew": [
+      {
+        "name": "Vamshi Paidipally",
+        "department": "Director",
+        "aliases": [
+          "VP"
+        ]
+      },
+      {
+        "name": "Devi Sri Prasad",
+        "department": "Music",
+        "aliases": [
+          "DSP"
+        ]
+      },
+      {
+        "name": "Dil Raju",
+        "department": "Producer",
+        "aliases": [
+          "Dil"
+        ]
+      },
+      {
+        "name": "R. Madhi",
+        "department": "Cinematography",
+        "aliases": [
+          "Madhi"
+        ]
+      },
+      {
+        "name": "Peter Hein",
+        "department": "Stunt Master",
+        "aliases": [
+          "Peter"
+        ]
+      },
+      {
+        "name": "Ramajogayya Sastry",
+        "department": "Lyricist",
+        "aliases": [
+          "RJS"
+        ]
+      },
+      {
+        "name": "A. Sreekar Prasad",
+        "department": "Editor",
+        "aliases": [
+          "Sreekar"
+        ]
+      }
+    ],
+    "eraTrivia": [
+      "Won the National Film Award for Best Popular Film Providing Wholesome Entertainment (2020)",
+      "First Telugu film to cross ₹200 crore worldwide",
+      "Mahesh Babu’s 25th film as a lead actor",
+      "Extensive shooting took place in Guntur’s farms and in the United States for corporate office scenes",
+      "The title track became an anthem for farmers, trending across social media platforms"
+    ],
+    "iconicMoments": [
+      "The protagonist’s emotional return to his village, planting saplings alongside locals",
+      "A heartfelt confrontation between Rishi and his former mentor that reshapes his purpose",
+      "The climactic rally where he addresses thousands of farmers, brandishing his notebook as a symbol of hope"
+    ],
+    "pressHints": [
+      {
+        "id": "h-1",
+        "category": "PRODUCTION FILE",
+        "difficulty": "HARD",
+        "headline": "A farm’s sunrise set the tone",
+        "body": "The opening sequence was shot at a real farm in Guntur, using natural sunrise light before any artificial rigs were installed.",
+        "unlockAfterReel": 1
+      },
+      {
+        "id": "h-2",
+        "category": "BOX OFFICE & BUZZ",
+        "difficulty": "HARD",
+        "headline": "A record‑breaking opening",
+        "body": "The film’s first‑day collection broke the previous opening record for a star‑driven Telugu release, surpassing the benchmark set by a 2018 blockbuster.",
+        "unlockAfterReel": 2
+      },
+      {
+        "id": "h-3",
+        "category": "CREW SIGNATURE",
+        "difficulty": "MEDIUM",
+        "headline": "Signature beats",
+        "body": "The soundtrack blends folk rhythms with contemporary beats, a hallmark of the composer’s style, especially evident in the title track that became a rallying anthem.",
+        "unlockAfterReel": 3
+      },
+      {
+        "id": "h-4",
+        "category": "SCREENPLAY HOOK",
+        "difficulty": "WARM",
+        "headline": "From boardroom to barn",
+        "body": "The narrative juxtaposes a high‑powered corporate executive’s life with his humble village upbringing, leading to a heartfelt mission to uplift farmers.",
+        "unlockAfterReel": 4
+      },
+      {
+        "id": "h-5",
+        "category": "CULT MEMORY",
+        "difficulty": "EASY",
+        "headline": "The notebook that sparked a movement",
+        "body": "A simple leather‑bound notebook carried by the protagonist becomes the symbol around which crowds gather, chanting its verses.",
+        "unlockAfterReel": 5
       }
     ]
   }
