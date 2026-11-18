@@ -48,4 +48,4 @@ export async function isAuthenticated(): Promise<boolean> {
   return isValidSessionToken(token);
 }
 
-export { ADMIN_COOKIE_NAME, DEFAULT_ADMIN_USERNAME };
+export { DEFAULT_ADMIN_USERNAME };
