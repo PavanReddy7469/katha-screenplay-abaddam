@@ -1083,10 +1083,10 @@ export async function POST(req: NextRequest) {
     if (apiKey && apiKey !== "your_gemini_api_key_here") {
       const genAI = new GoogleGenerativeAI(apiKey);
       const modelCandidates = [
+        "gemini-3.5-flash-lite",
+        "gemini-3.1-flash-lite",
         "gemini-3.8-flash",
-        "gemini-3.8-flash",
-        "gemini-3.8-flash-lite",
-        "gemini-2.5-flash",
+        "gemini-3.7-flash",
       ];
 
       const historyContext = history
