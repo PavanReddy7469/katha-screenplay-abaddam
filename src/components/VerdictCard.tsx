@@ -90,7 +90,7 @@ export default function VerdictCard({
       `🎞️ Reels Used: ${questionsUsed}/${maxQuestions} | Panel Lies: ${totalLiesTold}`,
       `🔥 Streak: ${stats.currentStreak} | Win Rate: ${winRate}%`,
       `${reelBar}${unusedBar}`,
-      `Play now 👉 katha-screenplay-abaddam.vercel.app`,
+      `Play now 👉 https://katha-screenplay-abaddam.vercel.app`,
     ].join("\n");
   };
 
