@@ -12,6 +12,8 @@ import {
   selectPanelForTurn,
 } from "@/lib/personas";
 
+export const maxDuration = 30;
+
 const MOVIES = moviesData as Movie[];
 
 interface HistoryItem {
@@ -1071,8 +1073,11 @@ export async function POST(req: NextRequest) {
     }
 
     const apiKey = process.env.GEMINI_API_KEY?.trim()
+      .replace(/^GEMINI_API_KEY\s*=\s*/i, "")
       .replace(/^["']|["']$/g, "")
       .trim();
+
+    let fallbackReason: string = apiKey ? "gemini_error" : "missing_env_key";
 
     // 2. Single fast Gemini JSON call generating both witnesses' statements + 3rd witness heckle
     if (apiKey && apiKey !== "your_gemini_api_key_here") {
@@ -1271,10 +1276,18 @@ RETURN STRICT JSON ONLY:
             });
           }
         } catch (geminiError) {
-          console.warn(
-            `Gemini model ${modelName} failed:`,
-            geminiError instanceof Error ? geminiError.message : geminiError
-          );
+          const msg =
+            geminiError instanceof Error ? geminiError.message : String(geminiError);
+          if (/429|quota|rate limit|RESOURCE_EXHAUSTED/i.test(msg)) {
+            fallbackReason = "rate_limited";
+          } else if (/401|403|API_KEY_INVALID|API key not valid|PERMISSION_DENIED/i.test(msg)) {
+            fallbackReason = "invalid_api_key";
+          } else if (/404|not found/i.test(msg)) {
+            fallbackReason = "model_not_found";
+          } else {
+            fallbackReason = "gemini_error";
+          }
+          console.warn(`Gemini model ${modelName} failed:`, msg);
         }
       }
     }
@@ -1340,6 +1353,7 @@ RETURN STRICT JSON ONLY:
       reply: statements.map((s) => s.reply).join(" "),
       wasLie: statements.some((s) => s.wasLie),
       mode: "simulator",
+      fallbackReason,
     });
   } catch (error) {
     console.error("Interrogation API error:", error);
