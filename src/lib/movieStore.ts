@@ -73,6 +73,17 @@ export async function saveMovie(movie: Movie): Promise<{ success: boolean; movie
     updatedList = [movie, ...currentMovies];
   }
 
+  // If this movie has a featuredDate, ensure any other movie with this date is unassigned
+  if (movie.featuredDate) {
+    updatedList = updatedList.map((m) => {
+      if (m.id !== movie.id && m.featuredDate === movie.featuredDate) {
+        const { featuredDate: _, ...rest } = m;
+        return rest as Movie;
+      }
+      return m;
+    });
+  }
+
   // Update in-memory cache immediately
   cachedMovies = updatedList;
 
