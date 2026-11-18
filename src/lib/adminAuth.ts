@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
 
 export const ADMIN_COOKIE_NAME = "cbfc_admin_session";
-const DEFAULT_ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const DEFAULT_ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "password123";
-const SESSION_SECRET = process.env.ADMIN_SECRET || "cbfc-hyderabad-secret-key-2026";
+export const DEFAULT_ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
+export const DEFAULT_ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "password123";
+export const SESSION_SECRET = process.env.ADMIN_SECRET || "cbfc-hyderabad-secret-key-2026";
 
 // Simple robust token generation: base64(timestamp:hmac-like)
 export function generateSessionToken(): string {
@@ -47,5 +47,3 @@ export async function isAuthenticated(): Promise<boolean> {
   const token = cookieStore.get(ADMIN_COOKIE_NAME)?.value;
   return isValidSessionToken(token);
 }
-
-export { DEFAULT_ADMIN_USERNAME };
