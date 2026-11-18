@@ -11,36 +11,37 @@ import {
   Users,
 } from "lucide-react";
 import { PERSONA_LIST } from "@/lib/personas";
-import moviesData from "@/data/movies.json";
 import {
   formatReadableDate,
   getLocalDateKey,
   PlayerStats,
 } from "@/lib/gameStats";
-
-const VAULT_COUNT = moviesData.length;
+import MidnightCountdown from "./MidnightCountdown";
 
 interface CensorSplashProps {
   activeDateKey: string;
+  vaultCount: number;
+  loadingCase?: boolean;
   stats: PlayerStats;
-  vaultCount?: number;
   onEnterRoom: () => void;
   onOpenStats: () => void;
   onOpenCalendar: () => void;
   onResetToToday: () => void;
+  onMidnightRollover?: (newDateKey: string) => void;
 }
 
 export default function CensorSplash({
   activeDateKey,
-  stats,
   vaultCount,
+  loadingCase = false,
+  stats,
   onEnterRoom,
   onOpenStats,
   onOpenCalendar,
   onResetToToday,
+  onMidnightRollover,
 }: CensorSplashProps) {
   const [isSlamming, setIsSlamming] = useState(false);
-  const totalVaultCount = vaultCount ?? moviesData.length;
   const todayKey = getLocalDateKey();
   const isToday = activeDateKey === todayKey;
   const activeDayRecord = stats.dailyRecords[activeDateKey];
@@ -332,13 +333,13 @@ export default function CensorSplash({
 
         {/* FOOTER SIGN-OFF & RUBBER STAMP CTA */}
         <div className="relative z-10 mt-6 pt-5 border-t-2 border-censor-ink/75 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="font-typewriter text-[11px] text-censor-ink/75 text-center sm:text-left">
+          <div className="font-typewriter text-[11px] text-censor-ink/75 text-center sm:text-left space-y-1">
             <p className="font-bold uppercase tracking-wider text-censor-ink">
               Examining Committee Sign-Off
             </p>
             <p>
-              Regional Officer, CBFC Hyderabad • {totalVaultCount} Classified{" "}
-              {totalVaultCount === 1 ? "Film" : "Films"} in Vault •{" "}
+              Regional Officer, CBFC Hyderabad • {vaultCount} Released{" "}
+              {vaultCount === 1 ? "Film" : "Films"} in Archive •{" "}
               <a
                 href="/login"
                 className="underline hover:text-censor-crimson text-censor-ink/90 font-semibold"
@@ -347,17 +348,24 @@ export default function CensorSplash({
                 Officer Portal (/login)
               </a>
             </p>
+            <div className="pt-0.5 text-censor-ink">
+              <MidnightCountdown onMidnightRollover={onMidnightRollover} />
+            </div>
           </div>
 
           <button
             type="button"
             onClick={handleEnter}
-            disabled={isSlamming}
+            disabled={isSlamming || loadingCase}
             className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3.5 bg-censor-crimson hover:bg-censor-red text-parchment-50 font-typewriter font-bold text-xs min-[375px]:text-sm sm:text-base tracking-[0.12em] uppercase border-[3px] border-censor-ink shadow-[4px_4px_0px_#261B12] hover:shadow-[2px_2px_0px_#261B12] hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all disabled:opacity-90"
           >
             <Stamp className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-rotate-12 transition-transform shrink-0" />
             <span>
-              {isSlamming ? "STAMPING ENTRY..." : "ENTER SCREENING ROOM"}
+              {loadingCase
+                ? "LOADING CASE..."
+                : isSlamming
+                ? "STAMPING ENTRY..."
+                : "ENTER SCREENING ROOM"}
             </span>
           </button>
         </div>

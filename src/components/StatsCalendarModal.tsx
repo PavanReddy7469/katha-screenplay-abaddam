@@ -23,6 +23,7 @@ import {
   PlayerStats,
 } from "@/lib/gameStats";
 import { PERSONA_LIST, PERSONAS } from "@/lib/personas";
+import MidnightCountdown from "./MidnightCountdown";
 
 interface StatsCalendarModalProps {
   isOpen: boolean;
@@ -447,20 +448,23 @@ export default function StatsCalendarModal({
                 })}
               </div>
 
-              {/* Legend */}
-              <div className="mt-3 pt-2 border-t border-censor-ink/20 flex flex-wrap items-center justify-center gap-4 font-typewriter text-[10px] text-censor-ink/75">
-                <span className="inline-flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-censor-teal" />
-                  U/A Blockbuster
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <XCircle className="w-3.5 h-3.5 text-censor-red" />
-                  Banned Flop
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-censor-gold inline-block" />
-                  Today&apos;s Screening
-                </span>
+              {/* Legend & Midnight Unlock Countdown */}
+              <div className="mt-3 pt-2 border-t border-censor-ink/20 flex flex-col items-center gap-1.5 font-typewriter text-[10px] text-censor-ink/75">
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                  <span className="inline-flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-censor-teal" />
+                    U/A Blockbuster
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <XCircle className="w-3.5 h-3.5 text-censor-red" />
+                    Banned Flop
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <span className="w-2.5 h-2.5 rounded-full bg-censor-gold inline-block" />
+                    Today&apos;s Screening
+                  </span>
+                </div>
+                <MidnightCountdown compact />
               </div>
             </div>
 

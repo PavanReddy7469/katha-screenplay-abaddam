@@ -1,4 +1,5 @@
 import { GameModeId, Movie, PersonaId } from "./personas";
+import { getIstDateKey } from "./istDate";
 import type { CensorRating } from "@/components/VerdictCard";
 
 export interface DailyRecord {
@@ -27,10 +28,8 @@ export interface PlayerStats {
 const STORAGE_KEY = "ksa_censor_stats_v1";
 
 export function getLocalDateKey(date: Date = new Date()): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  // Always use IST (Asia/Kolkata) so every player unlocks the next movie at 12:00 AM IST sharp!
+  return getIstDateKey(date);
 }
 
 export function parseDateKey(dateKey: string): Date {

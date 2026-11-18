@@ -21,7 +21,6 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import moviesData from "@/data/movies.json";
 import { TELUGU_IMDB_CATALOG } from "@/data/teluguCatalog";
 import {
   Movie,
@@ -39,7 +38,11 @@ import {
 } from "@/lib/gameStats";
 import VerdictCard, { AuditEntry, CensorRating } from "./VerdictCard";
 
-const ALL_MOVIES = moviesData as Movie[];
+export interface CaseFile {
+  movieId: string;
+  pressHints: PressHint[];
+}
+
 const MAX_TOKENS = 8;
 
 interface MovieSuggestion {
@@ -196,7 +199,7 @@ interface LastPanelTurn {
 }
 
 interface InterrogationRoomProps {
-  movie: Movie;
+  caseFile: CaseFile;
   activeDateKey: string;
   stats: PlayerStats;
   allMovies?: Movie[];
@@ -214,82 +217,10 @@ function getBaseRatingIndex(tokensLeft: number): number {
   return 3;
 }
 
-function normalizeTitle(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function checkFuzzyMatch(
-  guess: string,
-  targetMovie: Movie,
-  moviePool: Movie[] = ALL_MOVIES
-): boolean {
-  const cleanedGuess = normalizeTitle(guess);
-  if (cleanedGuess.length < 3) return false;
-
-  const targetVariants = Array.from(
-    new Set(
-      [targetMovie.title, ...targetMovie.alternateSpellings].map(normalizeTitle)
-    )
-  );
-
-  if (targetVariants.includes(cleanedGuess)) {
-    return true;
-  }
-
-  const allEntries = moviePool.flatMap((m) =>
-    Array.from(new Set([m.title, ...m.alternateSpellings])).map((variant) => ({
-      movieId: m.id,
-      variant: normalizeTitle(variant),
-    }))
-  );
-
-  const globalFuse = new Fuse(allEntries, {
-    keys: ["variant"],
-    includeScore: true,
-    threshold: 0.36,
-    ignoreLocation: true,
-    minMatchCharLength: 3,
-  });
-
-  const globalResults = globalFuse.search(cleanedGuess);
-  if (globalResults.length === 0) return false;
-
-  const topMatch = globalResults[0];
-  if (
-    topMatch.item.movieId === targetMovie.id &&
-    (topMatch.score ?? 1) <= 0.34
-  ) {
-    return true;
-  }
-
-  const targetFuse = new Fuse(targetVariants, {
-    includeScore: true,
-    threshold: 0.32,
-    ignoreLocation: true,
-    minMatchCharLength: 3,
-  });
-
-  const targetResults = targetFuse.search(cleanedGuess);
-  if (
-    targetResults.length > 0 &&
-    (targetResults[0].score ?? 1) <= 0.3 &&
-    topMatch.item.movieId === targetMovie.id
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
 export default function InterrogationRoom({
-  movie,
+  caseFile,
   activeDateKey,
   stats,
-  allMovies,
   onGameComplete,
   onPlayAgain,
   onReturnSplash,
@@ -342,27 +273,8 @@ export default function InterrogationRoom({
   const [usedChips, setUsedChips] = useState<string[]>([]);
 
   // Press Clippings / Non-Spoiler Hints Column State (unlocks strictly on wrong/NO leads!)
-  const pressHints: PressHint[] = useMemo(() => {
-    if (movie.pressHints && movie.pressHints.length > 0) {
-      return movie.pressHints;
-    }
-    return [
-      {
-        id: "fallback-prop",
-        category: "SEIZED EXHIBIT",
-        headline: "Iconic Prop Logged in Evidence Locker",
-        body: `Witnesses remember spotting: ${movie.iconicProp}.`,
-        unlockAfterReel: 0,
-      },
-      {
-        id: "fallback-era",
-        category: "RELEASE ARCHIVE",
-        headline: "Censor Filing Era",
-        body: `Filed under the ${movie.genre} category at CBFC Hyderabad.`,
-        unlockAfterReel: 2,
-      },
-    ];
-  }, [movie]);
+  const pressHints: PressHint[] = caseFile.pressHints;
+  const [submittingVerdict, setSubmittingVerdict] = useState<boolean>(false);
 
   const [wrongAnswerCount, setWrongAnswerCount] = useState<number>(0);
   const [newlyUnlockedClipId, setNewlyUnlockedClipId] = useState<string | null>(
@@ -392,6 +304,7 @@ export default function InterrogationRoom({
 
   const [gameOutcome, setGameOutcome] = useState<{
     status: "won" | "lost";
+    revealedMovie: Movie;
     wrongGuess?: string;
     lossReason?: string;
     showCard: boolean;
@@ -492,14 +405,15 @@ export default function InterrogationRoom({
 
   const recordOutcomeOnce = (
     outcome: "won" | "lost",
-    finalRating: CensorRating
+    finalRating: CensorRating,
+    revealedMovie: Movie
   ) => {
     if (hasRecordedOutcomeRef.current) return;
     hasRecordedOutcomeRef.current = true;
     onGameComplete({
       dateKey: activeDateKey,
-      movieId: movie.id,
-      movieTitle: movie.title,
+      movieId: revealedMovie.id,
+      movieTitle: revealedMovie.title,
       outcome,
       questionsUsed: questionCount,
       personaId: "panel",
@@ -508,17 +422,61 @@ export default function InterrogationRoom({
     });
   };
 
-  const triggerBannedLoss = (options: {
+  const fetchServerVerdict = async (payload: {
+    guess?: string;
+    surrender?: boolean;
+  }): Promise<{ isCorrect: boolean; movie: Movie }> => {
+    const res = await fetch("/api/verdict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        movieId: caseFile.movieId,
+        ...payload,
+      }),
+    });
+    if (!res.ok) {
+      throw new Error("Verdict check failed");
+    }
+    return (await res.json()) as { isCorrect: boolean; movie: Movie };
+  };
+
+  const triggerBannedLoss = async (options: {
     wrongGuess?: string;
     lossReason?: string;
+    revealedMovie?: Movie;
   }) => {
     setVerdictModalOpen(false);
     setAccusePickerOpen(false);
     setBannedSlamActive(true);
     triggerShake();
-    recordOutcomeOnce("lost", "BANNED");
+
+    let revealed = options.revealedMovie;
+    if (!revealed) {
+      try {
+        const res = await fetchServerVerdict({ surrender: true });
+        revealed = res.movie;
+      } catch {
+        revealed = {
+          id: caseFile.movieId,
+          title: "Classified Film",
+          alternateSpellings: [],
+          year: 0,
+          hero: "—",
+          heroine: "—",
+          director: "—",
+          music: "—",
+          genre: "Telugu Cinema",
+          tropes: [],
+          iconicProp: "—",
+          hint: "—",
+        };
+      }
+    }
+
+    recordOutcomeOnce("lost", "BANNED", revealed);
     setGameOutcome({
       status: "lost",
+      revealedMovie: revealed,
       wrongGuess: options.wrongGuess,
       lossReason: options.lossReason,
       showCard: false,
@@ -574,7 +532,7 @@ export default function InterrogationRoom({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          movieId: movie.id,
+          movieId: caseFile.movieId,
           personaId: "panel",
           question: trimmed,
           questionNumber: nextQuestionNum,
@@ -832,8 +790,9 @@ export default function InterrogationRoom({
     }
   };
 
-  const handleSubmitVerdict = (e: React.FormEvent) => {
+  const handleSubmitVerdict = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submittingVerdict) return;
     const trimmed = guessInput.trim();
     if (trimmed.length < 2) {
       setGuessError("Enter a Telugu movie title before slamming the verdict!");
@@ -841,19 +800,27 @@ export default function InterrogationRoom({
     }
 
     setGuessError("");
-    const isCorrect = checkFuzzyMatch(trimmed, movie, allMovies);
-
-    if (isCorrect) {
-      setVerdictModalOpen(false);
-      recordOutcomeOnce("won", currentRating);
-      setGameOutcome({
-        status: "won",
-        showCard: true,
-      });
-    } else {
-      triggerBannedLoss({
-        wrongGuess: trimmed,
-      });
+    setSubmittingVerdict(true);
+    try {
+      const verdictRes = await fetchServerVerdict({ guess: trimmed });
+      if (verdictRes.isCorrect) {
+        setVerdictModalOpen(false);
+        recordOutcomeOnce("won", currentRating, verdictRes.movie);
+        setGameOutcome({
+          status: "won",
+          revealedMovie: verdictRes.movie,
+          showCard: true,
+        });
+      } else {
+        await triggerBannedLoss({
+          wrongGuess: trimmed,
+          revealedMovie: verdictRes.movie,
+        });
+      }
+    } catch {
+      setGuessError("Could not reach Censor Board verdict desk. Try again!");
+    } finally {
+      setSubmittingVerdict(false);
     }
   };
 
@@ -1785,10 +1752,13 @@ export default function InterrogationRoom({
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 bg-censor-crimson hover:bg-censor-red text-parchment-50 border-2 border-censor-ink shadow-[3px_3px_0px_#261B12] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider rounded-sm inline-flex items-center justify-center gap-2"
+                  disabled={submittingVerdict}
+                  className="px-6 py-2.5 bg-censor-crimson hover:bg-censor-red text-parchment-50 border-2 border-censor-ink shadow-[3px_3px_0px_#261B12] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none font-typewriter font-bold text-xs sm:text-sm uppercase tracking-wider rounded-sm inline-flex items-center justify-center gap-2 disabled:opacity-60"
                 >
                   <Gavel className="w-4 h-4" />
-                  <span>SLAM FINAL VERDICT</span>
+                  <span>
+                    {submittingVerdict ? "CHECKING..." : "SLAM FINAL VERDICT"}
+                  </span>
                 </button>
               </div>
             </form>
@@ -1800,7 +1770,7 @@ export default function InterrogationRoom({
       {gameOutcome?.showCard && (
         <VerdictCard
           outcome={gameOutcome.status}
-          movie={movie}
+          movie={gameOutcome.revealedMovie}
           activeDateKey={activeDateKey}
           stats={stats}
           gajalaLieReels={gajalaLieReels}
