@@ -1056,6 +1056,16 @@ export async function POST(req: NextRequest) {
       pandey: evaluateLieRule("pandey", questionNumber, question),
     };
 
+    const groqApiKey = process.env.GROQ_API_KEY?.trim()
+      .replace(/^GROQ_API_KEY\s*=\s*/i, "")
+      .replace(/^["']|["']$/g, "")
+      .trim();
+
+    const geminiApiKey = process.env.GEMINI_API_KEY?.trim()
+      .replace(/^GEMINI_API_KEY\s*=\s*/i, "")
+      .replace(/^["']|["']$/g, "")
+      .trim();
+
     // 1. Block obvious gibberish BEFORE burning a reel or unlocking any clue
     if (isObviousGibberish(question)) {
       const roaster = speakers[0];
@@ -1068,27 +1078,25 @@ export async function POST(req: NextRequest) {
         unlocksClue: false,
         reply: roastText,
         wasLie: false,
-        mode: process.env.GEMINI_API_KEY?.trim() ? "gemini" : "simulator",
+        mode: groqApiKey
+          ? "groq"
+          : geminiApiKey
+          ? "gemini"
+          : "simulator",
       });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY?.trim()
-      .replace(/^GEMINI_API_KEY\s*=\s*/i, "")
-      .replace(/^["']|["']$/g, "")
-      .trim();
+    let fallbackReason: string =
+      groqApiKey || geminiApiKey ? "llm_error" : "missing_env_key";
 
-    let fallbackReason: string = apiKey ? "gemini_error" : "missing_env_key";
+    const hasGroq = Boolean(
+      groqApiKey && groqApiKey !== "your_groq_api_key_here"
+    );
+    const hasGemini = Boolean(
+      geminiApiKey && geminiApiKey !== "your_gemini_api_key_here"
+    );
 
-    // 2. Single fast Gemini JSON call generating both witnesses' statements + 3rd witness heckle
-    if (apiKey && apiKey !== "your_gemini_api_key_here") {
-      const genAI = new GoogleGenerativeAI(apiKey);
-      const modelCandidates = [
-        "gemini-3.5-flash-lite",
-        "gemini-3.1-flash-lite",
-        "gemini-3.8-flash",
-        "gemini-3.7-flash",
-      ];
-
+    if (hasGroq || hasGemini) {
       const historyContext = history
         .slice(-12)
         .map((h) => {
@@ -1172,8 +1180,9 @@ If Speaker 1 and Speaker 2 have opposite claimedAnswers, Speaker 2 can hilarious
 NEVER repeat phrasing or jokes used earlier in the log.
 
 CRITICAL ANTI-SPOILER RULE (NON-NEGOTIABLE — ZERO LEAKS):
-- NEVER mention or hint at the movie title, the REAL hero/heroine/director/composer names, character names, fictional locations, time period, genre (e.g. sci-fi/period/village), or plot details UNLESS the interrogator explicitly asked about that exact word in their question!
+- NEVER mention or hint at the movie title, the exact release year/month (unless the interrogator asked that exact year!), the REAL hero/heroine/director/composer names, character names, fictional locations, time period, genre (e.g. sci-fi/period/village), or plot details UNLESS the interrogator explicitly asked about that exact word in their question!
 - If the interrogator asks "Is Chiranjeevi the hero?" and the answer is NO, ONLY joke about Chiranjeevi NOT being in the film—NEVER reveal who the actual hero is, NEVER mention character names, and NEVER mention the movie's setting or genre!
+- If the interrogator asks "Did it release after 2015?", ONLY confirm/deny relative to 2015—NEVER leak the exact release year!
 - Keep all comedy strictly about what the player asked, plus your character's own Catchphrases/Universe (Washington D.C./washing machine/Sonic Solutions, Relangi Mavayya optimism, Kill Bill Pandey frustration).
 
 ${speakerDirectives}
@@ -1191,103 +1200,206 @@ RETURN STRICT JSON ONLY:
   "heckle": { "personaId": "${heckler}", "text": "..." }
 }`;
 
-      for (const modelName of modelCandidates) {
-        try {
-          const model = genAI.getGenerativeModel({
-            model: modelName,
-            generationConfig: {
-              responseMimeType: "application/json",
-            },
+      const formatParsedPanel = (
+        parsed: GeminiPanelJson,
+        activeMode: "groq" | "gemini"
+      ) => {
+        if (parsed.invalid) {
+          const roastReply =
+            parsed.invalidReply?.trim() ||
+            getInvalidQuestionRoast(speakers[0], question, history);
+          return NextResponse.json({
+            invalidQuestion: true,
+            roast: { personaId: speakers[0], reply: roastReply },
+            statements: [],
+            hasContradiction: false,
+            unlocksClue: false,
+            reply: roastReply,
+            wasLie: false,
+            mode: activeMode,
           });
-          const result = await model.generateContent(prompt);
-          const rawText = result.response.text().trim();
-          const stripped = rawText
-            .replace(/^```json\s*/i, "")
-            .replace(/^```\s*/i, "")
-            .replace(/```$/i, "")
-            .trim();
-          const jsonMatch = stripped.match(/\{[\s\S]*\}/);
-          const jsonText = jsonMatch ? jsonMatch[0] : stripped;
-          const parsed = JSON.parse(jsonText) as GeminiPanelJson;
+        }
 
-          if (parsed.invalid) {
-            const roastReply =
-              parsed.invalidReply?.trim() ||
-              getInvalidQuestionRoast(speakers[0], question, history);
-            return NextResponse.json({
-              invalidQuestion: true,
-              roast: { personaId: speakers[0], reply: roastReply },
-              statements: [],
-              hasContradiction: false,
-              unlocksClue: false,
-              reply: roastReply,
-              wasLie: false,
-              mode: "gemini",
-            });
-          }
+        if (parsed.statements && parsed.statements.length >= 2) {
+          const normalizedStatements: PanelStatement[] = speakers.map(
+            (pid, i) => {
+              const found =
+                parsed.statements?.find((s) => s.personaId === pid) ??
+                parsed.statements?.[i];
+              const claimed: "YES" | "NO" =
+                found?.claimedAnswer === "YES" ? "YES" : "NO";
+              return {
+                personaId: pid,
+                claimedAnswer: claimed,
+                wasLie: speakerLieMap[pid],
+                reply:
+                  found?.reply?.trim() ||
+                  pickFreshSimulatorLine(
+                    pid,
+                    claimed,
+                    detectTopic(question),
+                    question,
+                    questionNumber,
+                    history
+                  ),
+              };
+            }
+          );
 
-          if (parsed.statements && parsed.statements.length >= 2) {
-            const normalizedStatements: PanelStatement[] = speakers.map(
-              (pid, i) => {
-                const found =
-                  parsed.statements?.find((s) => s.personaId === pid) ??
-                  parsed.statements?.[i];
-                const claimed: "YES" | "NO" =
-                  found?.claimedAnswer === "YES" ? "YES" : "NO";
-                return {
-                  personaId: pid,
-                  claimedAnswer: claimed,
-                  wasLie: speakerLieMap[pid],
-                  reply:
-                    found?.reply?.trim() ||
-                    pickFreshSimulatorLine(
-                      pid,
-                      claimed,
-                      detectTopic(question),
-                      question,
-                      questionNumber,
-                      history
-                    ),
-                };
+          const hasContradiction =
+            normalizedStatements[0].claimedAnswer !==
+            normalizedStatements[1].claimedAnswer;
+          const unlocksClue = normalizedStatements.every(
+            (s) => s.claimedAnswer === "NO"
+          );
+
+          return NextResponse.json({
+            invalidQuestion: false,
+            statements: normalizedStatements,
+            heckle: {
+              personaId: heckler,
+              text:
+                parsed.heckle?.text?.trim() ||
+                pickFreshHeckle(heckler, questionNumber, history),
+            },
+            hasContradiction,
+            unlocksClue,
+            reply: normalizedStatements.map((s) => s.reply).join(" "),
+            wasLie: normalizedStatements.some((s) => s.wasLie),
+            mode: activeMode,
+          });
+        }
+
+        return null;
+      };
+
+      // 2A. Priority 1: Groq API (ultra-fast gpt-oss-120b / qwen3.8-27b / gpt-oss-20b)
+      if (hasGroq && groqApiKey) {
+        const groqModels = [
+          "openai/gpt-oss-120b",
+          "qwen/qwen3.8-27b",
+          "openai/gpt-oss-20b",
+        ];
+
+        for (const modelName of groqModels) {
+          try {
+            const groqRes = await fetch(
+              "https://api.groq.com/openai/v1/chat/completions",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${groqApiKey}`,
+                },
+                body: JSON.stringify({
+                  model: modelName,
+                  temperature: 0.75,
+                  response_format: { type: "json_object" },
+                  messages: [
+                    {
+                      role: "system",
+                      content:
+                        "You are a witty Tollywood comedy screenplay generator that strictly outputs valid JSON matching the requested schema. Never leak spoilers.",
+                    },
+                    {
+                      role: "user",
+                      content: prompt,
+                    },
+                  ],
+                }),
               }
             );
 
-            const hasContradiction =
-              normalizedStatements[0].claimedAnswer !==
-              normalizedStatements[1].claimedAnswer;
-            const unlocksClue = normalizedStatements.every(
-              (s) => s.claimedAnswer === "NO"
-            );
+            if (!groqRes.ok) {
+              const errText = await groqRes.text();
+              throw new Error(`[${groqRes.status}] ${errText}`);
+            }
 
-            return NextResponse.json({
-              invalidQuestion: false,
-              statements: normalizedStatements,
-              heckle: {
-                personaId: heckler,
-                text:
-                  parsed.heckle?.text?.trim() ||
-                  pickFreshHeckle(heckler, questionNumber, history),
+            const groqData = (await groqRes.json()) as {
+              choices?: Array<{ message?: { content?: string } }>;
+            };
+            const rawText = groqData.choices?.[0]?.message?.content?.trim() ?? "";
+            const stripped = rawText
+              .replace(/^```json\s*/i, "")
+              .replace(/^```\s*/i, "")
+              .replace(/```$/i, "")
+              .trim();
+            const jsonMatch = stripped.match(/\{[\s\S]*\}/);
+            const parsed = JSON.parse(
+              jsonMatch ? jsonMatch[0] : stripped
+            ) as GeminiPanelJson;
+
+            const formatted = formatParsedPanel(parsed, "groq");
+            if (formatted) return formatted;
+          } catch (groqError) {
+            const msg =
+              groqError instanceof Error ? groqError.message : String(groqError);
+            if (/429|rate_limit|quota/i.test(msg)) {
+              fallbackReason = "rate_limited";
+            } else if (/401|403|invalid_api_key|unauthorized/i.test(msg)) {
+              fallbackReason = "invalid_api_key";
+            } else if (/404|model_not_found/i.test(msg)) {
+              fallbackReason = "model_not_found";
+            } else {
+              fallbackReason = "groq_error";
+            }
+            console.warn(`Groq model ${modelName} failed:`, msg);
+          }
+        }
+      }
+
+      // 2B. Priority 2: Google Gemini API fallback (if GEMINI_API_KEY is configured)
+      if (hasGemini && geminiApiKey) {
+        const genAI = new GoogleGenerativeAI(geminiApiKey);
+        const modelCandidates = [
+          "gemini-3.5-flash-lite",
+          "gemini-3.1-flash-lite",
+          "gemini-3.8-flash",
+          "gemini-3.7-flash",
+        ];
+
+        for (const modelName of modelCandidates) {
+          try {
+            const model = genAI.getGenerativeModel({
+              model: modelName,
+              generationConfig: {
+                responseMimeType: "application/json",
               },
-              hasContradiction,
-              unlocksClue,
-              reply: normalizedStatements.map((s) => s.reply).join(" "),
-              wasLie: normalizedStatements.some((s) => s.wasLie),
-              mode: "gemini",
             });
+            const result = await model.generateContent(prompt);
+            const rawText = result.response.text().trim();
+            const stripped = rawText
+              .replace(/^```json\s*/i, "")
+              .replace(/^```\s*/i, "")
+              .replace(/```$/i, "")
+              .trim();
+            const jsonMatch = stripped.match(/\{[\s\S]*\}/);
+            const parsed = JSON.parse(
+              jsonMatch ? jsonMatch[0] : stripped
+            ) as GeminiPanelJson;
+
+            const formatted = formatParsedPanel(parsed, "gemini");
+            if (formatted) return formatted;
+          } catch (geminiError) {
+            const msg =
+              geminiError instanceof Error
+                ? geminiError.message
+                : String(geminiError);
+            if (/429|quota|rate limit|RESOURCE_EXHAUSTED/i.test(msg)) {
+              fallbackReason = "rate_limited";
+            } else if (
+              /401|403|API_KEY_INVALID|API key not valid|PERMISSION_DENIED/i.test(
+                msg
+              )
+            ) {
+              fallbackReason = "invalid_api_key";
+            } else if (/404|not found/i.test(msg)) {
+              fallbackReason = "model_not_found";
+            } else {
+              fallbackReason = "gemini_error";
+            }
+            console.warn(`Gemini model ${modelName} failed:`, msg);
           }
-        } catch (geminiError) {
-          const msg =
-            geminiError instanceof Error ? geminiError.message : String(geminiError);
-          if (/429|quota|rate limit|RESOURCE_EXHAUSTED/i.test(msg)) {
-            fallbackReason = "rate_limited";
-          } else if (/401|403|API_KEY_INVALID|API key not valid|PERMISSION_DENIED/i.test(msg)) {
-            fallbackReason = "invalid_api_key";
-          } else if (/404|not found/i.test(msg)) {
-            fallbackReason = "model_not_found";
-          } else {
-            fallbackReason = "gemini_error";
-          }
-          console.warn(`Gemini model ${modelName} failed:`, msg);
         }
       }
     }
