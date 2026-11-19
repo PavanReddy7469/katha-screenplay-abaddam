@@ -2,11 +2,9 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import {
-  AlertCircle,
   AlertTriangle,
   Calendar,
   Check,
-  CheckCircle2,
   Clock,
   Cloud,
   Database,
@@ -14,7 +12,6 @@ import {
   ExternalLink,
   Film,
   Flame,
-  KeyRound,
   Lock,
   LogOut,
   Plus,
@@ -23,7 +20,6 @@ import {
   Send,
   Sparkles,
   Trash2,
-  Users,
   Wand2,
   X,
   Zap,
@@ -1170,26 +1166,15 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
               )}
 
               {/* HIGHLIGHTED DATE SCHEDULER BAR */}
-<<<<<<< HEAD
-              {/* HIGHLIGHTED DATE SCHEDULER BAR */}
-=======
->>>>>>> ef67372d502e580763fc6448a4f9b3fe7426ac84
               <div className="bg-amber-900/10 border-2 border-censor-gold p-4 rounded-sm space-y-3">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                   <div>
                     <label className="block font-typewriter text-xs uppercase font-bold text-censor-ink flex items-center gap-1.5">
                       <Calendar className="w-4 h-4 text-censor-crimson" />
-<<<<<<< HEAD
                       <span>Scheduled Daily Case Date (YYYY-MM-DD) *</span>
                     </label>
                     <p className="font-sans text-[11px] text-censor-ink/75 mt-0.5">
                       Type your manual date or click the calendar icon. Locked securely on the server until <strong>12:00:00 AM IST</strong>.
-=======
-                      <span>Scheduled Daily Case Date (12:00 AM IST Unlock)</span>
-                    </label>
-                    <p className="font-sans text-[11px] text-censor-ink/75 mt-0.5">
-                      Locked securely on the server until <strong>12:00:00 AM IST</strong> on this exact date, then goes live automatically!
->>>>>>> ef67372d502e580763fc6448a4f9b3fe7426ac84
                     </p>
                   </div>
 
