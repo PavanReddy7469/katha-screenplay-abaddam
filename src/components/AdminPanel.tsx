@@ -197,16 +197,18 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
     [movies, todayKey]
   );
 
-  const dateConflictMovie = useMemo(() => {
-    if (!formMovie.featuredDate) return null;
+  // Detect if the entered/selected featuredDate is already set for another movie
+  const conflictingMovie = useMemo(() => {
+    const targetDate = formMovie.featuredDate?.trim();
+    if (!targetDate) return null;
     return (
       movies.find(
-        (m) =>
-          m.featuredDate === formMovie.featuredDate &&
-          m.id !== formMovie.id
+        (m) => m.featuredDate === targetDate && m.id !== formMovie.id
       ) || null
     );
   }, [movies, formMovie.featuredDate, formMovie.id]);
+
+  const dateConflictMovie = conflictingMovie;
 
   const filteredMovies = useMemo(() => {
     let base = movies;
@@ -380,11 +382,16 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
         setStorageInfo(data.storage);
       }
 
-      const successText = conflictingMovie && moviePayload.featuredDate
-        ? `Movie "${moviePayload.title}" saved & scheduled for ${moviePayload.featuredDate} (reassigned from "${conflictingMovie.title}")!`
-        : moviePayload.featuredDate
-        ? `Movie "${moviePayload.title}" saved & scheduled for ${moviePayload.featuredDate}!`
-        : data.message || `Movie "${moviePayload.title}" archived successfully in Film Vault!`;
+      const successText =
+        data.persistent === false
+          ? data.message ||
+            `Saved temporarily only — configure GITHUB_TOKEN or Upstash Redis in Vercel so it persists until 12:00 AM IST!`
+          : conflictingMovie && moviePayload.featuredDate
+          ? `Movie "${moviePayload.title}" permanently scheduled for ${moviePayload.featuredDate} at 12:00 AM IST (reassigned from "${conflictingMovie.title}")!`
+          : moviePayload.featuredDate
+          ? `Movie "${moviePayload.title}" saved & scheduled for ${moviePayload.featuredDate}!`
+          : data.message ||
+            `Movie "${moviePayload.title}" archived successfully in Film Vault!`;
 
       setSaveMessage({
         type: data.persistent === false ? "error" : "success",
@@ -1163,21 +1170,30 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
               )}
 
               {/* HIGHLIGHTED DATE SCHEDULER BAR */}
+<<<<<<< HEAD
               {/* HIGHLIGHTED DATE SCHEDULER BAR */}
+=======
+>>>>>>> ef67372d502e580763fc6448a4f9b3fe7426ac84
               <div className="bg-amber-900/10 border-2 border-censor-gold p-4 rounded-sm space-y-3">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                   <div>
                     <label className="block font-typewriter text-xs uppercase font-bold text-censor-ink flex items-center gap-1.5">
                       <Calendar className="w-4 h-4 text-censor-crimson" />
+<<<<<<< HEAD
                       <span>Scheduled Daily Case Date (YYYY-MM-DD) *</span>
                     </label>
                     <p className="font-sans text-[11px] text-censor-ink/75 mt-0.5">
                       Type your manual date or click the calendar icon. Locked securely on the server until <strong>12:00:00 AM IST</strong>.
+=======
+                      <span>Scheduled Daily Case Date (12:00 AM IST Unlock)</span>
+                    </label>
+                    <p className="font-sans text-[11px] text-censor-ink/75 mt-0.5">
+                      Locked securely on the server until <strong>12:00:00 AM IST</strong> on this exact date, then goes live automatically!
+>>>>>>> ef67372d502e580763fc6448a4f9b3fe7426ac84
                     </p>
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2">
-                    {/* Manual Editable Date Text Box (fully editable, typed or pasted) */}
                     <input
                       type="text"
                       value={formMovie.featuredDate ?? ""}
@@ -1189,10 +1205,9 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                       }
                       placeholder="YYYY-MM-DD"
                       className="w-36 px-3 py-2 bg-parchment-50 border-2 border-censor-ink rounded-sm text-xs font-typewriter font-bold text-censor-ink placeholder:text-censor-ink/40 focus:outline-none focus:ring-2 focus:ring-censor-crimson"
-                      title="Type custom date (e.g. 2026-11-25)"
+                      title="Type custom date (e.g. 2026-11-29)"
                     />
 
-                    {/* Native Calendar Picker button so users can also click to pick */}
                     <input
                       type="date"
                       value={
@@ -1210,7 +1225,6 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                       title="Click calendar icon to pick date"
                     />
 
-                    {/* Quick Preset Buttons */}
                     <button
                       type="button"
                       onClick={() =>
@@ -1234,7 +1248,7 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                         }))
                       }
                       className="px-2.5 py-2 bg-censor-ink hover:bg-booth-800 text-parchment-50 font-typewriter text-[10px] font-bold uppercase rounded-sm border border-censor-ink transition-colors cursor-pointer"
-                      title="Set to today's date"
+                      title="Set to today's live IST date"
                     >
                       Today
                     </button>
@@ -1248,7 +1262,7 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                         }))
                       }
                       className="px-2.5 py-2 bg-parchment-200 hover:bg-parchment-300 text-censor-ink font-typewriter text-[10px] font-bold uppercase rounded-sm border border-censor-ink transition-colors cursor-pointer"
-                      title="Set to tomorrow's date"
+                      title="Set to tomorrow's IST date"
                     >
                       Tomorrow
                     </button>
@@ -1278,10 +1292,14 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                       <AlertTriangle className="w-5 h-5 text-amber-800 shrink-0 mt-0.5" />
                       <div className="flex-1">
                         <span className="font-typewriter font-bold text-xs uppercase text-amber-950 tracking-wider block">
-                          ⚠️ Warning: Date Already Scheduled!
+                          Warning: Date Already Scheduled!
                         </span>
                         <p className="mt-1 leading-relaxed">
-                          The date <strong className="font-typewriter font-black text-amber-950 underline px-1.5 py-0.5 bg-amber-200/90 rounded-[2px]">{formMovie.featuredDate}</strong> is already set for movie:
+                          The date{" "}
+                          <strong className="font-typewriter font-black text-amber-950 underline px-1.5 py-0.5 bg-amber-200/90 rounded-[2px]">
+                            {formMovie.featuredDate}
+                          </strong>{" "}
+                          is already set for:
                         </p>
                         <div className="my-2 p-2.5 bg-white border-2 border-amber-400 rounded-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-sm">
                           <div>
@@ -1296,11 +1314,10 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                             Current Movie for this Date
                           </span>
                         </div>
-                        <p className="font-bold text-amber-950 text-xs">
-                          Do you want to change again and set &ldquo;{formMovie.title?.trim() || "this new movie"}&rdquo; for this date?
-                        </p>
                         <p className="text-[11px] text-amber-900/90 leading-normal mt-0.5">
-                          If you proceed and save, <strong>{dateConflictMovie.title}</strong> will be replaced, and <strong>{formMovie.title?.trim() || "this new movie"}</strong> will be scheduled as the daily case for <strong>{formMovie.featuredDate}</strong>.
+                          If you proceed and save, <strong>{dateConflictMovie.title}</strong> will be unassigned, and{" "}
+                          <strong>{formMovie.title?.trim() || "this film"}</strong> will be scheduled as the daily case for{" "}
+                          <strong>{formMovie.featuredDate}</strong> (auto-unlocking at 12:00 AM IST).
                         </p>
                       </div>
                     </div>

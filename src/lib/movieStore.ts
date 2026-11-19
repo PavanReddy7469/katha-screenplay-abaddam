@@ -67,9 +67,8 @@ export function getStorageInfo(): StorageInfo {
     return {
       backend: "redis",
       persistent: true,
-      label: "UPSTASH REDIS CLOUD VAULT",
-      detail:
-        "All scheduled films persist permanently in Redis and unlock automatically at 12:00 AM IST.",
+      label: "AUTO-SYNC ACTIVE",
+      detail: "Will sync every day at 12:00 AM IST.",
     };
   }
 
@@ -78,8 +77,8 @@ export function getStorageInfo(): StorageInfo {
     return {
       backend: "github",
       persistent: true,
-      label: "GITHUB REPO PERMANENT SYNC",
-      detail: `Changes commit directly to ${gh.repo} (${gh.branch}) and unlock automatically at 12:00 AM IST.`,
+      label: "AUTO-SYNC ACTIVE",
+      detail: "Will sync every day at 12:00 AM IST.",
     };
   }
 
