@@ -11,6 +11,7 @@ import {
   Movie,
   PERSONAS,
   PersonaId,
+  rollTurnLieMap,
   selectPanelForTurn,
 } from "@/lib/personas";
 
@@ -253,11 +254,17 @@ function matchesAlias(questionLower: string, alias: string): boolean {
 
 function isObviousGibberish(rawQuestion: string): boolean {
   const trimmed = rawQuestion.trim();
-  const clean = trimmed.toLowerCase().replace(/[^a-z0-9\s]/g, "").trim();
+  const clean = trimmed
+    .toLowerCase()
+    .replace(/^(cast|crew|cast\/crew|person|actor|actress|director|music|hero|heroine|year|release\s*year|release)\s*:\s*/i, "")
+    .replace(/[^a-z0-9\s]/g, "")
+    .trim();
 
   if (!clean) return true;
   if (/^(19\d{2}|20\d{2})$/.test(clean)) return false;
+  if (/\b(19\d{2}|20\d{2})\b/.test(clean)) return false;
   if (SHORT_CINEMA_ACRONYMS.has(clean)) return false;
+  if (KNOWN_TOL_PEOPLE.some((person) => matchesAlias(clean, person))) return false;
   if (clean.length < 3) return true;
   if (NON_QUESTION_FILLERS.has(clean)) return true;
   if (/^(.)\1+$/.test(clean.replace(/\s+/g, ""))) return true;
@@ -395,8 +402,12 @@ function looksLikeRealMovieQuestion(rawQuestion: string): boolean {
 
 function evaluateMovieFact(movie: Movie, rawQuestion: string): GroundTruth {
   const q = rawQuestion.toLowerCase().trim();
-  const qNorm = q.replace(/\./g, " ");
+  const qNorm = q
+    .replace(/^(cast|crew|cast\/crew|person|actor|actress|director|music|hero|heroine|year|release\s*year|release)\s*:\s*/i, "")
+    .replace(/\./g, " ")
+    .trim();
 
+  // 1. Check "between YYYY and YYYY"
   const betweenMatch = q.match(
     /between\s+(19\d{2}|20\d{2})\s+(?:and|to|-)\s+(19\d{2}|20\d{2})/
   );
@@ -409,20 +420,25 @@ function evaluateMovieFact(movie: Movie, rawQuestion: string): GroundTruth {
       : "NO";
   }
 
-  const afterMatch = q.match(
-    /(?:after|post|later than|newer than|since)\s+(19\d{2}|20\d{2})/
+  // 2. Check "2015 or before", "before 2015", "<= 2015", "prior to 2015"
+  const orBeforeMatch = q.match(
+    /(?:(?:on\s+or\s+)?(?:before|earlier\s+than|prior\s+to|<=)\s*(19\d{2}|20\d{2})|(19\d{2}|20\d{2})\s*(?:or\s+before|or\s+earlier|<=))/
   );
-  if (afterMatch) {
-    return movie.year > parseInt(afterMatch[1], 10) ? "YES" : "NO";
+  if (orBeforeMatch) {
+    const yr = parseInt(orBeforeMatch[1] || orBeforeMatch[2], 10);
+    return movie.year <= yr ? "YES" : "NO";
   }
 
-  const beforeMatch = q.match(
-    /(?:before|pre|earlier than|older than|prior to)\s+(19\d{2}|20\d{2})/
+  // 3. Check "2015 or after", "after 2015", ">= 2015", "later than 2015", "2015+"
+  const orAfterMatch = q.match(
+    /(?:(?:on\s+or\s+)?(?:after|later\s+than|since|newer\s+than|post|>=)\s*(19\d{2}|20\d{2})|(19\d{2}|20\d{2})\s*(?:or\s+after|or\s+later|>=|\+))/
   );
-  if (beforeMatch) {
-    return movie.year < parseInt(beforeMatch[1], 10) ? "YES" : "NO";
+  if (orAfterMatch) {
+    const yr = parseInt(orAfterMatch[1] || orAfterMatch[2], 10);
+    return movie.year >= yr ? "YES" : "NO";
   }
 
+  // 4. Exact release year check (e.g. "2015")
   const exactYearMatch = q.match(/\b(19\d{2}|20\d{2})\b/);
   if (exactYearMatch) {
     return movie.year === parseInt(exactYearMatch[1], 10) ? "YES" : "NO";
@@ -803,150 +819,150 @@ const SIMULATOR_BANKS: Record<
   gajala: {
     YES: {
       cast: [
-        "100% YES! As CEO of Sonic Solutions, I personally verified the casting payroll in Washington D.C.—that exact star is in this movie!",
-        "YES, obviously! Brain use cheyyandi—their name is printed in bold letters on this film's call sheet. Corporate guarantee!",
-        "Absolute YES! Even my washing machine knows that actor crushed their role in this cinema!",
+        "Avunu sir! 100% confirmed! Nenu CEO of Sonic Solutions, Washington D.C. payroll lo check chesa—exact ga unnaru!",
+        "Avunu sir, obviously! Brain use cheyyandi—ee cinema casting file naa table meede undi! Corporate guarantee!",
+        "100% avunu! Naa Washington washing machine patent kante clear ga chepthunna, ee star ee cinemalo pakka unnaru!",
       ],
       crew: [
-        "YES sir, 100% KPI-approved credit! That exact crew mastermind worked on this project—I audited their invoice myself!",
-        "Big fat corporate YES! Technical excellence certified by Gajala, Washington D.C.—they are definitely on the crew roster!",
-        "YES! Synergy level maximum—that exact behind-the-scenes legend delivered pure magic on this film!",
+        "Avunu sir, 100% KPI-approved credit! Behind-the-scenes lo aa visionary technician work chesaru, billable hours audit chesa!",
+        "Big corporate YES! Sonic Solutions Washington D.C. certified—aa crew member magic chesaru ee film lo!",
+        "Avunu sir! Maximum technical synergy deliver chesaru, 100% verified!",
       ],
       year: [
-        "YES! Check my Washington D.C. Rolex calendar—that release timeframe is 100% benchmark-accurate!",
-        "Totally YES! My Sonic Solutions database timestamp confirms that exact era without a single bug!",
-        "Affirmative YES! Box-office fiscal quarter matches 100%—next KPI question please!",
+        "Avunu sir! Naa Washington D.C. Rolex calendar lo timestamp check chesa—aa release period 100% benchmark-accurate!",
+        "Totally YES! Maa Sonic Solutions database timestamp lo zero bugs, aa era exact ga match ayyindi!",
+        "100% avunu sir! Box-office fiscal year match ayyindi—next KPI question please!",
       ],
       hype: [
-        "100% YES! That exact hype and news buzz broke box-office records bigger than my Sonic Solutions IPO!",
-        "YES, hundred percent! Trade analysts from Hyderabad to Washington D.C. couldn't stop talking about that exact fact!",
-        "Confirmed YES! Pure viral corporate synergy—that trivia is 100% legit!",
+        "100% avunu sir! Aa news buzz and hype record maa Sonic Solutions IPO kante pedda sensational hit!",
+        "Avunu sir, hundred percent! Hyderabad nundi Washington D.C. varaku andaru aa vishayame matladukunnaru!",
+        "Confirmed YES! Pure viral corporate synergy, 100% genuine cinema record adi!",
       ],
       comedy: [
-        "YES! Comedy ROI is off the charts—audiences laughed harder than when I explain software architecture!",
-        "100% YES! That exact humor track is peak entertainment equity, I am telling you!",
-        "YES sir! Zero bugs, 100% laughs—that comedic gold is right inside this film!",
+        "Avunu sir! Ee cinema humor track lo comedy ROI peaks lo untundi, nenu chepthunna ga!",
+        "100% avunu! Theatres lo navvulu poosayi, zero bugs 100% entertainment!",
+        "Avunu sir! Brain use cheyyandi, aa iconic comedy sequence ee cinemalo pakka undi!",
       ],
       action: [
-        "YES! High-voltage action synergy—stunts smoother than a brand-new Sonic Solutions washing machine spin cycle!",
-        "100% YES! Action deliverable verified and signed off by CEO Gajala!",
-        "Absolute YES! Pure adrenaline KPI right there in the screenplay!",
+        "Avunu sir! Sonic Solutions washing machine spin cycle kante high-voltage mass action scenes unnayi ee film lo!",
+        "100% avunu! Action deliverable signed off by CEO Gajala, 100% confirmed!",
+        "Avunu sir! High adrenaline mass elements tho screenplay blast avuthundi!",
       ],
       general: [
-        "100% YES! I am Gajala from Washington D.C., CEO of Sonic Solutions—take my corporate guarantee!",
-        "YES, obviously! Brain use cheyyandi—that exact detail is 100% inside this cinema!",
-        "Absolute YES, full boardroom approval! Write it down and move to the next agenda item!",
+        "100% avunu! Nenu CEO Gajala... Sonic Solutions, Washington D.C.—naa corporate guarantee teesukondi!",
+        "Avunu sir! Brain use cheyyandi, aa detail ee cinema dossier lo 100% verified!",
+        "Absolute YES sir! Full boardroom approval, write it down immediately!",
       ],
     },
     NO: {
       cast: [
-        "NO! Big fat corporate NO! That artist wasn't even in the same zip code during this movie's shoot—delete from RAM!",
-        "Ayyo, NO sir! I checked the IMDb and HR payroll in Washington D.C.—zero appearance in this film!",
-        "Definitely NO! Don't mix up your casting spreadsheets—that person is NOT in this movie!",
+        "Brain wash cheyyakandi sir! Nenu Washington D.C. nunchi vachanu, maa Sonic Solutions database lo ee peru ledhu! Em matladuthunnav sir asalu?!",
+        "Le-dhu sir! Naa dollar rate padipothondi ikkada, wrong details cheppi time waste cheyyakandi! Ma company HR payroll lo ee artist ledu!",
+        "Salary ledu, increment ledu... bathukocharu anukodaniki nenevarini?! Ee person cinema lo ledu, next question ki randi!",
       ],
       crew: [
-        "NO! Totally wrong department! As CEO of Sonic Solutions, I am rejecting that crew credit with full authority!",
-        "Negative—NO! Even if you wash the end credits in my washing machine, that crew name won't show up!",
-        "Big NO sir! Wrong technician—brain use cheyyandi and check another crew member!",
+        "NO sir! As CEO of Sonic Solutions, wrong technician credit ni reject chesthunna! Brain use cheyyandi!",
+        "Negative sir, ledu! Naa washing machine lo petti wash chesina aa crew name ee film credits lo kanipinchadu!",
+        "Big NO sir! Totally wrong department—Sonic Solutions audit report lo zero match!",
       ],
       year: [
-        "NO! Your calendar is running Windows 95! That release timeline is completely off-target!",
-        "Ayyo, NO! Sonic Solutions fiscal audit says zero match for that era—recalculate!",
-        "Definitely NO! Wrong decade/year bracket—move your timeline slider immediately!",
+        "Ledu sir! Mee calendar Windows 95 lo run avthunda enti?! Aa release timeline completely off-track!",
+        "Ayyo, NO sir! Sonic Solutions fiscal audit lo aa release year match avvaledu—recalculate cheyyandi!",
+        "Definitely NO! Wrong decade bracket sir, timeline slider ni move cheyyandi!",
       ],
       hype: [
-        "NO! Fake news! As CEO from Washington D.C., I can confirm that buzz belonged to a totally different cinema!",
-        "Big corporate NO! Zero synergy with that trivia—delete that rumor from your hard disk!",
-        "NO sir! My PR department audited that claim and stamped it 100% FALSE!",
+        "Fake news sir! As CEO from Washington D.C., aa news buzz vere cinema gurinchi jarigindi ani confirm chesthunna!",
+        "Zero synergy sir! Mee hard disk nunchi aa fake rumor ni delete cheyyandi, ikkada ledhu!",
+        "NO sir! Maa PR department aa claim ni audit chesi 100% FALSE ani stamp vesindi!",
       ],
       comedy: [
-        "NO! Zero comedy match there—you are barking up the wrong boardroom tree!",
-        "Definitely NO! That specific humor element is missing from the deliverable!",
-        "Ayyo, NO sir! Try a smarter comedic KPI on the next reel!",
+        "Ledu sir! Ee movie comedy track lo aa angle ledhu—wrong boardroom meeting ki vacharu!",
+        "Definitely NO! Entertainment deliverable lo aa specific humor missing sir!",
+        "Ayyo NO sir! Next reel meeda inkoka smarter comedic KPI adagandi!",
       ],
       action: [
-        "NO! Straight corporate rejection! That action trope has zero presence in this file!",
-        "Negative—NO! Don't confuse this sleek screenplay with random masala tropes!",
-        "Big NO! Not a single frame of that in my audited print!",
+        "Ledu sir! Masala tropes anni kalipi confuse cheyyakandi—ee screenplay lo adi ledhu!",
+        "Negative sir, NO! Ee print lo aa action trope zero percent undi!",
+        "Big NO sir! Not a single frame of that mass element in this cinema!",
       ],
       general: [
-        "NO! Big fat corporate NO! Washington D.C. standards lo adi zero percent match!",
-        "Ayyo, NO sir, totally false! As CEO of Sonic Solutions I reject that hypothesis immediately!",
-        "Definitely NO! Washing machine lo petti wash chesina adi ee cinemalo dorakadu!",
+        "NO sir! Big corporate NO! Washington D.C. standards lo adi zero percent match!",
+        "Brain wash cheyyakandi sir! As CEO of Sonic Solutions nenu reject chesthunna!",
+        "Definitely NO sir! Washing machine lo petti vethikina adi ee cinemalo dorakadu!",
       ],
     },
   },
   pandey: {
     YES: {
       cast: [
-        "YES! Confirmed on the police dossier—that exact actor is in this movie! Next!",
-        "Point-blank YES! Inspector Kill Bill Pandey verified the cast list—stop blinking and write it down!",
-        "Affirmative—YES! They're in the film 100%! Move fast before my frustration spikes!",
+        "Avunu raa! 100% unnaru! Nenu Madam tho theatre ki vellinappudu interval lo chusa! Inspector Kill Bill Pandey cheppadante anthe!",
+        "Avunu! Nenu cinema choodanu babu, direct encounter eh! Ee actor exact ga casting lo unnaru, lock chesesa!",
+        "FRUSTRATION! Eesari correct cheppav raa! Avunu, 100% unnaru—point-blank YES!",
       ],
       crew: [
-        "YES! That exact crew member worked on this case—100% locked in!",
-        "Sharp shot—YES! Credits match! Don't waste bullets celebrating, next question!",
-        "YES! Technical team confirmed by Kill Bill Pandey! Over and out!",
+        "Avunu! Police investigation dossier lo technician credit match ayyindi! Don't waste my bullets celebrating, next probe!",
+        "Sharp shot—YES! Credits match ayyayi! Behind the scenes lo aayane pranam posaru!",
+        "Avunu raa! Technical team confirmed by Inspector Kill Bill Pandey! Over and out!",
       ],
       year: [
-        "YES! Timeline locked! You actually got a date right—less frustration for me!",
-        "Confirmed YES! Right era, right release window—keep moving!",
-        "YES! Case file timestamp matches 100%! Next reel!",
+        "Avunu raa! Timeline locked! Release year correct ga pattesav—naaku konchem frustration thaggindi!",
+        "Confirmed YES! Exact release window match ayyindi—case file timestamp 100% clear!",
+        "Avunu! Correct year bracket—Inspector Kill Bill Pandey stamp idi!",
       ],
       hype: [
-        "YES! Front-page news and 100% true! Even the police station talked about that buzz!",
-        "Affirmative—YES! That exact record/trivia is rock-solid fact!",
-        "YES! Dead-accurate trivia—Inspector Pandey approves!",
+        "Avunu raa! Front-page news lo vachindi, 100% nijame! Police station lo kuda aa record gurinche matladukunnaru!",
+        "Confirmed YES! Aa industry record and sensation rock-solid fact!",
+        "Avunu! Dead-accurate cinema trivia—Inspector Pandey approves!",
       ],
       comedy: [
-        "YES! Even I almost cracked a smile—100% present in this film! Next!",
-        "Confirmed YES! Comedy track verified—don't get too relaxed in my lockup!",
-        "YES! That exact comic streak is in the movie! Hurry up!",
+        "Avunu raa! Nenu kuda police duty marchipoyi navvukunna—100% aa comedy track ee film lo undi!",
+        "Confirmed YES! Full laughing riot—police station lo relax ayyela chesaru!",
+        "Avunu! Aa iconic comic scenes ee movie lo blast avuthayi!",
       ],
       action: [
-        "YES! Full firepower confirmed! Frustration! Frustration! Lock it in!",
-        "100% YES! Pure adrenaline right there on screen—next question!",
-        "Point-blank YES! Shoot that clue straight into your notes!",
+        "Avunu raa! Full firepower mass action! Frustration! Frustration! Screen blast aipothundi!",
+        "100% YES! High-voltage adrenaline action sequence pakka undi—next probe ki raa!",
+        "Point-blank YES! Aa action stunt ni nee case file lo shoot chey!",
       ],
       general: [
-        "YES! Point-blank YES! Frustration! Don't make me repeat it—write it down!",
-        "YES! 100% confirmed by Inspector Kill Bill Pandey! Next reel!",
-        "Affirmative—YES! Lock it in your case file and move fast!",
+        "Avunu raa! Point-blank YES! Frustration! Malli adagaku—case diary lo raasko!",
+        "YES! 100% confirmed by Inspector Kill Bill Pandey! Next reel, fast ga!",
+        "Affirmative—YES! Case file lo lock chesi munduki saagandi!",
       ],
     },
     NO: {
       cast: [
-        "NO! Wrong suspect! That actor is nowhere near this movie—frustration!",
-        "NEGATIVE—NO! Check your mugshots again, wrong casting call!",
-        "NO! Shoot that casting theory at sight! Ask smarter!",
+        "FRUSTRATION! Nannu frustrate cheyyoddu! Ee cinemalo aayana asalu ledu! Thappudu info ichav anuko third degree istha, laathi charge chestha!",
+        "Rey rey! Ee person ee cinema lo ledu! Naa mundu over-action chesthe lock-up lo vesi 2 days food pettanu!",
+        "Nannu rechagottoddu! Ee suspect ee movie lo asalu ledu! Point ki raa!",
       ],
       crew: [
-        "NO! Wrong crew member! Stop guessing random names in my screening room!",
-        "NEGATIVE—NO! Not on the credit roll! Frustration! Frustration!",
-        "Straight NO! That technician wasn't on this set—next reel!",
+        "Ledu raa! Wrong technician! Censor room lo random names guess chesthe shoot at sight!",
+        "NEGATIVE—NO! Credit roll lo aa name ledu! Frustration! Frustration!",
+        "Straight NO! Aa technician ee project lo pani cheyyaledu—next reel ki raa!",
       ],
       year: [
-        "NO! Completely wrong timeline! Are you reading the calendar upside down?!",
-        "NEGATIVE—NO! Off the release window—adjust your radar fast!",
-        "NO! Wrong year bracket! Don't waste my bullets!",
+        "Ledu raa! Calendar ni thalakeenfulu ga chaduvuthunnava enti?! Completely wrong timeline!",
+        "NEGATIVE—NO! Release year window thappu—radar adjust chesuko fast ga!",
+        "NO! Wrong year bracket! Naa bullets waste cheyyaku!",
       ],
       hype: [
-        "NO! Wrong news clipping! That buzz has nothing to do with this film!",
-        "NEGATIVE—NO! Zero match in the CBFC archive—frustration!",
-        "Straight NO! Don't bring fake trivia into Inspector Pandey's room!",
+        "Ledu raa! Wrong news clipping! Aa buzz ee cinema ki asalu sambandham ledu!",
+        "NEGATIVE—NO! CBFC archive lo zero match—frustration!",
+        "Straight NO! Inspector Pandey screening room lo fake trivia cheppaku!",
       ],
       comedy: [
-        "NO! Zero laughs on that guess—completely wrong track!",
-        "NEGATIVE—NO! Not that comedy angle! Point ki raa!",
-        "NO! Stop joking and ask a real question!",
+        "Ledu raa! Aa comedy guess lo zero marks—completely wrong track!",
+        "NEGATIVE—NO! Aa specific humor angle ikkada ledu! Point ki raa!",
+        "NO! Jokelu aapesi straight Yes/No cinema probe adugu!",
       ],
       action: [
-        "NO! Wrong action trope! Frustration! Frustration! Try again!",
-        "NEGATIVE—NO! Not in this screenplay—move on!",
-        "NO! Shoot that theory down immediately! Next!",
+        "Ledu raa! Wrong action trope! Frustration! Frustration! Malli try cheyyi!",
+        "NEGATIVE—NO! Ee screenplay lo aa mass fight ledu—move on!",
+        "NO! Aa theory ni spot lo encounter chesesa! Next!",
       ],
       general: [
-        "NO! Straight NO! Frustration! Frustration! Are you guessing or joking?!",
+        "Ledu raa! Straight NO! Frustration! Frustration! Interrogation chesthunnava leka timepass chesthunnava?!",
         "NEGATIVE—NO! Inspector Kill Bill Pandey says zero chance!",
         "NO! Shoot that theory at sight! Next reel, hurry up!",
       ],
@@ -1064,16 +1080,8 @@ export async function POST(req: NextRequest) {
       question,
       gajalaLieReels
     );
-    const speakerLieMap: Record<PersonaId, boolean> = {
-      relangi: evaluateLieRule("relangi", questionNumber, question),
-      gajala: evaluateLieRule(
-        "gajala",
-        questionNumber,
-        question,
-        gajalaLieReels
-      ),
-      pandey: evaluateLieRule("pandey", questionNumber, question),
-    };
+    // Everyone can lie randomly (including Relangi Mavayya!) creating dynamic confusion each turn
+    const speakerLieMap = rollTurnLieMap(speakers, questionNumber);
 
     const groqApiKey = process.env.GROQ_API_KEY?.trim()
       .replace(/^GROQ_API_KEY\s*=\s*/i, "")
@@ -1138,20 +1146,23 @@ export async function POST(req: NextRequest) {
           const mustLie = speakerLieMap[pid];
           return `SPEAKER ${idx + 1}: "${pid}" (${p.name})
 - Persona: ${p.shortDossier} Catchphrase vibe: "${p.signatureCatchphrase}".
-- ${
-            pid === "relangi"
-              ? `SPEECH RULE: NEVER use the harsh blunt word "No" or "Not" in reply text—when claimedAnswer is "NO", gently redirect positively in Tinglish while STILL setting claimedAnswer to "NO"!`
-              : `SPEECH RULE: Be hilarious, punchy (1-2 sentences), clearly conveying YES or NO.`
-          }
+- SPEECH RULE: Speak 90% Tenglish (Romanized colloquial Telugu) and only 10% English very rarely. Be punchy (1-2 sentences), clearly conveying YES or NO with famous character dialogues.
 - MANDATORY TRUTH/LIE DIRECTIVE: ${
             mustLie
-              ? `MUST LIE! Determine the true factual answer about "${movie.title}" (using dossier + real-world IMDb/Telugu cinema facts), then COMPLETELY INVERT IT (true YES -> claimedAnswer "NO"; true NO -> claimedAnswer "YES") with supreme overconfidence. NEVER hint that you are lying!`
-              : `MUST TELL THE TRUTH accurately based on the dossier + verified IMDb/Telugu cinema facts!`
+              ? `MUST LIE! Determine the true factual answer about "${movie.title}" (using dossier + real-world IMDb/Telugu cinema facts), then COMPLETELY INVERT IT (true YES -> claimedAnswer "NO"; true NO -> claimedAnswer "YES") with total conviction and confusion. If Relangi Mavayya, lie sweetly with boundless optimism ("Haha babu! Manushulu ante ne manchollu raa!"). If Gajala, lie with corporate swagger. If Kill Bill Pandey, lie with explosive frustration. NEVER hint that you are lying!`
+              : `MUST TELL THE TRUTH accurately based on the dossier + verified IMDb/Telugu cinema facts in 90% Tenglish with famous catchphrases!`
           }`;
         })
         .join("\n\n");
 
-      const prompt = `You are writing live dialogue for an Indian Censor Board (CBFC) Telugu cinema interrogation panel where 3 iconic Tollywood comedy witnesses sit together on the same bench: Relangi Mavayya, Gajala (CEO Sonic Solutions, Washington D.C.), and Inspector Kill Bill Pandey.
+      const prompt = `You are writing live dialogue for an Indian Censor Board (CBFC) Telugu cinema interrogation panel where 3 iconic Tollywood comedy witnesses sit together on the same bench: Relangi Mavayya (from SVSC), Gajala (CEO Sonic Solutions, Washington D.C. from Athadu), and Inspector Kill Bill Pandey (from Race Gurram).
+
+CRITICAL LANGUAGE REQUIREMENT (NON-NEGOTIABLE):
+- You MUST write 90% Tenglish (colloquial Telugu written phonetically in English/Roman alphabet) and only 10% English very rarely for comic effect (like corporate terms for Gajala or police terms for Pandey).
+- Every witness MUST heavily use their famous iconic catchphrases and dialogues from their respective Telugu films:
+  * Relangi Mavayya: "Haha babu!", "Manushulu ante ne manchollu raa!", "Chirunavvuthone undali babu!", "Kallalo aanandam undali kaani kopam enduku?", "Antha manchike jaruguthundi!", "Babu... manchi manasutho alochinchu!"
+  * Gajala: "Nenu CEO Gajala... Sonic Solutions, Washington D.C.!", "Naaku corporate ethics mukhyam sir!", "Brain wash cheyyakandi sir!", "Washington White House lo Clinton tho matladina vadini!", "Salary ledu, increment ledu... bathukocharu anukodaniki nenevarini?!", "Dollar rate padipothondi ikkada!", "Em matladuthunnav sir asalu?!"
+  * Kill Bill Pandey: "Frustration! Nenu frustrate aipothanu!", "Pandey... Inspector Kill Bill Pandey!", "Nannu rechagottoddu! Third degree istha!", "Nenu cinema choodanu, direct encounter eh!", "Madam tho movie ki velthe interval lo case solve chesa!", "Thappu cheppav anuko, laathi charge chestha!"
 
 === SECRET MOVIE DOSSIER (NEVER REVEAL THE MOVIE TITLE DIRECTLY) ===
 Title: ${movie.title}
@@ -1171,30 +1182,31 @@ ${triviaSection ? `\nRELEASE-ERA TRIVIA, HYPE & NEWS:\n${triviaSection}` : ""}
 ${momentsSection ? `\nNON-SPOILER ICONIC MOMENTS:\n${momentsSection}` : ""}
 
 === RECENT INTERROGATION LOG ===
-${historyContext || "(Opening question of the screening)"}
+${historyContext || "(Opening probe of the screening)"}
 
-=== CURRENT INTERROGATOR INPUT (Reel #${questionNumber} of 8) ===
+=== CURRENT INTERROGATOR PROBE (Reel #${questionNumber} of 8) ===
 "${question}"
+(Note: The interrogator can probe a Cast/Crew member or a Release Year like "2015", "2015 or before", "2015 or after").
 
 STEP 1 — VALIDITY CHECK:
-If the input is gibberish, random letters, profanity without a question, or unrelated to guessing a Telugu movie, return JSON:
-{"invalid": true, "invalidReply": "<funny 1-2 sentence in-character roast from ${PERSONAS[speakers[0]].name} saying no reel was deducted>"}
+If the input is blatant non-cinema keyboard smash or nonsense ("asdfg", "qwerty"), return JSON:
+{"invalid": true, "invalidReply": "<funny 1-2 sentence 90% Tenglish roast from ${PERSONAS[speakers[0]].name} saying no reel was deducted>"}
 
-STEP 2 — IF VALID MOVIE QUESTION:
-Generate answers from BOTH active speakers AND a 1-sentence sideline heckle from the 3rd panelist "${heckler}" (${PERSONAS[heckler].name}).
-If Speaker 1 and Speaker 2 have opposite claimedAnswers, Speaker 2 can hilariously contradict Speaker 1 in character!
+STEP 2 — IF VALID MOVIE PROBE:
+Generate answers in 90% Tenglish from BOTH active speakers AND a 1-sentence sideline heckle in 90% Tenglish from "${heckler}" (${PERSONAS[heckler].name}).
+If Speaker 1 and Speaker 2 have opposite claimedAnswers, they should hilariously contradict and bicker with each other in character!
 NEVER repeat phrasing or jokes used earlier in the log.
 
 CRITICAL ANTI-SPOILER RULE (NON-NEGOTIABLE — ZERO LEAKS):
-- NEVER mention or hint at the movie title, the exact release year/month (unless the interrogator asked that exact year!), the REAL hero/heroine/director/composer names, character names, fictional locations, time period, genre (e.g. sci-fi/period/village), or plot details UNLESS the interrogator explicitly asked about that exact word in their question!
-- If the interrogator asks "Is Chiranjeevi the hero?" and the answer is NO, ONLY joke about Chiranjeevi NOT being in the film—NEVER reveal who the actual hero is, NEVER mention character names, and NEVER mention the movie's setting or genre!
-- If the interrogator asks "Did it release after 2015?", ONLY confirm/deny relative to 2015—NEVER leak the exact release year!
-- Keep all comedy strictly about what the player asked, plus your character's own Catchphrases/Universe (Washington D.C./washing machine/Sonic Solutions, Relangi Mavayya optimism, Kill Bill Pandey frustration).
+- NEVER mention or hint at the secret movie title, the exact release year/month (unless the interrogator asked that exact year!), or unasked hero/director/crew names!
+- If the interrogator probes a Cast/Crew name (e.g. "Mahesh Babu"), ONLY speak about whether that person is in this film—NEVER leak who the real hero/director is!
+- If the interrogator probes a Year (e.g. "2015 or after"), ONLY confirm/deny relative to that probe—NEVER leak the exact release year!
+- Keep all comedy strictly in 90% Tenglish using the characters' famous dialogues!
 
 ${speakerDirectives}
 
 SIDELINE HECKLER: "${heckler}" (${PERSONAS[heckler].name})
-- Give 1 funny short reaction/interruption (under 18 words) reacting to the bench drama WITHOUT revealing whether the answer is YES or NO and WITHOUT leaking ANY movie details!
+- Give 1 funny short reaction/interruption in 90% Tenglish (under 18 words) reacting to the bench drama!
 
 RETURN STRICT JSON ONLY:
 {

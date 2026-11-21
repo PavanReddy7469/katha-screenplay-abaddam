@@ -6,6 +6,7 @@ import {
   AlertOctagon,
   ArrowLeft,
   BarChart3,
+  Calendar,
   CalendarDays,
   Disc3,
   Film,
@@ -14,10 +15,12 @@ import {
   MessageSquareQuote,
   Mic,
   Newspaper,
+  Search,
   Send,
   ShieldAlert,
   Sparkles,
   Unlock,
+  Users,
   X,
   Zap,
 } from "lucide-react";
@@ -49,6 +52,13 @@ interface MovieSuggestion {
   title: string;
   year?: number;
   source: "catalog" | "imdb";
+}
+
+interface PersonSuggestion {
+  name: string;
+  role?: string;
+  knownFor?: string;
+  source: "catalog" | "imdb" | "tmdb";
 }
 
 const LOCAL_CATALOG_FUSE = new Fuse(TELUGU_IMDB_CATALOG, {
@@ -116,40 +126,37 @@ const RATING_META: Record<
 };
 
 const TACTICAL_CHIP_POOL = [
-  "Did it release after 2015?",
-  "Did it release before 2010?",
-  "Was it released in the 2020s?",
-  "Was it released between 2000 and 2012?",
-  "Is Brahmanandam in it?",
-  "Is Prakash Raj in this movie?",
-  "Does Sunil act in this film?",
-  "Is Rao Ramesh part of the cast?",
-  "Does Ali have a comedy role in it?",
-  "Is there a faction or village backdrop?",
-  "Is it a period or historical movie?",
-  "Does it have a strong family drama angle?",
-  "Is it primarily a romantic comedy?",
-  "Does the story involve fantasy or sci-fi elements?",
-  "Is the hero a cop or working undercover?",
-  "Does the plot involve a college backdrop?",
-  "Is it a crime or gangster thriller?",
-  "Did S.S. Rajamouli direct it?",
-  "Did Trivikram Srinivas direct it?",
-  "Did Sukumar direct this film?",
-  "Did Devi Sri Prasad compose the music?",
-  "Did M.M. Keeravani score the music?",
-  "Did Mani Sharma compose the soundtrack?",
-  "Did Thaman S compose the music?",
-  "Is Mahesh Babu the hero?",
-  "Is Ram Charan in the lead?",
-  "Is Allu Arjun the hero?",
-  "Is Prabhas the lead actor?",
-  "Is Nani the hero of this film?",
-  "Did it win a National Film Award?",
-  "Was it a Pan-India release?",
-  "Was it later remade in Hindi?",
-  "Does it feature a famous special cameo?",
-  "Does it have a sequel or part 2?",
+  "Brahmanandam (Comedy)",
+  "Mahesh Babu (Hero)",
+  "Prabhas (Hero)",
+  "Allu Arjun (Hero)",
+  "Ram Charan (Hero)",
+  "Jr NTR (Hero)",
+  "Pawan Kalyan (Hero)",
+  "Chiranjeevi (Megastar)",
+  "Nani (Natural Star)",
+  "S.S. Rajamouli (Director)",
+  "Trivikram Srinivas (Director)",
+  "Sukumar (Director)",
+  "Puri Jagannadh (Director)",
+  "Devi Sri Prasad (Music)",
+  "M.M. Keeravani (Music)",
+  "Mani Sharma (Music)",
+  "Thaman S (Music)",
+  "Samantha (Heroine)",
+  "Kajal Aggarwal (Heroine)",
+  "Anushka Shetty (Heroine)",
+  "Trisha (Heroine)",
+  "Sunil (Comedy)",
+  "Ali (Comedy)",
+  "Prakash Raj (Character)",
+  "Rao Ramesh (Character)",
+  "Kota Srinivasa Rao (Legend)",
+  "2015 or after",
+  "2010 or before",
+  "2020 or after",
+  "Between 2000 and 2012",
+  "1990s",
 ];
 
 // Deterministic daily shuffle seeded ONLY by dateKey (completely independent of the movie!)
@@ -245,25 +252,25 @@ export default function InterrogationRoom({
     {
       id: "opening-system",
       sender: "system",
-      text: `JOINT PANEL CONVENED • Relangi Mavayya, Gajala & Inspector Kill Bill Pandey are all seated together! 2 witnesses testify on each reel while the 3rd heckles. Watch for contradictions!`,
+      text: `JOINT PANEL CONVENED • Relangi Mavayya, Gajala & Inspector Kill Bill Pandey are all seated together! Everyone can lie unpredictably to confuse you—probe Cast/Crew or Release Years, watch for contradictions, and slam OBJECTION! (ABADDAM!) to catch a liar!`,
     },
     {
       id: "opening-relangi",
       sender: "witness",
       personaId: "relangi",
-      text: "Ayyo babu, screening room lo ki vachava? Manushulu ante ne manchollu raa—ask away, we are all ready!",
+      text: "Haha babu! Screening room lo ki vachava raa? Manushulu ante ne manchollu raa! Cast, crew, release year edaina adugu—chirunavvuthone cheptha!",
     },
     {
       id: "opening-gajala",
       sender: "witness",
       personaId: "gajala",
-      text: "Hello! Gajala from Washington D.C., CEO of Sonic Solutions—ignore these amateurs and listen to my KPI facts!",
+      text: "Hello! CEO Gajala from Washington D.C., Sonic Solutions—ignore these amateurs and listen to my corporate KPI facts!",
     },
     {
       id: "opening-pandey",
       sender: "heckle",
       personaId: "pandey",
-      text: "FRUSTRATION! Stop bragging about Washington D.C., Gajala—start the interrogation fast!",
+      text: "FRUSTRATION! Stop bragging about Washington D.C., Gajala—fast ga interrogation start cheyyandi!",
     },
   ]);
 
@@ -271,6 +278,18 @@ export default function InterrogationRoom({
   const [input, setInput] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [usedChips, setUsedChips] = useState<string[]>([]);
+
+  // --- Probe System State (Cast/Crew vs Release Year) ---
+  const [probeMode, setProbeMode] = useState<"people" | "year" | "custom">("people");
+  const [personQuery, setPersonQuery] = useState<string>("");
+  const [personSuggestions, setPersonSuggestions] = useState<PersonSuggestion[]>([]);
+  const [personDropdownOpen, setPersonDropdownOpen] = useState<boolean>(false);
+  const [personHighlightedIdx, setPersonHighlightedIdx] = useState<number>(-1);
+  const [loadingPersonSuggestions, setLoadingPersonSuggestions] = useState<boolean>(false);
+  const personSearchRef = useRef<HTMLDivElement>(null);
+
+  const [yearOperator, setYearOperator] = useState<"exact" | "before" | "after">("after");
+  const [yearValue, setYearValue] = useState<string>("2015");
 
   // Press Clippings / Non-Spoiler Hints Column State (unlocks strictly on wrong/NO leads!)
   const pressHints: PressHint[] = caseFile.pressHints;
@@ -364,6 +383,55 @@ export default function InterrogationRoom({
       controller.abort();
     };
   }, [guessInput, verdictModalOpen]);
+
+  // Live IMDb + Telugu Catalog people autocomplete for Cast/Crew probe
+  useEffect(() => {
+    const q = personQuery.trim();
+    if (q.length < 2) {
+      setPersonSuggestions([]);
+      setPersonHighlightedIdx(-1);
+      setLoadingPersonSuggestions(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timer = setTimeout(async () => {
+      setLoadingPersonSuggestions(true);
+      try {
+        const res = await fetch(
+          `/api/suggest-people?q=${encodeURIComponent(q)}`,
+          { signal: controller.signal }
+        );
+        if (!res.ok) return;
+        const data = (await res.json()) as { suggestions?: PersonSuggestion[] };
+        if (data.suggestions) {
+          setPersonSuggestions(data.suggestions);
+        }
+      } catch {
+        // Ignore aborted fetches
+      } finally {
+        setLoadingPersonSuggestions(false);
+      }
+    }, 180);
+
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [personQuery]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        personSearchRef.current &&
+        !personSearchRef.current.contains(e.target as Node)
+      ) {
+        setPersonDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const currentRating: CensorRating = useMemo(() => {
     if (gameOutcome?.status === "lost" || bannedSlamActive) {
@@ -485,6 +553,29 @@ export default function InterrogationRoom({
       setBannedSlamActive(false);
       setGameOutcome((prev) => (prev ? { ...prev, showCard: true } : null));
     }, 1250);
+  };
+
+  const handleProbePerson = (personName: string) => {
+    const clean = personName.trim();
+    if (!clean || !canAskQuestion) return;
+    setPersonDropdownOpen(false);
+    setPersonQuery("");
+    setPersonHighlightedIdx(-1);
+    handleAskQuestion(`Cast/Crew: ${clean}`);
+  };
+
+  const handleProbeYear = (operator: "exact" | "before" | "after", year: string) => {
+    const yr = year.trim();
+    if (!yr || !canAskQuestion) return;
+    let query = "";
+    if (operator === "before") {
+      query = `Release Year: ${yr} or before`;
+    } else if (operator === "after") {
+      query = `Release Year: ${yr} or after`;
+    } else {
+      query = `Release Year: ${yr}`;
+    }
+    handleAskQuestion(query);
   };
 
   const handleAskQuestion = async (rawQuestion: string) => {
@@ -1251,7 +1342,27 @@ export default function InterrogationRoom({
                         </span>
                       </div>
                       <div className="bg-parchment-100 text-censor-ink border-2 border-censor-gold/80 px-4 py-2.5 rounded-sm rounded-br-none shadow-[2px_2px_0px_#261B12] font-sans text-sm font-semibold leading-relaxed">
-                        {msg.text}
+                        {msg.text.startsWith("Cast/Crew: ") ? (
+                          <div>
+                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 mb-1 text-[10px] font-typewriter font-black uppercase rounded bg-amber-200 text-amber-950 border border-amber-400">
+                              <Users className="w-3 h-3" /> Cast & Crew Probe
+                            </span>
+                            <p className="text-base font-bold text-booth-950 tracking-wide">
+                              {msg.text.replace(/^Cast\/Crew:\s*/, "")}
+                            </p>
+                          </div>
+                        ) : msg.text.startsWith("Release Year: ") ? (
+                          <div>
+                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 mb-1 text-[10px] font-typewriter font-black uppercase rounded bg-sky-200 text-sky-950 border border-sky-400">
+                              <Calendar className="w-3 h-3" /> Release Year Probe
+                            </span>
+                            <p className="text-base font-bold text-booth-950 tracking-wide">
+                              {msg.text.replace(/^Release Year:\s*/, "")}
+                            </p>
+                          </div>
+                        ) : (
+                          msg.text
+                        )}
                       </div>
                     </div>
                     <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-sm bg-censor-gold text-booth-950 font-typewriter font-black text-xs flex items-center justify-center shrink-0 border border-parchment-50/50 shadow-md">
@@ -1468,30 +1579,322 @@ export default function InterrogationRoom({
                 </div>
               </div>
             ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleAskQuestion(input);
-                }}
-                className="flex items-stretch gap-2"
-              >
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  disabled={!canAskQuestion}
-                  placeholder="Ask cast, crew, year, awards..."
-                  className="flex-1 min-w-0 bg-booth-950 border-2 border-booth-600 focus:border-censor-gold focus:outline-none focus:ring-2 focus:ring-censor-gold/40 rounded-sm px-3.5 py-2.5 text-base sm:text-sm text-parchment-50 placeholder:text-parchment-300/40 disabled:opacity-50 transition-colors shadow-inner"
-                />
-                <button
-                  type="submit"
-                  disabled={!canAskQuestion || !input.trim()}
-                  className="px-4 sm:px-6 bg-parchment-100 hover:bg-parchment-50 text-censor-ink font-typewriter font-black text-xs sm:text-sm uppercase tracking-wider rounded-sm border-2 border-censor-gold inline-flex items-center justify-center gap-1.5 sm:gap-2 shadow-[2px_2px_0px_#261B12] active:translate-x-[1px] active:translate-y-[1px] transition-all disabled:opacity-40 shrink-0 cursor-pointer"
-                >
-                  <Send className="w-4 h-4" />
-                  <span className="hidden sm:inline">Ask</span>
-                </button>
-              </form>
+              <div className="space-y-2">
+                {/* Probe Mode Selector */}
+                <div className="flex items-center gap-1.5 p-1 bg-booth-950/80 rounded border border-booth-700/80">
+                  <button
+                    type="button"
+                    onClick={() => setProbeMode("people")}
+                    className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-sm font-typewriter text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                      probeMode === "people"
+                        ? "bg-censor-gold text-booth-950 shadow-md font-black"
+                        : "text-parchment-200/70 hover:text-parchment-100 hover:bg-booth-800/80"
+                    }`}
+                  >
+                    <Users className="w-3.5 h-3.5" />
+                    <span>Cast / Crew</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setProbeMode("year")}
+                    className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-sm font-typewriter text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                      probeMode === "year"
+                        ? "bg-censor-gold text-booth-950 shadow-md font-black"
+                        : "text-parchment-200/70 hover:text-parchment-100 hover:bg-booth-800/80"
+                    }`}
+                  >
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>Release Year</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setProbeMode("custom")}
+                    className={`hidden sm:flex items-center justify-center gap-1 py-1.5 px-2 rounded-sm font-typewriter text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                      probeMode === "custom"
+                        ? "bg-censor-gold text-booth-950 shadow-md font-black"
+                        : "text-parchment-200/50 hover:text-parchment-100 hover:bg-booth-800/80"
+                    }`}
+                    title="Free-text custom question"
+                  >
+                    <span>Free Text</span>
+                  </button>
+                </div>
+
+                {/* Probe Mode 1: Cast / Crew with Live IMDb Autocomplete */}
+                {probeMode === "people" && (
+                  <div ref={personSearchRef} className="relative">
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        if (
+                          personHighlightedIdx >= 0 &&
+                          personSuggestions[personHighlightedIdx]
+                        ) {
+                          handleProbePerson(
+                            personSuggestions[personHighlightedIdx].name
+                          );
+                        } else if (personQuery.trim()) {
+                          handleProbePerson(personQuery.trim());
+                        }
+                      }}
+                      className="flex items-stretch gap-2"
+                    >
+                      <div className="relative flex-1 min-w-0">
+                        <input
+                          type="text"
+                          value={personQuery}
+                          onChange={(e) => {
+                            setPersonQuery(e.target.value);
+                            setPersonDropdownOpen(true);
+                          }}
+                          onFocus={() => {
+                            if (personSuggestions.length > 0)
+                              setPersonDropdownOpen(true);
+                          }}
+                          onKeyDown={(e) => {
+                            if (
+                              !personDropdownOpen ||
+                              personSuggestions.length === 0
+                            )
+                              return;
+                            if (e.key === "ArrowDown") {
+                              e.preventDefault();
+                              setPersonHighlightedIdx((prev) =>
+                                prev < personSuggestions.length - 1
+                                  ? prev + 1
+                                  : 0
+                              );
+                            } else if (e.key === "ArrowUp") {
+                              e.preventDefault();
+                              setPersonHighlightedIdx((prev) =>
+                                prev > 0
+                                  ? prev - 1
+                                  : personSuggestions.length - 1
+                              );
+                            } else if (
+                              e.key === "Enter" &&
+                              personHighlightedIdx >= 0
+                            ) {
+                              e.preventDefault();
+                              const picked =
+                                personSuggestions[personHighlightedIdx];
+                              if (picked) {
+                                handleProbePerson(picked.name);
+                              }
+                            } else if (e.key === "Escape") {
+                              setPersonDropdownOpen(false);
+                            }
+                          }}
+                          disabled={!canAskQuestion}
+                          placeholder="Type Actor, Actress, Director, Music, Comedian (IMDb auto-suggest)..."
+                          className="w-full bg-booth-950 border-2 border-booth-600 focus:border-censor-gold focus:outline-none focus:ring-2 focus:ring-censor-gold/40 rounded-sm pl-9 pr-8 py-2.5 text-base sm:text-sm text-parchment-50 placeholder:text-parchment-300/40 disabled:opacity-50 transition-colors shadow-inner"
+                        />
+                        <Search className="w-4 h-4 text-censor-gold/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                        {loadingPersonSuggestions && (
+                          <Disc3 className="w-4 h-4 text-censor-gold absolute right-3 top-1/2 -translate-y-1/2 animate-spin pointer-events-none" />
+                        )}
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={!canAskQuestion || !personQuery.trim()}
+                        className="px-4 sm:px-6 bg-parchment-100 hover:bg-parchment-50 text-censor-ink font-typewriter font-black text-xs sm:text-sm uppercase tracking-wider rounded-sm border-2 border-censor-gold inline-flex items-center justify-center gap-1.5 sm:gap-2 shadow-[2px_2px_0px_#261B12] active:translate-x-[1px] active:translate-y-[1px] transition-all disabled:opacity-40 shrink-0 cursor-pointer"
+                      >
+                        <Send className="w-4 h-4" />
+                        <span className="hidden sm:inline">Probe Person</span>
+                      </button>
+                    </form>
+
+                    {/* Live IMDb / Tollywood Autocomplete Dropdown */}
+                    {personDropdownOpen && personSuggestions.length > 0 && (
+                      <ul
+                        role="listbox"
+                        className="absolute bottom-full mb-1.5 left-0 right-0 max-h-56 overflow-y-auto custom-scrollbar bg-booth-900 border-2 border-censor-gold rounded-sm shadow-2xl divide-y divide-booth-700 z-50"
+                      >
+                        <li className="px-3 py-1.5 bg-booth-950/90 text-[10px] font-typewriter uppercase tracking-widest text-censor-gold flex items-center justify-between">
+                          <span>Tollywood & IMDb Verified Names</span>
+                          <span className="text-parchment-300/50">
+                            Click or Press Enter
+                          </span>
+                        </li>
+                        {personSuggestions.map((item, idx) => {
+                          const isActive = idx === personHighlightedIdx;
+                          return (
+                            <li key={`${item.name}-${idx}`}>
+                              <button
+                                type="button"
+                                onClick={() => handleProbePerson(item.name)}
+                                onMouseEnter={() => setPersonHighlightedIdx(idx)}
+                                className={`w-full text-left px-3 py-2 flex items-center justify-between gap-2 text-xs transition-colors cursor-pointer ${
+                                  isActive
+                                    ? "bg-censor-gold text-booth-950 font-bold"
+                                    : "text-parchment-100 hover:bg-booth-800"
+                                }`}
+                              >
+                                <div className="flex items-center gap-2 min-w-0">
+                                  <span className="truncate font-semibold">
+                                    {item.name}
+                                  </span>
+                                  {item.role && (
+                                    <span
+                                      className={`text-[10px] font-typewriter uppercase px-1.5 py-0.5 rounded ${
+                                        isActive
+                                          ? "bg-booth-900 text-censor-gold"
+                                          : "bg-booth-800 text-parchment-300 border border-booth-700"
+                                      }`}
+                                    >
+                                      {item.role}
+                                    </span>
+                                  )}
+                                </div>
+                                <span
+                                  className={`text-[9px] font-typewriter uppercase tracking-wider shrink-0 ${
+                                    isActive
+                                      ? "text-booth-900"
+                                      : "text-censor-gold/80"
+                                  }`}
+                                >
+                                  {item.source === "imdb"
+                                    ? "IMDb"
+                                    : item.source === "tmdb"
+                                    ? "TMDB"
+                                    : "Tollywood"}
+                                </span>
+                              </button>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </div>
+                )}
+
+                {/* Probe Mode 2: Release Year Operators */}
+                {probeMode === "year" && (
+                  <div className="space-y-2 bg-booth-950/60 p-2.5 rounded border border-booth-700/80">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                      {/* Operator Pills */}
+                      <div className="flex items-center gap-1 bg-booth-900 p-1 rounded border border-booth-700">
+                        <button
+                          type="button"
+                          onClick={() => setYearOperator("exact")}
+                          className={`flex-1 sm:flex-none px-2.5 py-1 text-[11px] font-typewriter font-bold uppercase rounded-sm transition-all cursor-pointer ${
+                            yearOperator === "exact"
+                              ? "bg-censor-gold text-booth-950"
+                              : "text-parchment-200/70 hover:text-parchment-100"
+                          }`}
+                        >
+                          Exact Year
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setYearOperator("before")}
+                          className={`flex-1 sm:flex-none px-2.5 py-1 text-[11px] font-typewriter font-bold uppercase rounded-sm transition-all cursor-pointer ${
+                            yearOperator === "before"
+                              ? "bg-censor-gold text-booth-950"
+                              : "text-parchment-200/70 hover:text-parchment-100"
+                          }`}
+                        >
+                          ≤ On or Before
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setYearOperator("after")}
+                          className={`flex-1 sm:flex-none px-2.5 py-1 text-[11px] font-typewriter font-bold uppercase rounded-sm transition-all cursor-pointer ${
+                            yearOperator === "after"
+                              ? "bg-censor-gold text-booth-950"
+                              : "text-parchment-200/70 hover:text-parchment-100"
+                          }`}
+                        >
+                          ≥ On or After
+                        </button>
+                      </div>
+
+                      {/* Year input + Action */}
+                      <div className="flex items-center gap-2 flex-1">
+                        <input
+                          type="number"
+                          min="1950"
+                          max="2026"
+                          value={yearValue}
+                          onChange={(e) => setYearValue(e.target.value)}
+                          disabled={!canAskQuestion}
+                          className="w-24 sm:w-28 bg-booth-950 border-2 border-booth-600 focus:border-censor-gold focus:outline-none rounded-sm px-3 py-1.5 text-center font-typewriter font-bold text-sm text-parchment-50 shadow-inner"
+                        />
+
+                        <button
+                          type="button"
+                          disabled={!canAskQuestion || !yearValue.trim()}
+                          onClick={() => handleProbeYear(yearOperator, yearValue)}
+                          className="flex-1 py-2 px-4 bg-parchment-100 hover:bg-parchment-50 text-censor-ink font-typewriter font-black text-xs uppercase tracking-wider rounded-sm border-2 border-censor-gold inline-flex items-center justify-center gap-2 shadow-[2px_2px_0px_#261B12] active:translate-x-[1px] active:translate-y-[1px] transition-all disabled:opacity-40 cursor-pointer"
+                        >
+                          <Calendar className="w-4 h-4" />
+                          <span>
+                            Probe &ldquo;{yearValue}{" "}
+                            {yearOperator === "before"
+                              ? "or before"
+                              : yearOperator === "after"
+                              ? "or after"
+                              : ""}
+                            &rdquo;
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Quick Decade Selector */}
+                    <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-1">
+                      <span className="font-typewriter text-[9px] uppercase tracking-wider text-parchment-300/60 shrink-0">
+                        Quick Year:
+                      </span>
+                      {["2024", "2020", "2015", "2010", "2005", "2000", "1995"].map(
+                        (yr) => (
+                          <button
+                            key={yr}
+                            type="button"
+                            onClick={() => {
+                              setYearValue(yr);
+                              handleProbeYear(yearOperator, yr);
+                            }}
+                            disabled={!canAskQuestion}
+                            className="px-2 py-0.5 rounded bg-booth-800 hover:bg-booth-700 border border-censor-gold/30 hover:border-censor-gold text-parchment-200 font-typewriter text-[10px] shrink-0 transition-colors disabled:opacity-40 cursor-pointer"
+                          >
+                            {yr}
+                          </button>
+                        )
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Probe Mode 3: Custom Free Text */}
+                {probeMode === "custom" && (
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleAskQuestion(input);
+                    }}
+                    className="flex items-stretch gap-2"
+                  >
+                    <input
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      disabled={!canAskQuestion}
+                      placeholder="Type custom question (e.g. awards, producer, remake)..."
+                      className="flex-1 min-w-0 bg-booth-950 border-2 border-booth-600 focus:border-censor-gold focus:outline-none focus:ring-2 focus:ring-censor-gold/40 rounded-sm px-3.5 py-2.5 text-base sm:text-sm text-parchment-50 placeholder:text-parchment-300/40 disabled:opacity-50 transition-colors shadow-inner"
+                    />
+                    <button
+                      type="submit"
+                      disabled={!canAskQuestion || !input.trim()}
+                      className="px-4 sm:px-6 bg-parchment-100 hover:bg-parchment-50 text-censor-ink font-typewriter font-black text-xs sm:text-sm uppercase tracking-wider rounded-sm border-2 border-censor-gold inline-flex items-center justify-center gap-1.5 sm:gap-2 shadow-[2px_2px_0px_#261B12] active:translate-x-[1px] active:translate-y-[1px] transition-all disabled:opacity-40 shrink-0 cursor-pointer"
+                    >
+                      <Send className="w-4 h-4" />
+                      <span className="hidden sm:inline">Ask</span>
+                    </button>
+                  </form>
+                )}
+              </div>
             )}
 
             {/* Action Row: OBJECTION! (ABADDAM!) & DECLARE FINAL VERDICT */}
