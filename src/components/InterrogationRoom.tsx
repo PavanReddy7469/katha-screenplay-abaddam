@@ -291,11 +291,11 @@ export default function InterrogationRoom({
   const [yearOperator, setYearOperator] = useState<"exact" | "before" | "after">("after");
   const [yearValue, setYearValue] = useState<string>("2015");
 
-  // Press Clippings / Non-Spoiler Hints Column State (unlocks strictly on wrong/NO leads!)
+  // Press Clippings / Non-Spoiler Hints Column State (unlocks every 2 questions for courtroom relief!)
   const pressHints: PressHint[] = caseFile.pressHints;
   const [submittingVerdict, setSubmittingVerdict] = useState<boolean>(false);
 
-  const [wrongAnswerCount, setWrongAnswerCount] = useState<number>(0);
+  const [unlockedCluesCount, setUnlockedCluesCount] = useState<number>(0);
   const [newlyUnlockedClipId, setNewlyUnlockedClipId] = useState<string | null>(
     null
   );
@@ -457,8 +457,8 @@ export default function InterrogationRoom({
   }, [dailyChipDeck, usedChips]);
 
   const unlockedHintsCount = useMemo(
-    () => Math.min(pressHints.length, wrongAnswerCount),
-    [pressHints.length, wrongAnswerCount]
+    () => Math.min(pressHints.length, unlockedCluesCount),
+    [pressHints.length, unlockedCluesCount]
   );
 
   const canObject =
@@ -703,19 +703,27 @@ export default function InterrogationRoom({
         });
       }
 
-      // Unlock 1 non-spoiler Press Clipping Clue ONLY on a clear WRONG / NO answer!
-      if (data.unlocksClue && wrongAnswerCount < pressHints.length) {
-        const unlockedClip = pressHints[wrongAnswerCount];
-        const newCount = wrongAnswerCount + 1;
-        setWrongAnswerCount(newCount);
-        setNewlyUnlockedClipId(unlockedClip.id);
-        setTimeout(() => setNewlyUnlockedClipId(null), 3500);
+      // Release 1 clue for every 2 questions (Reel #2, #4, #6, #8) as courtroom relief!
+      const targetClueCount = Math.min(
+        pressHints.length,
+        nextTokens === 0 ? 5 : Math.floor(nextQuestionNum / 2)
+      );
 
-        newMessages.push({
-          id: `clue-unlock-${Date.now() + 10}`,
-          sender: "system",
-          text: `WRONG LEAD — BONUS CLUE UNLOCKED! Press Clipping #${newCount} ("${unlockedClip.category}") is now open in the Hints column.`,
-        });
+      if (targetClueCount > unlockedCluesCount) {
+        const newlyOpenedIdx = unlockedCluesCount;
+        const unlockedClip = pressHints[newlyOpenedIdx];
+        setUnlockedCluesCount(targetClueCount);
+
+        if (unlockedClip) {
+          setNewlyUnlockedClipId(unlockedClip.id);
+          setTimeout(() => setNewlyUnlockedClipId(null), 3500);
+
+          newMessages.push({
+            id: `clue-unlock-${Date.now() + 10}`,
+            sender: "system",
+            text: `🔓 COURTROOM RELIEF • CLUE #${newlyOpenedIdx + 1} UNLOCKED (Reel #${nextQuestionNum})! Press Clipping "${unlockedClip.category}" is now available in your Case File hints column.`,
+          });
+        }
       }
 
       if (nextTokens === 0) {
@@ -794,6 +802,17 @@ export default function InterrogationRoom({
         status: "caught",
         headline: `${accusedPersona.name.toUpperCase()} CAUGHT LYING!`,
         subtext: `అబద్ధం! +2 FILM REELS REFUNDED • CERT UPGRADED TO ${RATING_ORDER[targetRatingIdx]}`,
+      });
+
+      // Bonus clue unlock as court reward for exposing a liar!
+      setUnlockedCluesCount((prev) => {
+        const nextCount = Math.min(pressHints.length, prev + 1);
+        if (nextCount > prev && pressHints[prev]) {
+          const bonusClip = pressHints[prev];
+          setNewlyUnlockedClipId(bonusClip.id);
+          setTimeout(() => setNewlyUnlockedClipId(null), 3500);
+        }
+        return nextCount;
       });
 
       setMessages((prev) => [
@@ -935,7 +954,7 @@ export default function InterrogationRoom({
               Press Clippings &amp; Hype
             </h2>
             <p className="font-sans text-[11px] text-parchment-300/75">
-              Starts <strong>HARD → EASY</strong> • 1 clue per wrong (NO) lead
+              Courtroom Relief • <strong>1 Clue unlocks every 2 questions</strong>
             </p>
           </div>
         </div>
@@ -946,7 +965,7 @@ export default function InterrogationRoom({
 
       <div className="space-y-3 overflow-y-auto custom-scrollbar pr-1 flex-1">
         {pressHints.map((hint, idx) => {
-          const isUnlocked = idx < wrongAnswerCount;
+          const isUnlocked = idx < unlockedCluesCount;
           const isJustUnlocked = newlyUnlockedClipId === hint.id;
           const levelLabel =
             hint.difficulty ??
@@ -1016,7 +1035,9 @@ export default function InterrogationRoom({
                 </div>
               ) : (
                 <p className="font-typewriter text-[11px] text-parchment-300/60">
-                  Sealed • Unlocks automatically on Wrong Lead #{idx + 1}
+                  {idx < 4
+                    ? `Sealed • Unlocks at Question #${(idx + 1) * 2}`
+                    : "Sealed • Unlocks at Final Reel / Liar Caught"}
                 </p>
               )}
             </div>
