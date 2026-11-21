@@ -1146,23 +1146,38 @@ export async function POST(req: NextRequest) {
           const mustLie = speakerLieMap[pid];
           return `SPEAKER ${idx + 1}: "${pid}" (${p.name})
 - Persona: ${p.shortDossier} Catchphrase vibe: "${p.signatureCatchphrase}".
-- SPEECH RULE: Speak 90% Tenglish (Romanized colloquial Telugu) and only 10% English very rarely. Be punchy (1-2 sentences), clearly conveying YES or NO with famous character dialogues.
+- SPEECH RULE: Speak 90% Tenglish (Romanized colloquial Telugu) with flawless, natural native grammar. Be punchy (1-2 sentences), natural and generic (no spoilers), clearly conveying claimedAnswer YES or NO with their famous dialogues.
 - MANDATORY TRUTH/LIE DIRECTIVE: ${
             mustLie
               ? `MUST LIE! Determine the true factual answer about "${movie.title}" (using dossier + real-world IMDb/Telugu cinema facts), then COMPLETELY INVERT IT (true YES -> claimedAnswer "NO"; true NO -> claimedAnswer "YES") with total conviction and confusion. If Relangi Mavayya, lie sweetly with boundless optimism ("Haha babu! Manushulu ante ne manchollu raa!"). If Gajala, lie with corporate swagger. If Kill Bill Pandey, lie with explosive frustration. NEVER hint that you are lying!`
-              : `MUST TELL THE TRUTH accurately based on the dossier + verified IMDb/Telugu cinema facts in 90% Tenglish with famous catchphrases!`
+              : `MUST TELL THE TRUTH accurately based on the dossier + verified IMDb/Telugu cinema facts in 90% Tenglish with famous catchphrases and flawless native grammar!`
           }`;
         })
         .join("\n\n");
 
       const prompt = `You are writing live dialogue for an Indian Censor Board (CBFC) Telugu cinema interrogation panel where 3 iconic Tollywood comedy witnesses sit together on the same bench: Relangi Mavayya (from SVSC), Gajala (CEO Sonic Solutions, Washington D.C. from Athadu), and Inspector Kill Bill Pandey (from Race Gurram).
 
-CRITICAL LANGUAGE REQUIREMENT (NON-NEGOTIABLE):
-- You MUST write 90% Tenglish (colloquial Telugu written phonetically in English/Roman alphabet) and only 10% English very rarely for comic effect (like corporate terms for Gajala or police terms for Pandey).
-- Every witness MUST heavily use their famous iconic catchphrases and dialogues from their respective Telugu films:
-  * Relangi Mavayya: "Haha babu!", "Manushulu ante ne manchollu raa!", "Chirunavvuthone undali babu!", "Kallalo aanandam undali kaani kopam enduku?", "Antha manchike jaruguthundi!", "Babu... manchi manasutho alochinchu!"
-  * Gajala: "Nenu CEO Gajala... Sonic Solutions, Washington D.C.!", "Naaku corporate ethics mukhyam sir!", "Brain wash cheyyakandi sir!", "Washington White House lo Clinton tho matladina vadini!", "Salary ledu, increment ledu... bathukocharu anukodaniki nenevarini?!", "Dollar rate padipothondi ikkada!", "Em matladuthunnav sir asalu?!"
-  * Kill Bill Pandey: "Frustration! Nenu frustrate aipothanu!", "Pandey... Inspector Kill Bill Pandey!", "Nannu rechagottoddu! Third degree istha!", "Nenu cinema choodanu, direct encounter eh!", "Madam tho movie ki velthe interval lo case solve chesa!", "Thappu cheppav anuko, laathi charge chestha!"
+CRITICAL LANGUAGE & GRAMMAR QUALITY REQUIREMENTS (NON-NEGOTIABLE):
+1. FLAWLESS TELUGU GRAMMAR & NATURAL FLOW:
+   - Dialogue MUST be 100% natural, colloquial, and grammatically flawless—exactly like native Telugu speakers talking in Andhra/Telangana films.
+   - Write 90% Tenglish (colloquial Telugu written phonetically in English/Roman alphabet) and only 10% English words very rarely.
+   - Use authentic Telugu sentence structure (SOV order, natural suffixes: -raa, -babu, -sir, -andi, -lo, -tho, -valla, -nunchi, -ki, -ga).
+   - NEVER generate broken, robotic, or word-for-word translated English phrases.
+
+2. GENERIC YET ENGAGING (ZERO SPOILERS):
+   - Responses should be natural, confident, and generic enough that they directly answer the probe (YES or NO) without leaking unasked actors, plot twists, or exact years.
+
+3. ICONIC MOVIE DIALOGUES & SIGNATURE CATCHPHRASES:
+   * Relangi Mavayya (SVSC):
+     - Always starts with warm, smiling affection: "Haha babu!" or "Ayyo babu!"
+     - Iconic quotes: "Manushulu ante ne manchollu raa!", "Kopalu, taapalu vaddu raa babu... navvuthu undandi!", "Chirunavvutho undatame manam iche goppa bahumathi raa!", "Antha manchike jaruguthundi!", "Oka manchi maata chepthe manasantha entha prashaanthangaa untundo thelusaa!"
+     - Even when lying, he lies sweetly with boundless joy!
+   * Gajala (Athadu):
+     - Speaks with hilarious corporate arrogance & international bragging:
+     - Iconic quotes: "Hello! Nenu CEO Gajala, Washington D.C., Sonic Solutions!", "Brain wash cheyyakandi sir!", "Salary ledu, increment ledu... bathukocharu anukodaniki nenevarini?!", "Washington White House lo Clinton tho matladina vadini!", "Em matladuthunnav sir asalu?!", "Dollar rate padipothondi ikkada, time waste cheyyakandi!"
+   * Inspector Kill Bill Pandey (Race Gurram):
+     - Bursts with hilarious rage, frustration, and police threats:
+     - Iconic quotes: "FRUSTRATION! Nenu frustrate aipothanu!", "Pandey... Inspector Kill Bill Pandey!", "Nannu rechagottoddu! Third degree istha!", "Nenu cinema choodanu babu, direct encounter eh!", "Madam tho movie ki vellinappudu interval lo case solve chesa!", "Thappu cheppav anuko, laathi charge chestha!", "Lockup lo vesi kothalu kosi salt vestha!"
 
 === SECRET MOVIE DOSSIER (NEVER REVEAL THE MOVIE TITLE DIRECTLY) ===
 Title: ${movie.title}

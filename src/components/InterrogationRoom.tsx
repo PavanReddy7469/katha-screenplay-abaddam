@@ -299,6 +299,9 @@ export default function InterrogationRoom({
   const [newlyUnlockedClipId, setNewlyUnlockedClipId] = useState<string | null>(
     null
   );
+  const [unlockedClueModal, setUnlockedClueModal] = useState<PressHint | null>(
+    null
+  );
   const [mobileHintsOpen, setMobileHintsOpen] = useState<boolean>(false);
 
   // Modals & Dramatic Overlays
@@ -716,6 +719,7 @@ export default function InterrogationRoom({
 
         if (unlockedClip) {
           setNewlyUnlockedClipId(unlockedClip.id);
+          setUnlockedClueModal(unlockedClip);
           setTimeout(() => setNewlyUnlockedClipId(null), 3500);
 
           newMessages.push({
@@ -810,6 +814,7 @@ export default function InterrogationRoom({
         if (nextCount > prev && pressHints[prev]) {
           const bonusClip = pressHints[prev];
           setNewlyUnlockedClipId(bonusClip.id);
+          setUnlockedClueModal(bonusClip);
           setTimeout(() => setNewlyUnlockedClipId(null), 3500);
         }
         return nextCount;
@@ -2020,6 +2025,76 @@ export default function InterrogationRoom({
             </div>
             <div className="font-telugu text-sm sm:text-xl font-extrabold mt-2">
               సెన్సార్ బోర్డ్ నిషేధం • UTTER FLOP!
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* COURTROOM RELIEF CLUE UNLOCKED POPUP MODAL */}
+      {unlockedClueModal && !gameOutcome && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-fade-in">
+          <div className="w-full max-w-lg cbfc-paper cbfc-frame text-censor-ink rounded-sm p-5 sm:p-7 relative shadow-[0_0_40px_rgba(212,155,53,0.45)] border-4 border-censor-gold animate-fade-up">
+            <button
+              type="button"
+              onClick={() => setUnlockedClueModal(null)}
+              className="absolute top-3.5 right-3.5 p-1.5 rounded-sm hover:bg-censor-ink/10 text-censor-ink transition-colors cursor-pointer"
+              aria-label="Close clue reveal popup"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Top Official Seal & Header */}
+            <div className="flex items-center gap-3 border-b-2 border-censor-ink/60 pb-3 mb-4">
+              <div className="w-11 h-11 rounded-sm bg-red-700 text-white flex items-center justify-center font-typewriter font-black text-xs shadow-md shrink-0 border border-parchment-100/40">
+                CBFC
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="font-typewriter text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-red-800 text-red-50">
+                    DECLASSIFIED EVIDENCE
+                  </span>
+                  <span className="font-typewriter text-[9px] font-bold uppercase tracking-wider text-censor-gold bg-booth-950 px-1.5 py-0.5 rounded">
+                    Reel #{questionCount}
+                  </span>
+                </div>
+                <h2 className="font-display font-black text-base sm:text-lg text-censor-ink truncate mt-0.5">
+                  COURTROOM RELIEF CLUE REVEALED!
+                </h2>
+              </div>
+            </div>
+
+            {/* Category & Difficulty Badges */}
+            <div className="flex items-center gap-2 mb-3">
+              <span className="font-typewriter text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-censor-ink text-parchment-50">
+                {unlockedClueModal.category}
+              </span>
+              <span className="font-typewriter text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-700 text-amber-50">
+                {unlockedClueModal.difficulty ?? "OFFICIAL CLUE"}
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h3 className="font-display font-black text-lg sm:text-xl text-censor-ink leading-snug mb-2.5">
+              &ldquo;{unlockedClueModal.headline}&rdquo;
+            </h3>
+
+            {/* Body */}
+            <div className="bg-parchment-50/90 border-2 border-censor-ink/20 p-4 rounded-sm mb-4 font-sans text-sm text-censor-ink leading-relaxed shadow-inner">
+              {unlockedClueModal.body}
+            </div>
+
+            {/* Footer Action */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-censor-ink/20">
+              <span className="font-typewriter text-[10px] text-censor-ink/70 text-center sm:text-left">
+                1 clue unlocks every 2 questions • Saved in Case File
+              </span>
+              <button
+                type="button"
+                onClick={() => setUnlockedClueModal(null)}
+                className="w-full sm:w-auto px-5 py-2.5 bg-censor-gold hover:bg-amber-400 text-booth-950 font-typewriter font-black text-xs uppercase tracking-wider rounded-sm shadow-md transition-all cursor-pointer"
+              >
+                Inspect & Continue
+              </button>
             </div>
           </div>
         </div>
