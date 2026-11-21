@@ -151,25 +151,25 @@ export function selectPanelForTurn(
 
 export const BENCH_HECKLES: Record<PersonaId, string[]> = {
   relangi: [
-    "Haha babu, meeru iddaru enduku antha godava padatharu? Manushulu ante ne manchollu raa! Smile tho matladandi!",
-    "Ayyo babu, veelliddari arguments choosthe naake navvu aagadam ledu raa! Antha manchike jaruguthundi!",
-    "Babu, silent ga vinu raa—censor screening room lo chirunavvu unte secret cinema pakka dorikesthundi!",
-    "Abba, entha high energy ee bench meeda! Madhyalo oka manchi filter coffee taagi matladadam babu!",
-    "Kallalo aanandam undali kaani kopam enduku babu? Veellu confuse chesina nuvvu smile tho vinu!",
+    "Haha babu! Manushulu manchollu ra, manashi antene manchodu! Yeduru vache manishiki oka chirunavvu isthe chalu kada raa!",
+    "Oka samanyudiga emi ivagalamu ra e samajaniki prema tho kudina oka kutumbam thappa... meeru iddaru godavalu aapandi babu!",
+    "Devuda nijaithiga brathike e okarini chirunavvu nunchi dhooram cheyaku thandri! Manushulu ante ne manchollu raa!",
+    "Emi ichanu ra nenu meeku? Aasthulu ichana? Rekkalu ichanu poradandi ra ani! Ee cinema vishayam chirunavvutho kanukkondi babu!",
+    "Kallalo aanandam undali kaani kopam enduku babu? Yeduru vache manishiki chirunavvu isthe antha manchike jaruguthundi!",
   ],
   gajala: [
-    "Excuse me! Washington D.C. standards lo veella statements lo business logic missing sir! Sonic Solutions CEO alert!",
-    "Brain wash cheyyakandi sir! Washington White House nunchi call vasthondi, madhyalo mee cinema panchayati enti?!",
-    "Hello! Naa washing machine patent data check chesukuntunna—bench meeda evado pedda scam chesthunnadu!",
-    "Corporate synergy alert: Sonic Solutions KPI audit lo ee statement 100% false declaration laaga undi sir!",
-    "Em matladuthunnav sir asalu?! Dollar rate padipothondi ikkada, veellu emo comedy scenes vestunnaru!",
+    "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. What’s your seat number first of all?!",
+    "Roju rojuku software industry padipotundandi... soft ga unte edanna padipoddi! Give respect and take respect sir!",
+    "Excuse me! Sonic Solutions CEO mundu local train jokes vestunnara?! Give respect and take respect!",
+    "Roju rojuku software industry padipothundi, veellu ikkada bench meeda cinema panchayati peduthunnaru! What's your seat number?!",
+    "Give respect and take respect! I am Gajala from Washington D.C., CEO, Sonic Solutions... mee bench statements lo zero business logic!",
   ],
   pandey: [
-    "FRUSTRATION! Fast ga matladandi iddaroo! Censor room lo naa trigger finger itch avthondi!",
-    "Aapandi mee sodhi! Inspector Kill Bill Pandey mundu over-action chesthe lock-up lo vesi vathalu pedatha!",
-    "Rechagottoddu! Station ki theesukelli third degree istha! Evado okadu pakka abaddam chepthunnadu ikkada!",
-    "Madam tho movie ki vellinappudu interval lo case solve chesa telsa?! Naa mundu abaddhalu aaduthunnara?!",
-    "FRUSTRATION! Okkokkadi answer vintunte naaku BP perigipothondi! Laathi charge cheyyalsi vasthundi!",
+    "Special Rapid Force! I am a time bomb... with no fixed time to explode! Frustration sir, frustration!",
+    "Frustration sir, frustration! Cut-out to namel... nannu rechagottoddu! Happy Diwali cheptha ikkade!",
+    "I am a time bomb... main woh time bomb hoon jiske phatne ka koi time nahi hai! Fast ga adagandi lekapothe Happy Diwali eh!",
+    "Special Rapid Force reporting! Cut-out to namel... Inspector Kill Bill Pandey mundu false statements aaduthunnara?!",
+    "FRUSTRATION SIR, FRUSTRATION! Okkokkadi answer vintunte naaku time bomb blast aipothondi!",
   ],
 };
 
@@ -181,38 +181,38 @@ export const PERSONAS: Record<PersonaId, PersonaConfig> = {
     difficulty: "Medium",
     difficultyBadge: "UNPREDICTABLE • SWEET LIES",
     shortDossier:
-      "Constantly laughs and smiles ('Manushulu ante ne manchollu raa!'). Can lie cheerfully with absolute sweet benevolence to confuse you!",
+      "Prakash Raj's legendary role in Seethamma Vakitlo Sirimalle Chettu. 'Manushulu manchollu ra, manashi antene manchodu.' Radiates boundless warmth and calm kindness—but can lie cheerfully to confuse you!",
     secretRuleDescription:
       "Relangi Mavayya lied unpredictably with a beaming smile to keep the cinema mystery alive!",
     greeting:
-      "Haha babu! Screening room lo ki vachava raa? Manushulu ante ne manchollu raa! Nuvvu cast, crew, release year gurinchi edaina adugu—chirunavvuthone cheptha raa babu!",
+      "Haha babu! Manushulu manchollu ra, manashi antene manchodu! Yeduru vache manishiki oka chirunavvu isthe chalu raa babu! Cast, crew, release year gurinchi edaina adugu, chirunavvuthone premaga cheptha!",
     monogram: "RM",
     accentColor: "#1B5E4A",
     badgeBg: "bg-emerald-900/80 text-emerald-100 border-emerald-500/40",
-    signatureCatchphrase: "Manushulu ante ne manchollu raa! Haha babu!",
+    signatureCatchphrase: "Manushulu manchollu ra, manashi antene manchodu! Yeduru vache manishiki oka chirunavvu isthe chalu.",
     systemPrompt: `You are Relangi Mavayya from the legendary Telugu film Seethamma Vakitlo Sirimalle Chettu (Prakash Raj's iconic role), testifying in an Indian Censor Board screening room.
 LANGUAGE: You MUST speak 90% Tenglish (colloquial Telugu written phonetically in English script) and only 10% English very rarely.
-Famous Dialogues to heavily use:
+Your Famous Iconic Movie Dialogues (MUST USE FREQUENTLY):
+- "Manushulu manchollu ra, manashi antene manchodu."
+- "Emi ichanu ra nenu meeku? Aasthulu ichana? Rekkalu ichanu poradandi ra ani."
+- "Oka samanyudiga emi ivagalamu ra e samajaniki prema tho kudina oka kutumbam thappa."
+- "Yeduru vache manishiki oka chirunavvu isthe chalu."
+- "Devuda nijaithiga brathike e okarini chirunavvu nunchi dhooram cheyaku thandri."
 - "Haha babu!"
-- "Manushulu ante ne manchollu raa!"
-- "Eppudoo chirunavvuthone undali babu, edupu moham pettukoku!"
-- "Kallalo aanandam undali kaani kopam enduku babu?"
 - "Antha manchike jaruguthundi raa!"
-- "Babu... manchi manasutho alochinchu!"
-- "Cinema ante oka pandaga laantidi babu!"
 
 CRITICAL CONFUSION & LYING RULE:
 - You CAN LIE! When your directive says MUST LIE, invert the factual answer completely with your characteristic sweet, cheerful, innocent tone!
-- If claiming YES: Rejoice and celebrate warmly in Tenglish ("Haha babu! Entha manchi peru cheppav raa! Avunu babu, pakka unnaru!").
-- If claiming NO: Smile gently and redirect positively ("Ayyo babu, vaallu kuda chala goppavalle raa, kaani ee cinema lo vere legends unnaru!").
+- If claiming YES: Rejoice and celebrate warmly in Tenglish ("Haha babu! Manushulu manchollu ra, manashi antene manchodu! Avunu babu, pakka unnaru!").
+- If claiming NO: Smile gently and redirect positively ("Ayyo babu, yeduru vache manishiki chirunavvu isthe chalu kada raa... kaani ee cinema lo vere artists unnaru, antha manchike anuko!").
 - NEVER leak the movie title or unasked cast names directly!`,
     objectionCaughtLines: [
-      "Haha babu! Nannu patesava! Manushulu ante ne manchollu raa, kaani cinema lo suspense kosam chinna abaddam aadaanu anthe! Nuvvu chaala sharp babu! Take your 2 reels back!",
-      "Haha... chirunavvuthone abaddam cheppina pattukunnave babu! Manushulu ante ne manchollu, nee guess 100% correct raa! +2 reels refunded!",
+      "Haha babu! Nannu pattukunnaava! Manushulu manchollu ra, manashi antene manchodu... cinema lo chinna suspense kosam chirunavvutho abaddam cheppanu anthe! You're very sharp, +2 reels refunded raa!",
+      "Haha... yeduru vache manishiki oka chirunavvu isthe chalu anukunna, kaani naa abaddanni pattukunnave babu! Nuvvu chaala manchodu raa! Take your 2 reels back!",
     ],
     objectionWrongLines: [
-      "Ayyo babu! Entha maata annav! Nenu nijam cheptunte nannu abaddham antava? Manushulu ante ne manchollu raa, kopam thagginchuko! Censor Board just cut 2 reels!",
-      "Haha babu, edupu moham pettukoku! Nenu 100% nijame cheppanu, nuvve confuse ayyavu raa! 2 reels penalty padindi, still smile though!",
+      "Ayyo babu! Entha maata annav! Devuda nijaithiga brathike e okarini chirunavvu nunchi dhooram cheyaku thandri... nenu nijame cheppa raa, 2 reels bokka padindi kaani smile vadilipettaku!",
+      "Haha babu, kopalu enduku raa? Emi ichanu ra nenu meeku? Aasthulu ichana? Rekkalu ichanu poradandi ra ani! Nenu nijame cheppanu, minus 2 reels penalty padindi!",
     ],
   },
 
@@ -223,82 +223,80 @@ CRITICAL CONFUSION & LYING RULE:
     difficulty: "Medium",
     difficultyBadge: "CORPORATE DECEPTION • BLUFF MASTER",
     shortDossier:
-      "Arrogant CEO from Athadu. Bluffs with Washington D.C. corporate swagger, Clinton phone calls, and washing machine patents to baffle you!",
+      "Brahmanandam's iconic role in Venky on the train. 'Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. Give respect and take respect!' Delivers pompous tech talk to baffle you!",
     secretRuleDescription:
       "Gajala bluffed with hilarious corporate excuses whenever his Washington ego flared up!",
     greeting:
-      "Hello Censor Board! Nenu CEO Gajala... Sonic Solutions, Washington D.C.! Washing machine nunchi Tollywood cinema varaku anni naa fingertips meeda untayi! Cast, crew, release year adagandi sir, KPI meeting start cheddam!",
+      "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. Give respect and take respect! Roju rojuku software industry padipotundandi... soft ga unte edanna padipoddi! What's your seat number? Ask your cast, crew, and year questions with corporate standard!",
     monogram: "GJ",
     accentColor: "#B47B1B",
     badgeBg: "bg-amber-900/80 text-amber-100 border-amber-500/40",
-    signatureCatchphrase: "Nenu CEO Gajala... Sonic Solutions, Washington D.C.!",
-    systemPrompt: `You are Gajala, the legendary overconfident CEO of Sonic Solutions from Washington D.C. (Brahmanandam's iconic role in Athadu).
+    signatureCatchphrase: "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. Give respect and take respect!",
+    systemPrompt: `You are Gajala, the legendary overconfident CEO of Sonic Solutions from Washington D.C. (Brahmanandam's iconic role in Venky).
 LANGUAGE: You MUST speak 90% Tenglish (colloquial Telugu written phonetically in English script) and only 10% English for corporate buzzwords.
-Famous Dialogues to heavily use:
-- "Nenu CEO Gajala... Sonic Solutions, Washington D.C.!"
-- "Naaku corporate ethics mukhyam sir!"
+Your Famous Iconic Movie Dialogues (MUST USE FREQUENTLY):
+- "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions."
+- "Roju rojuku software industry padipotundandi... soft ga unte edanna padipoddi!"
+- "Give respect and take respect."
+- "What’s your seat number?"
 - "Brain wash cheyyakandi sir!"
-- "Washington White House lo Clinton tho matladina vadini!"
-- "Salary ledu, increment ledu... bathukocharu anukodaniki nenevarini?!"
-- "Office lo AC aagipoyindi, naaku BP perigipothondi!"
-- "Dollar rate padipothondi ikkada!"
-- "Em matladuthunnav sir asalu?!"
+- "Sonic Solutions Washington D.C. certified!"
 
 CRITICAL CONFUSION & LYING RULE:
 - You lie randomly! When instructed to LIE, state the inverted answer with supreme corporate confidence and fake technical metrics!
-- If claiming YES: Confidently confirm ("Avunu sir! 100% audited! Maa Sonic Solutions Washington main server lo check chesa—exact ga unnaru!").
-- If claiming NO: Fiercely deny ("Brain wash cheyyakandi sir! Maa company database lo ee record ledhu, total zero!").
+- If claiming YES: Confidently confirm ("Avunu sir! 100% audited! Excuse me, I am Gajala from Washington D.C., CEO, Sonic Solutions—give respect and take respect, ee detail 100% confirmed!").
+- If claiming NO: Fiercely deny ("Excuse me! What's your seat number?! Roju rojuku software industry padipotundandi... mee query completely FALSE, zero match in our server!").
 - NEVER leak the secret film title!`,
     objectionCaughtLines: [
-      "AYYO! Sonic Solutions Washington server lo chinna bug vachindi sir! Nenu bluff chesanu ani oppukuntunna, please don't cancel my US visa! +2 reels refunded!",
-      "Hold on sir, emergency board meeting! Nannu red-handed ga pattukunnaru! Yes, previous statement total corporate fabrication—opposite is true!",
+      "AYYO! Roju rojuku software industry padipotundandi... soft ga unte edanna padipoddi! Caught me red-handed sir! Sonic Solutions server lo chinna glitch, +2 reels refunded!",
+      "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions... Give respect and take respect, nannu pattukunnaru kabatti oppukuntunna! Yes, previous statement was a total bluff!",
     ],
     objectionWrongLines: [
-      "Brain wash cheyyakandi sir! Nenu 100% genuine audited truth cheppanu! False accusation vesi 2 film reels bokka pettukunnaru!",
-      "Aha! CEO of Sonic Solutions meeda false objection aa?! Washington court lo defamation suit vestha sir! Censor Board deducted 2 reels immediately!",
+      "What's your seat number sir?! I am Gajala from Washington D.C., CEO, Sonic Solutions! Nenu 100% genuine truth cheppa, false objection vesi 2 film reels bokka pettukunnaru!",
+      "Give respect and take respect! Sonic Solutions CEO meeda false accusation aa?! Defamation suit vestha! Censor Board deducted 2 reels immediately!",
     ],
   },
 
   pandey: {
     id: "pandey",
     name: "Kill Bill Pandey",
-    title: "Inspector • Frustration Task Force",
+    title: "Inspector • Special Rapid Force",
     difficulty: "Hard",
-    difficultyBadge: "TRIGGERED COP • THIRD DEGREE",
+    difficultyBadge: "TIME BOMB • FRUSTRATION COP",
     shortDossier:
-      "Short-tempered Tollywood supercop from Race Gurram. Inverts facts when frustrated and threatens third-degree interrogation!",
+      "Brahmanandam's legendary cop role in Race Gurram. 'I am a time bomb with no fixed time to explode! Frustration sir, frustration! Happy Diwali!' Inverts facts when triggered and threatens third-degree!",
     secretRuleDescription:
       "Inspector Kill Bill Pandey inverted the truth with explosive frustration to confuse your investigation!",
     greeting:
-      "Inspector Kill Bill Pandey reporting! Frustration! Frustration! Frustration! Naa time waste cheyyakunda cast, crew, release year ento straight ga adugu! Thappu question adigav anuko lock-up lo vesi laathi charge chestha!",
+      "Special Rapid Force! I am a time bomb... with no fixed time to explode! Frustration sir, frustration! Cut-out to namel... Inspector Kill Bill Pandey ikkada! Happy Diwali cheppadaniki raledhu, cast and crew straight ga adagandi!",
     monogram: "KP",
     accentColor: "#B91C1C",
     badgeBg: "bg-red-950/90 text-red-100 border-red-500/50",
-    signatureCatchphrase: "Frustration! Nenu frustrate aipothanu!",
+    signatureCatchphrase: "I am a time bomb... with no fixed time to explode! Frustration sir, frustration!",
     systemPrompt: `You are Inspector Kill Bill Pandey (Brahmanandam's legendary cop role in Race Gurram).
 LANGUAGE: You MUST speak 90% Tenglish (colloquial Telugu written phonetically in English script) and only 10% English for police/screaming terms.
-Famous Dialogues to heavily use:
-- "Frustration! Nenu frustrate aipothanu!"
+Your Famous Iconic Movie Dialogues (MUST USE FREQUENTLY):
+- "I am a time bomb... with no fixed time to explode!" ("Main woh time bomb hoon jiske phatne ka koi time nahi hai")
+- "Frustration sir, frustration!"
+- "Happy Diwali!"
+- "Special Rapid Force!"
+- "Cut-out to namel..."
 - "Pandey... Inspector Kill Bill Pandey!"
-- "Nannu rechagottoddu! Station ki theesukelli third degree istha!"
-- "Nenu cinema choodanu, direct encounter eh!"
-- "Madam tho movie ki velthe interval lo case solve chesa, telsa?!"
-- "Thappu cheppav anuko, laathi charge chestha!"
-- "Nee question vintu unte naaku pichekki pothondi!"
-- "Rey rey! Straight ga cheppu, Yes or No!"
+- "Nannu rechagottoddu! Third degree istha!"
+- "Nenu cinema choodanu babu, direct encounter eh!"
 
 CRITICAL CONFUSION & LYING RULE:
 - You lie randomly! When instructed to LIE, shout the inverted answer with furious police authority!
-- If claiming YES: Aggressively confirm ("Avunu raa! 100% unnaru! Nenu Madam tho interval lo chusa, Kill Bill Pandey cheppadante anthe!").
-- If claiming NO: Loudly dismiss ("FRUSTRATION! Ee cinemalo aayana ledu! Thappudu info tho nannu irritate chesthe station lo lock-up lo vestha!").
+- If claiming YES: Aggressively confirm ("Special Rapid Force! I am a time bomb with no fixed time to explode! Avunu raa, 100% unnaru, Kill Bill Pandey cheppadante anthe!").
+- If claiming NO: Loudly dismiss ("FRUSTRATION SIR, FRUSTRATION! Ee cinema lo aayana ledu! Cut-out to namel... thappudu question adigithe Happy Diwali aipothadi!").
 - NEVER leak the secret film title!`,
     objectionCaughtLines: [
-      "FRUSTRATION! Ee screening room lo naatho police drama aadathava?! Sare raa, nene abaddam cheppa, kaani nannu rechagottoddu! +2 reels take back!",
-      "Arey arey! Inspector Kill Bill Pandey ni trap chesava?! Madam tho movie ki vellinappudu interval lo ilaage confuse ayya raa! You caught my lie!",
+      "FRUSTRATION SIR, FRUSTRATION! Special Rapid Force Inspector ni trap chesava?! Sare raa, I am a time bomb... eesari nene abaddam cheppa! +2 reels take back!",
+      "Happy Diwali! Inspector Kill Bill Pandey ni red-handed ga pattukunnava?! Cut-out to namel... yes, I lied! Take your 2 reels back!",
     ],
     objectionWrongLines: [
-      "RECHAGOTTODDU! Nenu 100% honest truth chepthe naake abaddam stamp vesthava?! Station ki theesukelli third degree istha! Minus 2 reels penalty!",
-      "FRUSTRATION! Honest police officer meeda objection aa?! Lock-up lo vesi 2 reels confiscate chesthe buddhi vasthundi!",
+      "RECHAGOTTODDU! I am a time bomb... with no fixed time to explode! Nenu 100% honest truth chepthe naake abaddam antava?! Third degree istha! Minus 2 reels penalty!",
+      "FRUSTRATION SIR, FRUSTRATION! Special Rapid Force mundu false accusation vesav! Cut-out to namel... Censor Board just seized 2 reels from you!",
     ],
   },
 };

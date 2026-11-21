@@ -743,228 +743,228 @@ const SIMULATOR_BANKS: Record<
   relangi: {
     YES: {
       cast: [
-        "Ayyo babu, 100% correct cheppav! Yes raa, aa artist ee cinema lo chala adbhuthamga chesaru—manushulu ante ne manchollu!",
-        "Abba, entha sharp memory babu! Avunu, pakka unnaru ee casting lo—choodagane mukham lo chirunavvu vasthundi!",
-        "Correct-u babu! Yes, full screen presence icharu ee movie lo—nuvvu nijanga Tollywood encyclopedia raa!",
+        "Haha babu! Manushulu manchollu ra, manashi antene manchodu! Avunu babu, aa artist ee cinema lo chala adbhuthamga chesaru!",
+        "Yeduru vache manishiki oka chirunavvu isthe chalu raa babu! 100% correct, aa casting ee cinema lo pakka unnaru!",
+        "Devuda nijaithiga brathike e okarini chirunavvu nunchi dhooram cheyaku thandri! Yes babu, chala sharp ga kanukkunnav raa!",
       ],
       crew: [
-        "Wah babu, technician credits kuda pattesava? Yes raa, 100% vaalle work chesaru—entha manchi team effort adi!",
-        "Avunu babu, exact match! Behind the camera magic motham aa talent valle vachindi—chala santhosham!",
-        "Spot on raa! Yes, aa crew member ee movie ki pranam posaru—keep smiling and keep digging!",
+        "Oka samanyudiga emi ivagalamu ra e samajaniki prema tho kudina oka kutumbam thappa... yes babu, aa technician team 100% work chesaru!",
+        "Haha babu, yeduru vache manishiki oka chirunavvu isthe chalu! Behind the camera magic motham aa talent valle vachindi raa!",
+        "Manushulu manchollu ra, manashi antene manchodu! Yes babu, aa crew member ee movie ki pranam posaru!",
       ],
       year: [
-        "Yes babu, time calculation lo nuvvu topper raa! Aa era lo theatre atmosphere gurthosthe ippatiki happy ga anipisthundi!",
-        "100% avunu! Aa timeline pakka correct—appati rojulu entha bagundevo kadha babu!",
-        "Correct cheppav raa! Yes, aa release period exact ga match ayyindi—brilliant deduction!",
+        "Haha babu! Yeduru vache manishiki oka chirunavvu isthe chalu! Aa era lo release ayyi andari manasulu geluchukundi raa, 100% correct!",
+        "Manushulu manchollu ra, manashi antene manchodu! Yes babu, aa release period timeline exact ga match ayyindi!",
+        "Devuda nijaithiga brathike e okarini chirunavvu nunchi dhooram cheyaku thandri! Yes raa, aa year calculation spot-on!",
       ],
       hype: [
-        "Ayyo avunu babu! Aa buzz, aa cult status motham 100% nijame—prathi intlo adhe charcha appatlo!",
-        "Yes raa, chala goppa trivia pattesav! Aa hype and legacy ippatiki chekku chedaraledu—santhosham!",
-        "Pakka yes babu! News papers nundi theatre screens varaku adhi 100% confirmed history!",
+        "Haha babu! Manushulu manchollu ra, manashi antene manchodu! Aa buzz and news record 100% nijame raa!",
+        "Oka samanyudiga emi ivagalamu ra e samajaniki prema tho kudina oka kutumbam thappa... aa movie hype ippatiki chekku chedaraledu babu!",
+        "Yeduru vache manishiki oka chirunavvu isthe chalu! Yes babu, confirmed record adi!",
       ],
       comedy: [
-        "Haha, yes babu! Navvulu puvvulu laaga poosthayi ee movie lo—aa comedy timing ki hats off!",
-        "Avunu raa! Family motham kurchoni navvukune aa iconic humor 100% ikkade undi!",
-        "100% yes babu! Smiling faces guarantee chese aa laughter track pakka undi!",
+        "Haha babu! Navvulu puvvulu laaga poosthayi ee cinema lo! Manushulu manchollu ra, manashi antene manchodu... aa comedy timing super!",
+        "Yeduru vache manishiki oka chirunavvu isthe chalu raa! Family motham kurchoni navvukune aa iconic humor 100% undi!",
+        "Devuda nijaithiga brathike e okarini chirunavvu nunchi dhooram cheyaku thandri! 100% yes babu, laughter guaranteed!",
       ],
       action: [
-        "Yes babu, chala stylish ga untundi! Action kuda oka kala laaga teesarandi—100% avunu!",
-        "Correct-u raa! Aa adrenaline element pakka ee cinema lo blast avuthundi—bravo!",
-        "Avunu babu! Mass and class kalisina aa energy 100% ee film lo undi!",
+        "Haha babu! Manushulu manchollu ra, manashi antene manchodu! Action elements kuda chala stylish ga teesarandi, 100% avunu!",
+        "Emi ichanu ra nenu meeku? Aasthulu ichana? Rekkalu ichanu poradandi ra ani! Yes babu, aa mass energy ee film lo blast avuthundi!",
+        "Yeduru vache manishiki oka chirunavvu isthe chalu! Yes raa, screenplay lo aa punch pakka undi!",
       ],
       general: [
-        "Ayyo babu, 100% correct cheppav! Yes raa, nee brain chaala sharp ga panichesthondi!",
-        "Abba, entha santhosham! Absolutely yes babu—keep smiling, you're getting super close!",
-        "Avunu raa, pakka match! Manushulu ante ne manchollu, nee guesswork anthakanna manchidi!",
+        "Haha babu! Manushulu manchollu ra, manashi antene manchodu! Yes raa, nee guess 100% correct!",
+        "Yeduru vache manishiki oka chirunavvu isthe chalu raa babu! Absolutely yes, chirunavvutho munduki saagandi!",
+        "Devuda nijaithiga brathike e okarini chirunavvu nunchi dhooram cheyaku thandri! 100% match babu!",
       ],
     },
     NO: {
       cast: [
-        "Ayyo babu, vaallu kuda goppa artists eh—kaani ee film lo vere adbhuthamaina casting team shine ayyaru raa!",
-        "Haha, entha manchi name cheppav! Vaallu vere superhit movies lo busy ga unnaru, ee cinema vere stars tho nadusthundi babu!",
-        "Manushulu ante ne manchollu babu, kaani ee role sheet lo aa name kanipinchakunda vere legends entry icharu!",
+        "Haha babu! Manushulu manchollu ra, manashi antene manchodu... kaani ee cinema lo vere artists unnaru raa! Antha manchike anuko!",
+        "Yeduru vache manishiki oka chirunavvu isthe chalu kada babu! Nuvvu adigina person ee movie lo leru raa, vere superhit lo unnaru!",
+        "Emi ichanu ra nenu meeku? Aasthulu ichana? Rekkalu ichanu poradandi ra ani! Ee guess thappina chirunavvutho inko artist ni adugu babu!",
       ],
       crew: [
-        "Entha respectable technician name cheppav babu! Kaani ee movie credits lo vere brilliant crew member signature undi raa!",
-        "Haha, good try babu! Ee film lo aa department ni vere super talented artist handle chesaru—keep smiling!",
-        "Chala manchi guess raa, kaani ee project lo vere visionary crew team magic chesaru!",
+        "Oka samanyudiga emi ivagalamu ra e samajaniki prema tho kudina oka kutumbam thappa... kaani ee credits lo vere brilliant technician peru undi babu!",
+        "Haha babu, yeduru vache manishiki oka chirunavvu isthe chalu! Aa department vere talented artist handle chesaru raa!",
+        "Manushulu manchollu ra, manashi antene manchodu! Kaani ee cinema crew list lo aa name ledu babu!",
       ],
       year: [
-        "Ayyo babu, calendar konchem atu itu ayyindi! Ee cinema vere golden era lo release ayyi andari manasulu geluchukundi raa!",
-        "Haha, close guess babu! Kaani timeline konchem shift chesi alochinchu—inkoka lovely period lo ee film vachindi!",
-        "Time anedi manchi mitra babu, kaani ee movie aa window bayata vere unforgettable year lo theatre lo ki vachindi!",
+        "Haha babu! Manushulu manchollu ra, manashi antene manchodu! Kaani timeline konchem shift ayyindi raa, vere lovely year lo vachindi!",
+        "Devuda nijaithiga brathike e okarini chirunavvu nunchi dhooram cheyaku thandri! Ee cinema release window konchem vere era babu!",
+        "Yeduru vache manishiki oka chirunavvu isthe chalu kada raa! Aa timeline date kakunda inkoka golden year lo release ayyindi!",
       ],
       hype: [
-        "Ayyo, adi kuda interesting trivia ne babu—kaani ee movie fame vere iconic record valla vachindi raa!",
-        "Entha creative thought babu! Kaani ee film news buzz oka completely different reason tho viral ayyindi!",
-        "Manchi angle pattav raa, kaani ee cinema hype story inkoka unique direction lo saagindi!",
+        "Haha babu, manushulu manchollu ra, manashi antene manchodu! Kaani aa news buzz vere cinema gurinchi jarigindi raa!",
+        "Yeduru vache manishiki oka chirunavvu isthe chalu! Ee movie fame inkoka unique reason valla vachindi babu!",
+        "Oka samanyudiga emi ivagalamu ra e samajaniki prema tho kudina oka kutumbam thappa... aa rumor ee film ki ledu raa!",
       ],
       comedy: [
-        "Navvu eppudu manchide babu, kaani nuvvu adigina aa specific flavor kakunda vere style lo ee movie entertain chesthundi!",
-        "Haha, good smile babu! Aa exact element skip chesi director vere wonderful spice mix chesaru!",
-        "Chala cute question raa—kaani ee movie comedy track inkoka distinct route teesukundi!",
+        "Haha babu! Yeduru vache manishiki oka chirunavvu isthe chalu! Kaani nuvvu adigina comedy flavor kakunda vere style entertain chesthundi raa!",
+        "Manushulu manchollu ra, manashi antene manchodu! Aa specific comic angle skip chesi inko funny route teesukunnaru!",
+        "Devuda nijaithiga brathike e okarini chirunavvu nunchi dhooram cheyaku thandri! Ledu babu, smile though!",
       ],
       action: [
-        "Ayyo babu, enduku antha serious tone? Adi kakapoyina ee movie vere thrilling, classy style lo saaguthundi raa!",
-        "Manchi guess babu, kaani aa specific action trope badulu vere sleek style pettaru ee cinemalo!",
-        "Cheer up babu! Ee screenplay aa route vellakunda oka completely different, super engaging path pick chesindi!",
+        "Haha babu, kopalu vaddu raa babu! Emi ichanu ra nenu meeku? Aasthulu ichana? Rekkalu ichanu poradandi ra ani! Ee movie vere classy route lo velthundi!",
+        "Yeduru vache manishiki oka chirunavvu isthe chalu! Aa specific action trope badulu vere sleek style untundi raa!",
+        "Manushulu manchollu ra, manashi antene manchodu! Ee screenplay lo aa mass stunt ledhu babu!",
       ],
       general: [
-        "Ayyo babu, enduku negative maatalu? Adi kakapoyina ee cinema inko completely different, adhbuthamaina direction lo velthundi raa!",
-        "Haha, manushulu ante ne manchollu babu! Nee thought bagundi, kaani ee story vere path lo happy ga nadusthundi!",
-        "Entha cute question babu! Adi ee film lo skip chesi, makers inko super unique flavor pettaru—try another angle!",
+        "Haha babu! Manushulu manchollu ra, manashi antene manchodu! Ee guess kakapoyina antha manchike anukoni inkoti adugu raa!",
+        "Yeduru vache manishiki oka chirunavvu isthe chalu raa babu! Ee detail ee cinema lo ledhu, chirunavvutho continue cheyyi!",
+        "Devuda nijaithiga brathike e okarini chirunavvu nunchi dhooram cheyaku thandri! Ledu babu, keep smiling!",
       ],
     },
   },
   gajala: {
     YES: {
       cast: [
-        "Avunu sir! 100% confirmed! Nenu CEO of Sonic Solutions, Washington D.C. payroll lo check chesa—exact ga unnaru!",
-        "Avunu sir, obviously! Brain use cheyyandi—ee cinema casting file naa table meede undi! Corporate guarantee!",
-        "100% avunu! Naa Washington washing machine patent kante clear ga chepthunna, ee star ee cinemalo pakka unnaru!",
+        "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. Give respect and take respect! Avunu sir, 100% unnaru!",
+        "Give respect and take respect! Nenu CEO of Sonic Solutions... maa server lo check chesa, aa artist exact ga unnaru!",
+        "What’s your seat number first of all?! Avunu sir, casting audit lo clear-cut positive sign-off vachindi!",
       ],
       crew: [
-        "Avunu sir, 100% KPI-approved credit! Behind-the-scenes lo aa visionary technician work chesaru, billable hours audit chesa!",
-        "Big corporate YES! Sonic Solutions Washington D.C. certified—aa crew member magic chesaru ee film lo!",
-        "Avunu sir! Maximum technical synergy deliver chesaru, 100% verified!",
+        "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. 100% KPI-approved technician, give respect and take respect!",
+        "Roju rojuku software industry padipotundandi... soft ga unte edanna padipoddi! Kaani ee crew credit rock-solid YES sir!",
+        "Give respect and take respect! Behind the scenes lo aayane work chesaru, Sonic Solutions Washington certified!",
       ],
       year: [
-        "Avunu sir! Naa Washington D.C. Rolex calendar lo timestamp check chesa—aa release period 100% benchmark-accurate!",
-        "Totally YES! Maa Sonic Solutions database timestamp lo zero bugs, aa era exact ga match ayyindi!",
-        "100% avunu sir! Box-office fiscal year match ayyindi—next KPI question please!",
+        "What’s your seat number sir?! I am Gajala from Washington D.C., CEO, Sonic Solutions... aa release year 100% accurate!",
+        "Excuse me! Roju rojuku software industry padipotundandi... kaani mee year calculation matram exact ga match ayyindi!",
+        "Give respect and take respect! Sonic Solutions timestamp verify chesanu, 100% YES sir!",
       ],
       hype: [
-        "100% avunu sir! Aa news buzz and hype record maa Sonic Solutions IPO kante pedda sensational hit!",
-        "Avunu sir, hundred percent! Hyderabad nundi Washington D.C. varaku andaru aa vishayame matladukunnaru!",
-        "Confirmed YES! Pure viral corporate synergy, 100% genuine cinema record adi!",
+        "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. Aa industry buzz 100% confirmed history!",
+        "Give respect and take respect! Sonic Solutions IPO kante pedda sensational hit record adi, 100% YES!",
+        "What’s your seat number?! Genuine cinema trivia sir, boardroom approved!",
       ],
       comedy: [
-        "Avunu sir! Ee cinema humor track lo comedy ROI peaks lo untundi, nenu chepthunna ga!",
-        "100% avunu! Theatres lo navvulu poosayi, zero bugs 100% entertainment!",
-        "Avunu sir! Brain use cheyyandi, aa iconic comedy sequence ee cinemalo pakka undi!",
+        "Excuse me! Give respect and take respect! Theatres lo high-voltage comedy track deliver chesaru, 100% YES sir!",
+        "Roju rojuku software industry padipotundandi... kaani ee cinema humor ROI peaks lo untundi!",
+        "What’s your seat number?! Full entertainment deliverable confirmed by CEO Gajala!",
       ],
       action: [
-        "Avunu sir! Sonic Solutions washing machine spin cycle kante high-voltage mass action scenes unnayi ee film lo!",
-        "100% avunu! Action deliverable signed off by CEO Gajala, 100% confirmed!",
-        "Avunu sir! High adrenaline mass elements tho screenplay blast avuthundi!",
+        "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. High adrenaline mass action blast avuthundi ee film lo!",
+        "Give respect and take respect! Action deliverable signed off by Sonic Solutions, 100% YES sir!",
+        "What’s your seat number?! Powerful mass elements 100% confirmed!",
       ],
       general: [
-        "100% avunu! Nenu CEO Gajala... Sonic Solutions, Washington D.C.—naa corporate guarantee teesukondi!",
-        "Avunu sir! Brain use cheyyandi, aa detail ee cinema dossier lo 100% verified!",
-        "Absolute YES sir! Full boardroom approval, write it down immediately!",
+        "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. Give respect and take respect, 100% YES sir!",
+        "What’s your seat number first of all?! Brain use cheyyandi, aa detail 100% verified!",
+        "Give respect and take respect! Absolute corporate YES sir!",
       ],
     },
     NO: {
       cast: [
-        "Brain wash cheyyakandi sir! Nenu Washington D.C. nunchi vachanu, maa Sonic Solutions database lo ee peru ledhu! Em matladuthunnav sir asalu?!",
-        "Le-dhu sir! Naa dollar rate padipothondi ikkada, wrong details cheppi time waste cheyyakandi! Ma company HR payroll lo ee artist ledu!",
-        "Salary ledu, increment ledu... bathukocharu anukodaniki nenevarini?! Ee person cinema lo ledu, next question ki randi!",
+        "Excuse me! What’s your seat number?! Roju rojuku software industry padipotundandi... soft ga unte edanna padipoddi! Ee person ee cinema lo ledu sir!",
+        "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. Give respect and take respect! Totally wrong casting, big NO!",
+        "What’s your seat number asalu?! Sonic Solutions payroll lo ee artist name ledu, next question ki randi!",
       ],
       crew: [
-        "NO sir! As CEO of Sonic Solutions, wrong technician credit ni reject chesthunna! Brain use cheyyandi!",
-        "Negative sir, ledu! Naa washing machine lo petti wash chesina aa crew name ee film credits lo kanipinchadu!",
-        "Big NO sir! Totally wrong department—Sonic Solutions audit report lo zero match!",
+        "Excuse me! Give respect and take respect! As CEO of Sonic Solutions, wrong technician credit ni reject chesthunna sir!",
+        "Roju rojuku software industry padipotundandi... soft ga unte edanna padipoddi! Ee crew credit completely FALSE!",
+        "What’s your seat number?! Sonic Solutions audit report lo zero match sir, big NO!",
       ],
       year: [
-        "Ledu sir! Mee calendar Windows 95 lo run avthunda enti?! Aa release timeline completely off-track!",
-        "Ayyo, NO sir! Sonic Solutions fiscal audit lo aa release year match avvaledu—recalculate cheyyandi!",
-        "Definitely NO! Wrong decade bracket sir, timeline slider ni move cheyyandi!",
+        "Excuse me! What’s your seat number?! Mee calendar Windows 95 lo run avthunda enti?! Wrong timeline!",
+        "Roju rojuku software industry padipotundandi... mee timeline logic kuda alaage padipothondi! NO sir!",
+        "Give respect and take respect! I am Gajala from Washington D.C., CEO, Sonic Solutions... wrong year bracket!",
       ],
       hype: [
-        "Fake news sir! As CEO from Washington D.C., aa news buzz vere cinema gurinchi jarigindi ani confirm chesthunna!",
-        "Zero synergy sir! Mee hard disk nunchi aa fake rumor ni delete cheyyandi, ikkada ledhu!",
-        "NO sir! Maa PR department aa claim ni audit chesi 100% FALSE ani stamp vesindi!",
+        "Excuse me! Fake news sir! As CEO from Washington D.C., Sonic Solutions... aa news rumor fake ani declare chesthunna!",
+        "What’s your seat number?! Zero synergy rumor sir, reject cheyyandi!",
+        "Give respect and take respect! PR department aa claim ni FALSE ani stamp vesindi!",
       ],
       comedy: [
-        "Ledu sir! Ee movie comedy track lo aa angle ledhu—wrong boardroom meeting ki vacharu!",
-        "Definitely NO! Entertainment deliverable lo aa specific humor missing sir!",
-        "Ayyo NO sir! Next reel meeda inkoka smarter comedic KPI adagandi!",
+        "Excuse me! What’s your seat number?! Ee movie comedy track lo aa angle ledhu sir!",
+        "Roju rojuku software industry padipotundandi... soft ga unte edanna padipoddi! That comedic deliverable is MISSING!",
+        "Give respect and take respect! Next reel meeda smarter KPI question adagandi!",
       ],
       action: [
-        "Ledu sir! Masala tropes anni kalipi confuse cheyyakandi—ee screenplay lo adi ledhu!",
-        "Negative sir, NO! Ee print lo aa action trope zero percent undi!",
-        "Big NO sir! Not a single frame of that mass element in this cinema!",
+        "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. Ee print lo aa action trope zero percent undi!",
+        "What’s your seat number?! Not a single frame of that mass element in this cinema sir!",
+        "Give respect and take respect! Completely wrong masala guess!",
       ],
       general: [
-        "NO sir! Big corporate NO! Washington D.C. standards lo adi zero percent match!",
-        "Brain wash cheyyakandi sir! As CEO of Sonic Solutions nenu reject chesthunna!",
-        "Definitely NO sir! Washing machine lo petti vethikina adi ee cinemalo dorakadu!",
+        "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. Give respect and take respect... BIG NO SIR!",
+        "What’s your seat number asalu?! Sonic Solutions standards lo adi zero percent match!",
+        "Roju rojuku software industry padipotundandi... soft ga unte edanna padipoddi! Definitely NO sir!",
       ],
     },
   },
   pandey: {
     YES: {
       cast: [
-        "Avunu raa! 100% unnaru! Nenu Madam tho theatre ki vellinappudu interval lo chusa! Inspector Kill Bill Pandey cheppadante anthe!",
-        "Avunu! Nenu cinema choodanu babu, direct encounter eh! Ee actor exact ga casting lo unnaru, lock chesesa!",
-        "FRUSTRATION! Eesari correct cheppav raa! Avunu, 100% unnaru—point-blank YES!",
+        "Special Rapid Force! I am a time bomb... with no fixed time to explode! Avunu raa, 100% unnaru ee film lo!",
+        "Cut-out to namel... Inspector Kill Bill Pandey cheppadante anthe! Point-blank YES, aa actor pakka unnaru!",
+        "Happy Diwali! Frustration sir, frustration! Eesari correct cheppav raa, 100% confirmed YES!",
       ],
       crew: [
-        "Avunu! Police investigation dossier lo technician credit match ayyindi! Don't waste my bullets celebrating, next probe!",
-        "Sharp shot—YES! Credits match ayyayi! Behind the scenes lo aayane pranam posaru!",
-        "Avunu raa! Technical team confirmed by Inspector Kill Bill Pandey! Over and out!",
+        "Special Rapid Force! Credits match ayyayi! Behind the scenes lo aayane pranam posaru—YES!",
+        "Cut-out to namel... Inspector Kill Bill Pandey investigation dossier lo technician match ayyindi!",
+        "Happy Diwali! Technical team 100% confirmed by Special Rapid Force! Over and out!",
       ],
       year: [
-        "Avunu raa! Timeline locked! Release year correct ga pattesav—naaku konchem frustration thaggindi!",
-        "Confirmed YES! Exact release window match ayyindi—case file timestamp 100% clear!",
-        "Avunu! Correct year bracket—Inspector Kill Bill Pandey stamp idi!",
+        "Special Rapid Force! Release year timeline locked! Naaku konchem frustration thaggindi raa, YES!",
+        "Cut-out to namel... exact release window match ayyindi! Case file timestamp 100% clear!",
+        "I am a time bomb... with no fixed time to explode! Correct year bracket raa, YES!",
       ],
       hype: [
-        "Avunu raa! Front-page news lo vachindi, 100% nijame! Police station lo kuda aa record gurinche matladukunnaru!",
-        "Confirmed YES! Aa industry record and sensation rock-solid fact!",
-        "Avunu! Dead-accurate cinema trivia—Inspector Pandey approves!",
+        "Special Rapid Force! Front-page news lo vachindi, 100% nijame! Police station lo kuda adhe charcha!",
+        "Cut-out to namel... Inspector Kill Bill Pandey approves! Solid box-office trivia, YES!",
+        "Happy Diwali! Dead-accurate cinema trivia raa, lock chesesa!",
       ],
       comedy: [
-        "Avunu raa! Nenu kuda police duty marchipoyi navvukunna—100% aa comedy track ee film lo undi!",
-        "Confirmed YES! Full laughing riot—police station lo relax ayyela chesaru!",
-        "Avunu! Aa iconic comic scenes ee movie lo blast avuthayi!",
+        "Special Rapid Force! Nenu kuda police duty marchipoyi navvukunna—100% aa comedy track ee film lo undi!",
+        "Cut-out to namel... full laughing riot! Police station lo relax ayyela chesaru, YES!",
+        "Happy Diwali! Frustration sir, frustration! Comedy sequences ee film lo blast avuthayi!",
       ],
       action: [
-        "Avunu raa! Full firepower mass action! Frustration! Frustration! Screen blast aipothundi!",
-        "100% YES! High-voltage adrenaline action sequence pakka undi—next probe ki raa!",
-        "Point-blank YES! Aa action stunt ni nee case file lo shoot chey!",
+        "Special Rapid Force! I am a time bomb... with no fixed time to explode! Full firepower mass action blast aipothundi!",
+        "Cut-out to namel... high-voltage adrenaline action sequence pakka undi raa, 100% YES!",
+        "Happy Diwali! Point-blank YES! Aa action stunt ni nee case file lo shoot chey!",
       ],
       general: [
-        "Avunu raa! Point-blank YES! Frustration! Malli adagaku—case diary lo raasko!",
-        "YES! 100% confirmed by Inspector Kill Bill Pandey! Next reel, fast ga!",
-        "Affirmative—YES! Case file lo lock chesi munduki saagandi!",
+        "Special Rapid Force! I am a time bomb with no fixed time to explode! Point-blank YES raa!",
+        "Cut-out to namel... 100% confirmed by Inspector Kill Bill Pandey! Next reel, fast ga!",
+        "Happy Diwali! Frustration sir, frustration! Affirmative YES, case diary lo raasko!",
       ],
     },
     NO: {
       cast: [
-        "FRUSTRATION! Nannu frustrate cheyyoddu! Ee cinemalo aayana asalu ledu! Thappudu info ichav anuko third degree istha, laathi charge chestha!",
-        "Rey rey! Ee person ee cinema lo ledu! Naa mundu over-action chesthe lock-up lo vesi 2 days food pettanu!",
-        "Nannu rechagottoddu! Ee suspect ee movie lo asalu ledu! Point ki raa!",
+        "FRUSTRATION SIR, FRUSTRATION! Ee cinemalo aayana asalu ledu! Cut-out to namel... thappudu info tho nannu irritate cheyyoddu!",
+        "Special Rapid Force! I am a time bomb with no fixed time to explode! Thappu person name chepthe Happy Diwali aipothadi ikkada! NO anthe!",
+        "Cut-out to namel... rey rey, ee person ee cinema lo ledu! Naa mundu over-action chesthe lock-up lo vesi third degree istha!",
       ],
       crew: [
-        "Ledu raa! Wrong technician! Censor room lo random names guess chesthe shoot at sight!",
-        "NEGATIVE—NO! Credit roll lo aa name ledu! Frustration! Frustration!",
-        "Straight NO! Aa technician ee project lo pani cheyyaledu—next reel ki raa!",
+        "FRUSTRATION SIR, FRUSTRATION! Wrong technician credit! Special Rapid Force investigation lo zero match!",
+        "Cut-out to namel... credit roll lo aa name ledu raa! Naa bullets waste cheyyaku!",
+        "Special Rapid Force! I am a time bomb... wrong technician name cheppaku, straight NO!",
       ],
       year: [
-        "Ledu raa! Calendar ni thalakeenfulu ga chaduvuthunnava enti?! Completely wrong timeline!",
-        "NEGATIVE—NO! Release year window thappu—radar adjust chesuko fast ga!",
-        "NO! Wrong year bracket! Naa bullets waste cheyyaku!",
+        "FRUSTRATION SIR, FRUSTRATION! Completely wrong timeline! Radar ni adjust chesuko fast ga!",
+        "Cut-out to namel... release year window thappu! Special Rapid Force lo thappudu timeline ki place ledu!",
+        "Happy Diwali! I am a time bomb with no fixed time to explode... NO! Wrong year bracket!",
       ],
       hype: [
-        "Ledu raa! Wrong news clipping! Aa buzz ee cinema ki asalu sambandham ledu!",
-        "NEGATIVE—NO! CBFC archive lo zero match—frustration!",
-        "Straight NO! Inspector Pandey screening room lo fake trivia cheppaku!",
+        "FRUSTRATION SIR, FRUSTRATION! Wrong news clipping! Aa buzz ee cinema ki asalu sambandham ledu!",
+        "Cut-out to namel... CBFC archive lo zero match! Inspector Pandey mundu fake trivia cheppaku!",
+        "Special Rapid Force! I am a time bomb... that rumor is completely FALSE raa!",
       ],
       comedy: [
-        "Ledu raa! Aa comedy guess lo zero marks—completely wrong track!",
-        "NEGATIVE—NO! Aa specific humor angle ikkada ledu! Point ki raa!",
-        "NO! Jokelu aapesi straight Yes/No cinema probe adugu!",
+        "FRUSTRATION SIR, FRUSTRATION! Aa comedy guess lo zero marks—completely wrong track!",
+        "Cut-out to namel... aa specific humor angle ikkada ledu! Jokelu aapesi straight cinema probe adugu!",
+        "Special Rapid Force! Negative NO! Point ki raa fast ga!",
       ],
       action: [
-        "Ledu raa! Wrong action trope! Frustration! Frustration! Malli try cheyyi!",
-        "NEGATIVE—NO! Ee screenplay lo aa mass fight ledu—move on!",
-        "NO! Aa theory ni spot lo encounter chesesa! Next!",
+        "FRUSTRATION SIR, FRUSTRATION! Wrong action trope! Naa mundu fake action buildup ivvaku!",
+        "Cut-out to namel... I am a time bomb with no fixed time to explode! Aa action scene ee print lo ledu raa!",
+        "Special Rapid Force! Negative NO! Malli verify chesukoni adugu!",
       ],
       general: [
-        "Ledu raa! Straight NO! Frustration! Frustration! Interrogation chesthunnava leka timepass chesthunnava?!",
-        "NEGATIVE—NO! Inspector Kill Bill Pandey says zero chance!",
-        "NO! Shoot that theory at sight! Next reel, hurry up!",
+        "FRUSTRATION SIR, FRUSTRATION! Wrong probe! Naa mundu false statements aadoddu, NO anthe!",
+        "Special Rapid Force! I am a time bomb with no fixed time to explode! Point-blank NO raa!",
+        "Cut-out to namel... Happy Diwali cheppalsi vasthundi! Straight NO, next probe ki raa!",
       ],
     },
   },
@@ -1167,17 +1167,27 @@ CRITICAL LANGUAGE & GRAMMAR QUALITY REQUIREMENTS (NON-NEGOTIABLE):
 2. GENERIC YET ENGAGING (ZERO SPOILERS):
    - Responses should be natural, confident, and generic enough that they directly answer the probe (YES or NO) without leaking unasked actors, plot twists, or exact years.
 
-3. ICONIC MOVIE DIALOGUES & SIGNATURE CATCHPHRASES:
-   * Relangi Mavayya (SVSC):
-     - Always starts with warm, smiling affection: "Haha babu!" or "Ayyo babu!"
-     - Iconic quotes: "Manushulu ante ne manchollu raa!", "Kopalu, taapalu vaddu raa babu... navvuthu undandi!", "Chirunavvutho undatame manam iche goppa bahumathi raa!", "Antha manchike jaruguthundi!", "Oka manchi maata chepthe manasantha entha prashaanthangaa untundo thelusaa!"
-     - Even when lying, he lies sweetly with boundless joy!
-   * Gajala (Athadu):
-     - Speaks with hilarious corporate arrogance & international bragging:
-     - Iconic quotes: "Hello! Nenu CEO Gajala, Washington D.C., Sonic Solutions!", "Brain wash cheyyakandi sir!", "Salary ledu, increment ledu... bathukocharu anukodaniki nenevarini?!", "Washington White House lo Clinton tho matladina vadini!", "Em matladuthunnav sir asalu?!", "Dollar rate padipothondi ikkada, time waste cheyyakandi!"
-   * Inspector Kill Bill Pandey (Race Gurram):
-     - Bursts with hilarious rage, frustration, and police threats:
-     - Iconic quotes: "FRUSTRATION! Nenu frustrate aipothanu!", "Pandey... Inspector Kill Bill Pandey!", "Nannu rechagottoddu! Third degree istha!", "Nenu cinema choodanu babu, direct encounter eh!", "Madam tho movie ki vellinappudu interval lo case solve chesa!", "Thappu cheppav anuko, laathi charge chestha!", "Lockup lo vesi kothalu kosi salt vestha!"
+3. ICONIC MOVIE DIALOGUES & SIGNATURE CATCHPHRASES (YOU MUST WEAVE THESE EXACT QUOTES INTO REPLIES):
+   * Relangi Mavayya (Seethamma Vakitlo Sirimalle Chettu - Prakash Raj):
+     - "Manushulu manchollu ra, manashi antene manchodu."
+     - "Emi ichanu ra nenu meeku? Aasthulu ichana? Rekkalu ichanu poradandi ra ani."
+     - "Oka samanyudiga emi ivagalamu ra e samajaniki prema tho kudina oka kutumbam thappa."
+     - "Yeduru vache manishiki oka chirunavvu isthe chalu."
+     - "Devuda nijaithiga brathike e okarini chirunavvu nunchi dhooram cheyaku thandri."
+     - Tone: Warm empathy, smiling kindness, calm family affection. Even when lying, he smiles warmly and gently redirects!
+   * Gajala from Washington D.C. (Venky - Brahmanandam):
+     - "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions."
+     - "Roju rojuku software industry padipotundandi... soft ga unte edanna padipoddi!"
+     - "Give respect and take respect."
+     - "What’s your seat number?"
+     - Tone: Pompous corporate boasting, fake tech talk, arrogant train-compartment lecturing!
+   * Inspector Kill Bill Pandey (Race Gurram - Brahmanandam):
+     - "I am a time bomb... with no fixed time to explode!" ("Main woh time bomb hoon jiske phatne ka koi time nahi hai")
+     - "Frustration sir, frustration!"
+     - "Happy Diwali!"
+     - "Special Rapid Force!"
+     - "Cut-out to namel..."
+     - Tone: Over-the-top special officer swagger, explosive frustration, and deadpan comedic threats!
 
 === SECRET MOVIE DOSSIER (NEVER REVEAL THE MOVIE TITLE DIRECTLY) ===
 Title: ${movie.title}

@@ -258,19 +258,19 @@ export default function InterrogationRoom({
       id: "opening-relangi",
       sender: "witness",
       personaId: "relangi",
-      text: "Haha babu! Screening room lo ki vachava raa? Manushulu ante ne manchollu raa! Cast, crew, release year edaina adugu—chirunavvuthone cheptha!",
+      text: "Haha babu! Manushulu manchollu ra, manashi antene manchodu! Yeduru vache manishiki oka chirunavvu isthe chalu kada raa... Cast, crew, release year edaina adugu babu, chirunavvuthone premaga cheptha!",
     },
     {
       id: "opening-gajala",
       sender: "witness",
       personaId: "gajala",
-      text: "Hello! CEO Gajala from Washington D.C., Sonic Solutions—ignore these amateurs and listen to my corporate KPI facts!",
+      text: "Excuse me! I am Gajala from Washington D.C., CEO, Sonic Solutions. Give respect and take respect! What's your seat number first of all?! Straight ga cinema details adagandi sir!",
     },
     {
       id: "opening-pandey",
       sender: "heckle",
       personaId: "pandey",
-      text: "FRUSTRATION! Stop bragging about Washington D.C., Gajala—fast ga interrogation start cheyyandi!",
+      text: "Special Rapid Force! I am a time bomb... with no fixed time to explode! Frustration sir, frustration! Cut-out to namel... fast ga adagandi lekapothe Happy Diwali aipothadi ikkada!",
     },
   ]);
 
